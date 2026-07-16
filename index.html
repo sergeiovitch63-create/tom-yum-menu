@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f0f12">
+<title>SAKURA — Menu</title>
+<style>
+:root{
+  --bg:#f5f2ef; --card:#ffffff; --card2:#faf7f4; --txt:#16151a; --muted:#7a7480;
+  --line:#e6e0da; --accent:#e0526b; --accent2:#ffd9e0; --shadow:0 1px 2px rgba(20,15,25,.06),0 6px 18px rgba(20,15,25,.05);
+  --ok:#2e9e6b; --spice:#e2603a; --new:#4a7fe0;
+}
+[data-theme="dark"]{
+  --bg:#0f0f12; --card:#1a1a20; --card2:#212129; --txt:#f2eff2; --muted:#8f8a97;
+  --line:#2c2c36; --accent:#ff6c86; --accent2:#3a1f28; --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+  --ok:#4dc98d; --spice:#ff8a5c; --new:#7aa5ff;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  transition:background .25s ease,color .25s ease;
+  padding-bottom:120px;
+}
+.wrap{max-width:520px;margin:0 auto;padding:0 16px}
+
+/* ---------- Top bar ---------- */
+.topbar{display:flex;justify-content:flex-end;gap:8px;padding:12px 0 0}
+.icobtn{
+  min-width:44px;min-height:44px;border:1px solid var(--line);background:var(--card);
+  color:var(--txt);border-radius:14px;font-size:14px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;
+  transition:transform .12s ease,background .2s ease;
+}
+.icobtn:active{transform:scale(.94)}
+
+/* ---------- Header ---------- */
+header{text-align:center;padding:14px 0 20px}
+.logo{
+  width:78px;height:78px;margin:0 auto 12px;border-radius:26px;
+  background:linear-gradient(145deg,var(--accent),#ff9db0);
+  display:flex;align-items:center;justify-content:center;font-size:40px;
+  box-shadow:var(--shadow);animation:pop .5s cubic-bezier(.2,1.4,.4,1);
+}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+h1{margin:0;font-size:30px;letter-spacing:.22em;font-weight:800;text-indent:.22em}
+.sub{margin:6px 0 0;color:var(--muted);font-size:14px}
+.meta{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  padding:7px 12px;font-size:12.5px;font-weight:600;color:var(--muted);
+}
+.chip b{color:var(--txt)}
+
+/* ---------- Search ---------- */
+.search{position:relative;margin:4px 0 12px}
+.search input{
+  width:100%;height:50px;border-radius:16px;border:1px solid var(--line);
+  background:var(--card);color:var(--txt);padding:0 44px 0 44px;font-size:16px;outline:none;
+  transition:border-color .2s ease;
+}
+.search input:focus{border-color:var(--accent)}
+.search .ic{position:absolute;left:15px;top:14px;font-size:17px;opacity:.55}
+.search .clr{
+  position:absolute;right:5px;top:3px;width:44px;height:44px;border:0;background:none;
+  color:var(--muted);font-size:20px;cursor:pointer;display:none;
+}
+.search.has .clr{display:block}
+
+/* ---------- Filters ---------- */
+.filters{display:flex;gap:8px;overflow-x:auto;padding:2px 0 14px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.pill{
+  flex:0 0 auto;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--card);color:var(--txt);font-size:14px;font-weight:600;cursor:pointer;
+  white-space:nowrap;transition:all .18s ease;
+}
+.pill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.pill:active{transform:scale(.95)}
+
+/* ---------- Category links ---------- */
+.cat{
+  background:var(--card);border:1px solid var(--line);border-radius:18px;
+  margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden;
+}
+.cat-btn{
+  width:100%;min-height:68px;display:flex;align-items:center;gap:14px;
+  background:none;border:0;color:var(--txt);padding:12px 14px;cursor:pointer;text-align:left;
+}
+.cat-btn:active{background:var(--card2)}
+.cat-emo{
+  width:46px;height:46px;flex:0 0 46px;border-radius:14px;background:var(--card2);
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+}
+.cat-txt{flex:1;min-width:0}
+.cat-title{font-size:16px;font-weight:700;line-height:1.25}
+.cat-sub{font-size:12.5px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cat-n{
+  font-size:12px;font-weight:700;color:var(--muted);background:var(--card2);
+  border-radius:999px;padding:4px 9px;
+}
+.arrow{font-size:12px;color:var(--muted);transition:transform .25s ease}
+.cat[open] .arrow{transform:rotate(90deg)}
+
+.panel{display:none;padding:0 14px 8px;border-top:1px solid var(--line)}
+.cat[open] .panel{display:block;animation:slide .22s ease}
+@keyframes slide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ---------- Dish ---------- */
+.dish{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.dish:last-child{border-bottom:0}
+.dish-main{flex:1;min-width:0}
+.dish-name{font-size:15px;font-weight:700;line-height:1.3}
+.dish-desc{font-size:13px;color:var(--muted);margin-top:3px;line-height:1.45}
+.badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+.b{font-size:10.5px;font-weight:800;padding:3px 7px;border-radius:6px;letter-spacing:.03em;text-transform:uppercase}
+.b.pop{background:var(--accent2);color:var(--accent)}
+.b.new{background:color-mix(in srgb,var(--new) 16%,transparent);color:var(--new)}
+.b.veg{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.b.spi{background:color-mix(in srgb,var(--spice) 16%,transparent);color:var(--spice)}
+.b.gf{background:color-mix(in srgb,var(--muted) 16%,transparent);color:var(--muted)}
+.aller{font-size:11.5px;color:var(--muted);margin-top:7px;opacity:.85}
+.dish-side{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:8px}
+.price{font-size:15px;font-weight:800;white-space:nowrap}
+.add{
+  width:44px;height:44px;border-radius:14px;border:0;background:var(--accent);color:#fff;
+  font-size:22px;font-weight:400;line-height:1;cursor:pointer;transition:transform .12s ease;
+}
+.add:active{transform:scale(.85)}
+.add.in{background:var(--ok)}
+
+.empty{text-align:center;color:var(--muted);padding:50px 20px;font-size:14px}
+
+/* ---------- Cart FAB ---------- */
+.fab{
+  position:fixed;left:50%;transform:translateX(-50%) translateY(140%);
+  bottom:calc(16px + env(safe-area-inset-bottom));
+  width:calc(100% - 32px);max-width:488px;height:58px;border:0;border-radius:18px;
+  background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:space-between;
+  padding:0 18px;font-size:15px;font-weight:700;cursor:pointer;z-index:40;
+  box-shadow:0 8px 30px rgba(224,82,107,.4);transition:transform .3s cubic-bezier(.2,1.2,.4,1);
+}
+.fab.on{transform:translateX(-50%) translateY(0)}
+.fab-n{background:rgba(255,255,255,.25);border-radius:9px;padding:3px 9px;font-size:13px}
+
+/* ---------- Sheet ---------- */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .25s;z-index:50}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--bg);
+  border-radius:24px 24px 0 0;transform:translateY(100%);transition:transform .3s cubic-bezier(.2,.9,.3,1);
+  max-height:86vh;display:flex;flex-direction:column;
+}
+.sheet.on{transform:none}
+.sheet-in{max-width:520px;margin:0 auto;width:100%;display:flex;flex-direction:column;min-height:0}
+.grab{width:40px;height:4px;background:var(--line);border-radius:9px;margin:10px auto 0;flex:0 0 auto}
+.sheet-h{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;flex:0 0 auto}
+.sheet-h h2{margin:0;font-size:19px}
+.sheet-body{overflow-y:auto;padding:0 18px;-webkit-overflow-scrolling:touch}
+.ci{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ci-n{flex:1;min-width:0}
+.ci-n div:first-child{font-size:14px;font-weight:700}
+.ci-n div:last-child{font-size:12.5px;color:var(--muted);margin-top:2px}
+.qty{display:flex;align-items:center;gap:2px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.qty button{width:38px;height:40px;border:0;background:none;color:var(--txt);font-size:18px;cursor:pointer}
+.qty button:active{background:var(--card2)}
+.qty span{min-width:26px;text-align:center;font-size:14px;font-weight:800}
+.ci-p{font-size:14px;font-weight:800;min-width:62px;text-align:right}
+.tot{padding:14px 0;border-top:1px solid var(--line);flex:0 0 auto}
+.tr{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);padding:5px 0}
+.tr.big{font-size:18px;font-weight:800;color:var(--txt);padding-top:10px;margin-top:6px;border-top:1px dashed var(--line)}
+.order{
+  width:100%;height:56px;border:0;border-radius:16px;background:var(--accent);color:#fff;
+  font-size:16px;font-weight:700;cursor:pointer;margin:4px 0 calc(18px + env(safe-area-inset-bottom));
+}
+.order:active{transform:scale(.98)}
+.order:disabled{opacity:.4}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 0 10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <button class="icobtn" id="lang" aria-label="Language">🌐 <span id="langTxt">EN</span></button>
+    <button class="icobtn" id="theme" aria-label="Theme">🌙</button>
+  </div>
+
+  <header>
+    <div class="logo">🌸</div>
+    <h1>SAKURA</h1>
+    <p class="sub" id="tagline"></p>
+    <div class="meta">
+      <span class="chip">⭐ <b>4,8</b> <span id="revTxt"></span></span>
+      <span class="chip" id="hoursTxt"></span>
+      <span class="chip">🛵 <b>25–35 min</b></span>
+    </div>
+  </header>
+
+  <div class="search" id="searchBox">
+    <span class="ic">🔍</span>
+    <input id="q" type="search" autocomplete="off">
+    <button class="clr" id="clr" aria-label="clear">✕</button>
+  </div>
+
+  <div class="filters" id="filters"></div>
+  <div id="list"></div>
+
+  <footer>SAKURA · 12 rue des Lilas, Paris · +33 1 23 45 67 89</footer>
+</div>
+
+<button class="fab" id="fab">
+  <span class="fab-n" id="fabN">0</span>
+  <span id="fabTxt"></span>
+  <span id="fabTot">0</span>
+</button>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true">
+  <div class="sheet-in">
+    <div class="grab"></div>
+    <div class="sheet-h">
+      <h2 id="sheetTitle"></h2>
+      <button class="icobtn" id="close" aria-label="close">✕</button>
+    </div>
+    <div class="sheet-body" id="cartBody"></div>
+    <div class="wrap" style="padding:0 18px">
+      <div class="tot" id="totals"></div>
+      <button class="order" id="order"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   i18n — interface
+   ============================================================ */
+const UI = {
+  fr:{tagline:"Cuisine asiatique · Fait maison, tous les jours",rev:"(1 240 avis)",
+      hours:"🕐 11h30–14h30 · 18h–23h",search:"Rechercher un plat…",
+      filters:{all:"Tout",pop:"Populaire",veg:"Végé",spicy:"Épicé",gf:"Sans gluten"},
+      badges:{pop:"Populaire",new:"Nouveau",veg:"Végé",spicy:"Épicé",gf:"Sans gluten"},
+      aller:"Allergènes",none:"aucun",dishes:d=>d>1?d+" plats":d+" plat",
+      cart:"Votre panier",view:"Voir le panier",empty:"Votre panier est vide",
+      sub:"Sous-total",ship:"Livraison",total:"Total",order:"Commander",
+      noRes:"Aucun plat ne correspond à votre recherche.",
+      done:"Merci ! Votre commande est envoyée en cuisine 🌸"},
+  en:{tagline:"Asian kitchen · Homemade, every day",rev:"(1,240 reviews)",
+      hours:"🕐 11:30am–2:30pm · 6–11pm",search:"Search a dish…",
+      filters:{all:"All",pop:"Popular",veg:"Veggie",spicy:"Spicy",gf:"Gluten-free"},
+      badges:{pop:"Popular",new:"New",veg:"Veggie",spicy:"Spicy",gf:"Gluten-free"},
+      aller:"Allergens",none:"none",dishes:d=>d>1?d+" dishes":d+" dish",
+      cart:"Your cart",view:"View cart",empty:"Your cart is empty",
+      sub:"Subtotal",ship:"Delivery",total:"Total",order:"Place order",
+      noRes:"No dish matches your search.",
+      done:"Thank you! Your order is on its way to the kitchen 🌸"}
+};
+
+/* ============================================================
+   DATA — catégorie → plats
+   tags: veg | spicy | gf     badge: pop | new
+   ============================================================ */
+const MENU = [
+{id:"dimsum",emo:"🥟",fr:"Entrées & Dim Sum",en:"Starters & Dim Sum",
+ frs:"Bouchées vapeur, raviolis, petites faims",ens:"Steamed bites, dumplings, small plates",
+ items:[
+  {fr:"Gyoza poulet-gingembre",en:"Chicken & Ginger Gyoza",p:7.9,badge:"pop",tags:[],
+   dfr:"6 raviolis grillés, poulet fermier, gingembre frais, sauce ponzu.",
+   den:"6 pan-fried dumplings, free-range chicken, fresh ginger, ponzu sauce.",
+   afr:"gluten, soja, sésame",aen:"gluten, soy, sesame"},
+  {fr:"Har Gow crevettes",en:"Har Gow Shrimp Dumplings",p:8.9,tags:["gf"],
+   dfr:"4 raviolis vapeur translucides, crevettes entières, pousses de bambou.",
+   den:"4 translucent steamed dumplings, whole shrimp, bamboo shoots.",
+   afr:"crustacés, soja",aen:"crustaceans, soy"},
+  {fr:"Bao porc laqué",en:"Glazed Pork Bao",p:6.5,badge:"new",tags:[],
+   dfr:"2 petits pains vapeur moelleux, porc mijoté 6 h, sauce hoisin, concombre.",
+   den:"2 fluffy steamed buns, 6-hour braised pork, hoisin sauce, cucumber.",
+   afr:"gluten, soja, sésame",aen:"gluten, soy, sesame"},
+  {fr:"Edamame fleur de sel",en:"Sea-Salt Edamame",p:4.9,tags:["veg","gf"],
+   dfr:"Fèves de soja vapeur, fleur de sel de Guérande, zeste de yuzu.",
+   den:"Steamed soy beans, Guérande sea salt, yuzu zest.",
+   afr:"soja",aen:"soy"}
+ ]},
+{id:"ramen",emo:"🍜",fr:"Ramen & Soupes",en:"Ramen & Soups",
+ frs:"Bouillons mijotés 12 h, nouilles fraîches",ens:"12-hour broths, fresh noodles",
+ items:[
+  {fr:"Tonkotsu classique",en:"Classic Tonkotsu",p:15.9,badge:"pop",tags:[],
+   dfr:"Bouillon de porc crémeux 12 h, chashu, œuf mollet, nori, ciboule.",
+   den:"Creamy 12-hour pork broth, chashu, soft egg, nori, spring onion.",
+   afr:"gluten, œuf, soja, sésame",aen:"gluten, egg, soy, sesame"},
+  {fr:"Ramen Spicy Miso",en:"Spicy Miso Ramen",p:16.5,tags:["spicy"],
+   dfr:"Miso rouge, huile de piment maison, porc haché, maïs, beurre.",
+   den:"Red miso, house chili oil, minced pork, sweet corn, butter.",
+   afr:"gluten, lait, soja",aen:"gluten, milk, soy"},
+  {fr:"Ramen végétarien shoyu",en:"Veggie Shoyu Ramen",p:14.5,tags:["veg"],
+   dfr:"Bouillon champignons-kombu, tofu grillé, pak choï, champignons noirs.",
+   den:"Mushroom-kombu broth, grilled tofu, pak choi, black mushrooms.",
+   afr:"gluten, soja",aen:"gluten, soy"},
+  {fr:"Soupe pho bœuf",en:"Beef Pho Soup",p:15.5,tags:["gf"],
+   dfr:"Bouillon anisé, fines tranches de bœuf, nouilles de riz, herbes fraîches.",
+   den:"Star-anise broth, thin sliced beef, rice noodles, fresh herbs.",
+   afr:"poisson, soja",aen:"fish, soy"}
+ ]},
+{id:"sushi",emo:"🍣",fr:"Sushi & Sashimi",en:"Sushi & Sashimi",
+ frs:"Poisson livré chaque matin de Rungis",ens:"Fish delivered fresh every morning",
+ items:[
+  {fr:"Sashimi saumon (9 pièces)",en:"Salmon Sashimi (9 pcs)",p:16.9,badge:"pop",tags:["gf"],
+   dfr:"Saumon d'Écosse label rouge, tranché épais, wasabi frais râpé.",
+   den:"Label Rouge Scottish salmon, thick cut, freshly grated wasabi.",
+   afr:"poisson",aen:"fish"},
+  {fr:"Nigiri thon rouge (2 pièces)",en:"Bluefin Tuna Nigiri (2 pcs)",p:9.5,tags:["gf"],
+   dfr:"Akami de thon rouge, riz vinaigré tiède, pointe de wasabi.",
+   den:"Bluefin akami, warm vinegared rice, a touch of wasabi.",
+   afr:"poisson",aen:"fish"},
+  {fr:"Chirashi mixte",en:"Mixed Chirashi",p:21.9,tags:["gf"],
+   dfr:"Bol de riz vinaigré, saumon, thon, daurade, avocat, tobiko.",
+   den:"Vinegared rice bowl, salmon, tuna, sea bream, avocado, tobiko.",
+   afr:"poisson, œuf, soja",aen:"fish, egg, soy"},
+  {fr:"Tataki de thon",en:"Tuna Tataki",p:14.9,badge:"new",tags:["gf","spicy"],
+   dfr:"Thon saisi 20 s, ponzu yuzu, oignons frits, piment togarashi.",
+   den:"20-second seared tuna, yuzu ponzu, fried onions, togarashi chili.",
+   afr:"poisson, soja, sésame",aen:"fish, soy, sesame"}
+ ]},
+{id:"maki",emo:"🍙",fr:"Maki & Rolls",en:"Maki & Rolls",
+ frs:"Roulés à la commande, riz Koshihikari",ens:"Rolled to order, Koshihikari rice",
+ items:[
+  {fr:"California roll (6 pièces)",en:"California Roll (6 pcs)",p:8.9,badge:"pop",tags:[],
+   dfr:"Surimi, avocat, concombre, sésame torréfié, mayo japonaise.",
+   den:"Surimi, avocado, cucumber, toasted sesame, Japanese mayo.",
+   afr:"crustacés, œuf, poisson, sésame",aen:"crustaceans, egg, fish, sesame"},
+  {fr:"Spicy salmon roll (6 pièces)",en:"Spicy Salmon Roll (6 pcs)",p:9.9,tags:["spicy"],
+   dfr:"Saumon, sriracha maison, ciboule, tempura crunch.",
+   den:"Salmon, house sriracha, spring onion, tempura crunch.",
+   afr:"poisson, gluten, œuf, soja",aen:"fish, gluten, egg, soy"},
+  {fr:"Dragon roll (8 pièces)",en:"Dragon Roll (8 pcs)",p:14.5,badge:"new",tags:[],
+   dfr:"Crevette tempura, anguille laquée, avocat en écailles, sauce unagi.",
+   den:"Tempura shrimp, glazed eel, avocado scales, unagi sauce.",
+   afr:"crustacés, poisson, gluten, œuf, soja",aen:"crustaceans, fish, gluten, egg, soy"},
+  {fr:"Maki avocat-concombre (6 pièces)",en:"Avocado-Cucumber Maki (6 pcs)",p:6.5,tags:["veg","gf"],
+   dfr:"Avocat mûr, concombre croquant, nori, sésame noir.",
+   den:"Ripe avocado, crisp cucumber, nori, black sesame.",
+   afr:"sésame",aen:"sesame"}
+ ]},
+{id:"tempura",emo:"🍤",fr:"Tempura & Fritures",en:"Tempura & Fried",
+ frs:"Pâte légère, huile changée deux fois par jour",ens:"Light batter, oil changed twice daily",
+ items:[
+  {fr:"Tempura de crevettes (5 pièces)",en:"Shrimp Tempura (5 pcs)",p:12.9,badge:"pop",tags:[],
+   dfr:"Grosses crevettes, pâte tempura aérienne, sauce tentsuyu, daikon râpé.",
+   den:"Large shrimp, airy tempura batter, tentsuyu sauce, grated daikon.",
+   afr:"crustacés, gluten, œuf, soja",aen:"crustaceans, gluten, egg, soy"},
+  {fr:"Tempura de légumes",en:"Vegetable Tempura",p:9.9,tags:["veg"],
+   dfr:"Patate douce, courgette, aubergine, shiso, poivron.",
+   den:"Sweet potato, courgette, aubergine, shiso, bell pepper.",
+   afr:"gluten, œuf",aen:"gluten, egg"},
+  {fr:"Karaage poulet",en:"Chicken Karaage",p:10.9,tags:[],
+   dfr:"Poulet mariné soja-ail-gingembre, frit croustillant, mayo yuzu.",
+   den:"Soy-garlic-ginger marinated chicken, crispy fried, yuzu mayo.",
+   afr:"gluten, œuf, soja",aen:"gluten, egg, soy"},
+  {fr:"Calamars croustillants",en:"Crispy Calamari",p:11.5,tags:["spicy"],
+   dfr:"Anneaux de calamar, sel-poivre du Sichuan, piment frais, citron vert.",
+   den:"Calamari rings, Sichuan salt & pepper, fresh chili, lime.",
+   afr:"mollusques, gluten",aen:"molluscs, gluten"}
+ ]},
+{id:"nouilles",emo:"🍝",fr:"Nouilles sautées",en:"Stir-Fried Noodles",
+ frs:"Wok à 300 °C, saveur « wok hei »",ens:"300°C wok, true “wok hei” flavour",
+ items:[
+  {fr:"Yakisoba poulet",en:"Chicken Yakisoba",p:13.9,badge:"pop",tags:[],
+   dfr:"Nouilles de blé, chou, carotte, sauce yakisoba, aonori, gingembre rouge.",
+   den:"Wheat noodles, cabbage, carrot, yakisoba sauce, aonori, red ginger.",
+   afr:"gluten, soja",aen:"gluten, soy"},
+  {fr:"Pad thaï crevettes",en:"Shrimp Pad Thai",p:15.5,tags:["gf"],
+   dfr:"Nouilles de riz, tamarin, cacahuètes concassées, pousses de soja, citron vert.",
+   den:"Rice noodles, tamarind, crushed peanuts, bean sprouts, lime.",
+   afr:"crustacés, arachides, œuf, poisson",aen:"crustaceans, peanuts, egg, fish"},
+  {fr:"Chow mein bœuf",en:"Beef Chow Mein",p:14.9,tags:[],
+   dfr:"Nouilles croustillantes, bœuf mariné, brocoli chinois, sauce huître.",
+   den:"Crispy noodles, marinated beef, Chinese broccoli, oyster sauce.",
+   afr:"gluten, mollusques, soja",aen:"gluten, molluscs, soy"},
+  {fr:"Dan dan noodles",en:"Dan Dan Noodles",p:13.5,badge:"new",tags:["spicy"],
+   dfr:"Nouilles fraîches, sauce sésame-piment du Sichuan, porc croustillant.",
+   den:"Fresh noodles, Sichuan sesame-chili sauce, crispy pork.",
+   afr:"gluten, sésame, arachides, soja",aen:"gluten, sesame, peanuts, soy"}
+ ]},
+{id:"riz",emo:"🍚",fr:"Riz sautés",en:"Fried Rice",
+ frs:"Riz de la veille, œuf, feu vif",ens:"Day-old rice, egg, high flame",
+ items:[
+  {fr:"Riz cantonais",en:"Cantonese Fried Rice",p:11.9,badge:"pop",tags:[],
+   dfr:"Riz jasmin, jambon, crevettes, petits pois, œuf brouillé, ciboule.",
+   den:"Jasmine rice, ham, shrimp, peas, scrambled egg, spring onion.",
+   afr:"crustacés, œuf, soja",aen:"crustaceans, egg, soy"},
+  {fr:"Riz sauté ananas",en:"Pineapple Fried Rice",p:12.9,tags:["veg"],
+   dfr:"Ananas frais, noix de cajou, curcuma, raisins secs, coriandre.",
+   den:"Fresh pineapple, cashews, turmeric, raisins, coriander.",
+   afr:"fruits à coque, œuf, soja",aen:"tree nuts, egg, soy"},
+  {fr:"Riz sauté kimchi",en:"Kimchi Fried Rice",p:13.5,tags:["spicy"],
+   dfr:"Kimchi fermenté maison, poitrine de porc, gochujang, œuf au plat.",
+   den:"House-fermented kimchi, pork belly, gochujang, fried egg.",
+   afr:"œuf, poisson, soja, gluten",aen:"egg, fish, soy, gluten"},
+  {fr:"Riz sauté au basilic thaï",en:"Thai Basil Fried Rice",p:12.5,tags:["spicy","gf"],
+   dfr:"Poulet émincé, basilic thaï, piment oiseau, haricots plats.",
+   den:"Sliced chicken, Thai basil, bird's-eye chili, flat beans.",
+   afr:"poisson, soja",aen:"fish, soy"}
+ ]},
+{id:"wok",emo:"🥘",fr:"Wok",en:"Wok",
+ frs:"Sautés minute, légumes croquants",ens:"Flash-fried, crisp vegetables",
+ items:[
+  {fr:"Poulet aigre-doux",en:"Sweet & Sour Chicken",p:14.5,badge:"pop",tags:[],
+   dfr:"Poulet croustillant, poivrons, ananas, sauce aigre-douce maison.",
+   den:"Crispy chicken, bell peppers, pineapple, house sweet & sour sauce.",
+   afr:"gluten, œuf, soja",aen:"gluten, egg, soy"},
+  {fr:"Bœuf sauté gingembre",en:"Ginger Beef Stir-Fry",p:16.9,tags:["gf"],
+   dfr:"Émincé de bœuf, gingembre frais, ciboule, sauce soja sans gluten.",
+   den:"Sliced beef, fresh ginger, spring onion, gluten-free soy sauce.",
+   afr:"soja, sésame",aen:"soy, sesame"},
+  {fr:"Mapo tofu",en:"Mapo Tofu",p:13.9,tags:["spicy","veg"],
+   dfr:"Tofu soyeux, poivre du Sichuan engourdissant, doubanjiang, ciboule.",
+   den:"Silken tofu, numbing Sichuan pepper, doubanjiang, spring onion.",
+   afr:"soja, gluten",aen:"soy, gluten"},
+  {fr:"Crevettes sel & poivre",en:"Salt & Pepper Shrimp",p:17.5,badge:"new",tags:["spicy"],
+   dfr:"Crevettes en coque, ail frit, piments verts, poivre blanc.",
+   den:"Shell-on shrimp, fried garlic, green chilies, white pepper.",
+   afr:"crustacés, gluten",aen:"crustaceans, gluten"}
+ ]},
+{id:"curry",emo:"🍛",fr:"Currys",en:"Curries",
+ frs:"Pâtes de curry pilées maison",ens:"House-pounded curry pastes",
+ items:[
+  {fr:"Curry vert thaï poulet",en:"Thai Green Curry Chicken",p:15.5,badge:"pop",tags:["spicy","gf"],
+   dfr:"Lait de coco, aubergines thaï, basilic, piment vert, riz jasmin.",
+   den:"Coconut milk, Thai aubergines, basil, green chili, jasmine rice.",
+   afr:"poisson, crustacés",aen:"fish, crustaceans"},
+  {fr:"Curry japonais katsu",en:"Japanese Katsu Curry",p:16.9,tags:[],
+   dfr:"Escalope de porc panée, roux de curry doux, riz, pickles fukujinzuke.",
+   den:"Breaded pork cutlet, mild curry roux, rice, fukujinzuke pickles.",
+   afr:"gluten, œuf, lait, soja",aen:"gluten, egg, milk, soy"},
+  {fr:"Curry massaman bœuf",en:"Beef Massaman Curry",p:17.5,tags:["gf"],
+   dfr:"Bœuf fondant 4 h, cardamome, cannelle, pommes de terre, cacahuètes.",
+   den:"4-hour braised beef, cardamom, cinnamon, potatoes, peanuts.",
+   afr:"arachides, poisson",aen:"peanuts, fish"},
+  {fr:"Curry rouge légumes",en:"Red Vegetable Curry",p:13.9,tags:["veg","spicy","gf"],
+   dfr:"Potiron, haricots plats, tofu, lait de coco, curry rouge végétal.",
+   den:"Pumpkin, flat beans, tofu, coconut milk, plant-based red curry.",
+   afr:"soja",aen:"soy"}
+ ]},
+{id:"bbq",emo:"🔥",fr:"Grillades & BBQ",en:"Grill & BBQ",
+ frs:"Braise de charbon binchotan",ens:"Binchotan charcoal grill",
+ items:[
+  {fr:"Yakitori poulet (3 brochettes)",en:"Chicken Yakitori (3 skewers)",p:10.9,badge:"pop",tags:[],
+   dfr:"Cuisse de poulet, sauce tare caramélisée, ciboule grillée.",
+   den:"Chicken thigh, caramelised tare sauce, grilled spring onion.",
+   afr:"gluten, soja",aen:"gluten, soy"},
+  {fr:"Bulgogi de bœuf",en:"Beef Bulgogi",p:18.9,tags:[],
+   dfr:"Bœuf mariné poire-soja, grillé, salade de laitue, ssamjang.",
+   den:"Pear-soy marinated beef, grilled, lettuce wraps, ssamjang.",
+   afr:"soja, gluten, sésame",aen:"soy, gluten, sesame"},
+  {fr:"Travers de porc laqués",en:"Glazed Pork Ribs",p:17.9,badge:"new",tags:["spicy"],
+   dfr:"Ribs confits 5 h, laque miel-gochujang, sésame, ciboule.",
+   den:"5-hour confit ribs, honey-gochujang glaze, sesame, spring onion.",
+   afr:"soja, gluten, sésame",aen:"soy, gluten, sesame"},
+  {fr:"Aubergine grillée miso",en:"Miso Grilled Aubergine",p:11.5,tags:["veg"],
+   dfr:"Aubergine fondante, glaçage miso sucré, sésame, shiso.",
+   den:"Melting aubergine, sweet miso glaze, sesame, shiso.",
+   afr:"soja, sésame",aen:"soy, sesame"}
+ ]},
+{id:"salades",emo:"🥗",fr:"Salades",en:"Salads",
+ frs:"Fraîches, croquantes, vinaigrées",ens:"Fresh, crunchy, well-dressed",
+ items:[
+  {fr:"Salade de chou wakame",en:"Wakame Seaweed Salad",p:6.9,tags:["veg","gf"],
+   dfr:"Algues wakame, sésame, vinaigre de riz, huile de sésame grillé.",
+   den:"Wakame seaweed, sesame, rice vinegar, toasted sesame oil.",
+   afr:"soja, sésame",aen:"soy, sesame"},
+  {fr:"Som tam papaye verte",en:"Green Papaya Som Tam",p:9.9,badge:"pop",tags:["spicy","gf"],
+   dfr:"Papaye verte râpée, tomates cerises, haricots longs, cacahuètes, citron vert.",
+   den:"Shredded green papaya, cherry tomatoes, long beans, peanuts, lime.",
+   afr:"arachides, crustacés, poisson",aen:"peanuts, crustaceans, fish"},
+  {fr:"Salade de bœuf thaï",en:"Thai Beef Salad",p:14.5,tags:["spicy","gf"],
+   dfr:"Bœuf saisi, menthe, coriandre, échalote, riz grillé pilé, nam jim.",
+   den:"Seared beef, mint, coriander, shallot, toasted rice powder, nam jim.",
+   afr:"poisson, soja",aen:"fish, soy"},
+  {fr:"Salade concombre-sésame",en:"Cucumber Sesame Salad",p:6.5,tags:["veg","gf","spicy"],
+   dfr:"Concombre écrasé, ail, huile de piment, vinaigre noir.",
+   den:"Smashed cucumber, garlic, chili oil, black vinegar.",
+   afr:"soja, sésame",aen:"soy, sesame"}
+ ]},
+{id:"vege",emo:"🌱",fr:"Végé & Vegan",en:"Veggie & Vegan",
+ frs:"100 % végétal, sans compromis",ens:"100% plant-based, no compromise",
+ items:[
+  {fr:"Bao champignons croustillants",en:"Crispy Mushroom Bao",p:8.9,badge:"new",tags:["veg"],
+   dfr:"Pleurotes panées, mayo végétale sriracha, chou rouge, coriandre.",
+   den:"Breaded oyster mushrooms, vegan sriracha mayo, red cabbage, coriander.",
+   afr:"gluten, soja, moutarde",aen:"gluten, soy, mustard"},
+  {fr:"Bibimbap végétal",en:"Vegan Bibimbap",p:14.5,badge:"pop",tags:["veg","spicy"],
+   dfr:"Riz, légumes marinés, tofu, gochujang, huile de sésame, algues.",
+   den:"Rice, marinated vegetables, tofu, gochujang, sesame oil, seaweed.",
+   afr:"soja, sésame, gluten",aen:"soy, sesame, gluten"},
+  {fr:"Tofu croustillant général Tso",en:"General Tso's Crispy Tofu",p:13.9,tags:["veg","spicy"],
+   dfr:"Tofu ferme croustillant, sauce aigre-piquante, brocoli, sésame.",
+   den:"Crispy firm tofu, sweet-hot sauce, broccoli, sesame.",
+   afr:"soja, gluten, sésame",aen:"soy, gluten, sesame"},
+  {fr:"Buddha bowl asiatique",en:"Asian Buddha Bowl",p:13.5,tags:["veg","gf"],
+   dfr:"Riz complet, edamame, avocat, carotte, chou kale, sauce cacahuète.",
+   den:"Brown rice, edamame, avocado, carrot, kale, peanut dressing.",
+   afr:"arachides, soja, sésame",aen:"peanuts, soy, sesame"}
+ ]},
+{id:"desserts",emo:"🍡",fr:"Desserts",en:"Desserts",
+ frs:"Peu sucrés, comme là-bas",ens:"Lightly sweet, just like over there",
+ items:[
+  {fr:"Mochis glacés (3 pièces)",en:"Ice Cream Mochi (3 pcs)",p:7.5,badge:"pop",tags:["veg","gf"],
+   dfr:"Trois parfums : matcha, mangue, sésame noir.",
+   den:"Three flavours: matcha, mango, black sesame.",
+   afr:"lait, sésame, soja",aen:"milk, sesame, soy"},
+  {fr:"Dorayaki matcha",en:"Matcha Dorayaki",p:6.5,tags:["veg"],
+   dfr:"Deux pancakes moelleux, crème matcha, haricot rouge azuki.",
+   den:"Two fluffy pancakes, matcha cream, azuki red bean.",
+   afr:"gluten, œuf, lait",aen:"gluten, egg, milk"},
+  {fr:"Mangue-riz gluant",en:"Mango Sticky Rice",p:8.5,tags:["veg","gf"],
+   dfr:"Riz gluant à la coco, mangue Kent, sésame torréfié, crème coco.",
+   den:"Coconut sticky rice, Kent mango, toasted sesame, coconut cream.",
+   afr:"sésame",aen:"sesame"},
+  {fr:"Cheesecake yuzu",en:"Yuzu Cheesecake",p:7.9,badge:"new",tags:["veg"],
+   dfr:"Cheesecake japonais aérien, coulis de yuzu, zestes confits.",
+   den:"Airy Japanese cheesecake, yuzu coulis, candied zest.",
+   afr:"gluten, œuf, lait",aen:"gluten, egg, milk"}
+ ]},
+{id:"bubble",emo:"🧋",fr:"Bubble Tea & Boissons",en:"Bubble Tea & Drinks",
+ frs:"Perles cuites toutes les 2 heures",ens:"Pearls cooked every 2 hours",
+ items:[
+  {fr:"Bubble tea taro",en:"Taro Bubble Tea",p:6.5,badge:"pop",tags:["veg"],
+   dfr:"Taro crémeux, lait entier, perles de tapioca noires.",
+   den:"Creamy taro, whole milk, black tapioca pearls.",
+   afr:"lait",aen:"milk"},
+  {fr:"Bubble tea matcha",en:"Matcha Bubble Tea",p:6.9,tags:["veg"],
+   dfr:"Matcha cérémoniel d'Uji, lait d'avoine, perles brown sugar.",
+   den:"Ceremonial Uji matcha, oat milk, brown sugar pearls.",
+   afr:"gluten (avoine)",aen:"gluten (oats)"},
+  {fr:"Thé glacé litchi-rose",en:"Lychee-Rose Iced Tea",p:5.5,badge:"new",tags:["veg","gf"],
+   dfr:"Thé vert jasmin, litchi frais, eau de rose, glaçons.",
+   den:"Jasmine green tea, fresh lychee, rose water, ice.",
+   afr:null,aen:null},
+  {fr:"Limonade calamansi",en:"Calamansi Lemonade",p:5.0,tags:["veg","gf"],
+   dfr:"Calamansi des Philippines, menthe fraîche, eau pétillante.",
+   den:"Philippine calamansi, fresh mint, sparkling water.",
+   afr:null,aen:null}
+ ]},
+{id:"sake",emo:"🍶",fr:"Sakés & Alcools",en:"Sake & Spirits",
+ frs:"Sélection de notre sommelier · 18 ans+",ens:"Our sommelier's picks · 18+",
+ items:[
+  {fr:"Saké Junmai (carafe 180 ml)",en:"Junmai Sake (180ml carafe)",p:12.0,badge:"pop",tags:["veg","gf"],
+   dfr:"Riz pur, servi tiède ou frais. Notes de riz cuit et d'amande.",
+   den:"Pure rice, served warm or chilled. Cooked rice and almond notes.",
+   afr:null,aen:null},
+  {fr:"Saké Daiginjo (carafe 180 ml)",en:"Daiginjo Sake (180ml carafe)",p:19.0,tags:["veg","gf"],
+   dfr:"Riz poli à 50 %, très floral, melon blanc et poire.",
+   den:"50% polished rice, highly floral, white melon and pear.",
+   afr:null,aen:null},
+  {fr:"Bière Asahi pression (33 cl)",en:"Asahi Draft Beer (33cl)",p:5.5,tags:["veg"],
+   dfr:"Lager japonaise sèche, très fraîche, mousse fine.",
+   den:"Dry Japanese lager, ice cold, fine head.",
+   afr:"gluten",aen:"gluten"},
+  {fr:"Umeshu glaçons",en:"Umeshu on the Rocks",p:8.0,badge:"new",tags:["veg","gf"],
+   dfr:"Liqueur de prune japonaise, sucrée-acidulée, sur glace.",
+   den:"Japanese plum liqueur, sweet-tart, over ice.",
+   afr:null,aen:null}
+ ]}
+];
+
+/* ============================================================
+   State
+   ============================================================ */
+const SHIP = 3.5;
+let lang = localStorage.getItem("sakura_lang") || "fr";
+let theme = localStorage.getItem("sakura_theme") || "light";
+let filter = "all";
+let query = "";
+const cart = new Map();               // key "catId:index" -> qty
+const open = new Set();
+
+const $ = s => document.querySelector(s);
+const T = () => UI[lang];
+
+const money = n =>
+  lang === "fr"
+    ? n.toFixed(2).replace(".", ",") + " €"
+    : "€" + n.toFixed(2);
+
+/* ============================================================
+   Render
+   ============================================================ */
+function matches(d){
+  if (filter === "pop" && d.badge !== "pop") return false;
+  if (filter !== "all" && filter !== "pop" && !d.tags.includes(filter)) return false;
+  if (!query) return true;
+  const q = query.toLowerCase();
+  return (d[lang] + " " + d["d" + lang]).toLowerCase().includes(q);
+}
+
+function badgeList(d){
+  const out = [];
+  if (d.badge === "pop") out.push(["pop", T().badges.pop]);
+  if (d.badge === "new") out.push(["new", T().badges.new]);
+  if (d.tags.includes("veg")) out.push(["veg", T().badges.veg]);
+  if (d.tags.includes("spicy")) out.push(["spi", T().badges.spicy]);
+  if (d.tags.includes("gf")) out.push(["gf", T().badges.gf]);
+  return out;
+}
+
+function renderFilters(){
+  const f = T().filters;
+  $("#filters").innerHTML = [
+    ["all", f.all], ["pop", f.pop], ["veg", f.veg], ["spicy", f.spicy], ["gf", f.gf]
+  ].map(([k, l]) =>
+    `<button class="pill" data-f="${k}" aria-pressed="${filter === k}">${l}</button>`
+  ).join("");
+}
+
+function renderList(){
+  const list = $("#list");
+  let html = "", shown = 0;
+
+  for (const c of MENU){
+    const hits = c.items.map((d, i) => [d, i]).filter(([d]) => matches(d));
+    if (!hits.length) continue;
+    shown += hits.length;
+    const isOpen = open.has(c.id) || !!query || filter !== "all";
+
+    html += `<div class="cat" ${isOpen ? "open" : ""} data-c="${c.id}">
+      <button class="cat-btn" data-toggle="${c.id}">
+        <span class="cat-emo">${c.emo}</span>
+        <span class="cat-txt">
+          <span class="cat-title">${c[lang]}</span>
+          <span class="cat-sub">${c[lang + "s"]}</span>
+        </span>
+        <span class="cat-n">${hits.length}</span>
+        <span class="arrow">▶</span>
+      </button>
+      <div class="panel">${hits.map(([d, i]) => dishHTML(c, d, i)).join("")}</div>
+    </div>`;
+  }
+
+  list.innerHTML = shown ? html : `<div class="empty">🍥<br><br>${T().noRes}</div>`;
+}
+
+function dishHTML(c, d, i){
+  const key = c.id + ":" + i;
+  const n = cart.get(key) || 0;
+  const al = d["a" + lang];
+  return `<div class="dish">
+    <div class="dish-main">
+      <div class="dish-name">${d[lang]}</div>
+      <div class="dish-desc">${d["d" + lang]}</div>
+      <div class="badges">${badgeList(d).map(([k, l]) => `<span class="b ${k}">${l}</span>`).join("")}</div>
+      <div class="aller">${T().aller} : ${al || T().none}</div>
+    </div>
+    <div class="dish-side">
+      <span class="price">${money(d.p)}</span>
+      <button class="add ${n ? "in" : ""}" data-add="${key}" aria-label="+">${n ? n : "+"}</button>
+    </div>
+  </div>`;
+}
+
+function find(key){
+  const [cid, i] = key.split(":");
+  const c = MENU.find(x => x.id === cid);
+  return { c, d: c.items[+i] };
+}
+
+function totals(){
+  let n = 0, sum = 0;
+  for (const [k, q] of cart){ n += q; sum += find(k).d.p * q; }
+  return { n, sum };
+}
+
+function renderCart(){
+  const { n, sum } = totals();
+  const fab = $("#fab");
+  fab.classList.toggle("on", n > 0);
+  $("#fabN").textContent = n;
+  $("#fabTxt").textContent = T().view;
+  $("#fabTot").textContent = money(sum);
+
+  const body = $("#cartBody");
+  if (!n){
+    body.innerHTML = `<div class="empty">🛒<br><br>${T().empty}</div>`;
+    $("#totals").innerHTML = "";
+    $("#order").disabled = true;
+  } else {
+    body.innerHTML = [...cart].map(([k, q]) => {
+      const { c, d } = find(k);
+      return `<div class="ci">
+        <div class="ci-n"><div>${d[lang]}</div><div>${c.emo} ${money(d.p)}</div></div>
+        <div class="qty">
+          <button data-q="${k}:-1" aria-label="−">−</button>
+          <span>${q}</span>
+          <button data-q="${k}:1" aria-label="+">+</button>
+        </div>
+        <div class="ci-p">${money(d.p * q)}</div>
+      </div>`;
+    }).join("");
+    $("#totals").innerHTML =
+      `<div class="tr"><span>${T().sub}</span><span>${money(sum)}</span></div>
+       <div class="tr"><span>${T().ship}</span><span>${money(SHIP)}</span></div>
+       <div class="tr big"><span>${T().total}</span><span>${money(sum + SHIP)}</span></div>`;
+    $("#order").disabled = false;
+  }
+  $("#order").textContent = T().order;
+  $("#sheetTitle").textContent = T().cart;
+}
+
+function renderStatic(){
+  const t = T();
+  document.documentElement.lang = lang;
+  $("#langTxt").textContent = lang === "fr" ? "EN" : "FR";
+  $("#tagline").textContent = t.tagline;
+  $("#revTxt").textContent = t.rev;
+  $("#hoursTxt").textContent = t.hours;
+  $("#q").placeholder = t.search;
+}
+
+function renderAll(){ renderStatic(); renderFilters(); renderList(); renderCart(); }
+
+/* ============================================================
+   Events
+   ============================================================ */
+$("#list").addEventListener("click", e => {
+  const tog = e.target.closest("[data-toggle]");
+  if (tog){
+    const id = tog.dataset.toggle;
+    const el = tog.closest(".cat");
+    if (el.hasAttribute("open")){ el.removeAttribute("open"); open.delete(id); }
+    else { el.setAttribute("open", ""); open.add(id); }
+    return;
+  }
+  const add = e.target.closest("[data-add]");
+  if (add){
+    const k = add.dataset.add;
+    cart.set(k, (cart.get(k) || 0) + 1);
+    add.textContent = cart.get(k);
+    add.classList.add("in");
+    renderCart();
+  }
+});
+
+$("#cartBody").addEventListener("click", e => {
+  const b = e.target.closest("[data-q]");
+  if (!b) return;
+  const parts = b.dataset.q.split(":");
+  const delta = +parts.pop();
+  const k = parts.join(":");
+  const q = (cart.get(k) || 0) + delta;
+  if (q <= 0) cart.delete(k); else cart.set(k, q);
+  renderCart();
+  renderList();
+});
+
+$("#filters").addEventListener("click", e => {
+  const p = e.target.closest("[data-f]");
+  if (!p) return;
+  filter = p.dataset.f;
+  renderFilters();
+  renderList();
+});
+
+$("#q").addEventListener("input", e => {
+  query = e.target.value.trim();
+  $("#searchBox").classList.toggle("has", !!query);
+  renderList();
+});
+$("#clr").addEventListener("click", () => {
+  query = ""; $("#q").value = "";
+  $("#searchBox").classList.remove("has");
+  renderList();
+});
+
+$("#lang").addEventListener("click", () => {
+  lang = lang === "fr" ? "en" : "fr";
+  localStorage.setItem("sakura_lang", lang);
+  renderAll();
+});
+
+function applyTheme(){
+  document.documentElement.dataset.theme = theme;
+  $("#theme").textContent = theme === "dark" ? "☀️" : "🌙";
+  document.querySelector('meta[name="theme-color"]')
+    .setAttribute("content", theme === "dark" ? "#0f0f12" : "#f5f2ef");
+}
+$("#theme").addEventListener("click", () => {
+  theme = theme === "dark" ? "light" : "dark";
+  localStorage.setItem("sakura_theme", theme);
+  applyTheme();
+});
+
+const openSheet = v => {
+  $("#sheet").classList.toggle("on", v);
+  $("#scrim").classList.toggle("on", v);
+  document.body.style.overflow = v ? "hidden" : "";
+};
+$("#fab").addEventListener("click", () => openSheet(true));
+$("#close").addEventListener("click", () => openSheet(false));
+$("#scrim").addEventListener("click", () => openSheet(false));
+$("#order").addEventListener("click", () => {
+  alert(T().done);
+  cart.clear();
+  openSheet(false);
+  renderCart();
+  renderList();
+});
+
+applyTheme();
+renderAll();
+</script>
+</body>
+</html>
