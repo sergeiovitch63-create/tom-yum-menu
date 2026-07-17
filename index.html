@@ -374,7 +374,7 @@ const g = (es,en,fr) => ({es,en,fr});
    n = nombre · d = descripción · p = precio fijo · v = variantes
    ============================================================ */
 const MENU = [
-{id:"entrantes",emo:"🍢",n:g("Entrantes","Starters","Entrées"),
+{id:"entrantes",n:g("Entrantes","Starters","Entrées"),
  s:g("Fritos crujientes, pinchitos, edamames","Crispy fried, skewers, edamame","Fritures croustillantes, brochettes, edamamés"),
  items:[
   {n:g("Alitas de pollo BBQ","BBQ Chicken Wings","Ailes de poulet BBQ"),p:6.60},
@@ -395,7 +395,7 @@ const MENU = [
   {n:g("Edamames","Edamame","Edamamés"),p:5.90,img:"edamames",tags:["veg"]}
  ]},
 
-{id:"combos",emo:"🍱",n:g("Combos","Combos","Combos"),
+{id:"combos",n:g("Combos","Combos","Combos"),
  s:g("Para compartir, 2 a 4 entrantes","To share, 2 to 4 starters","À partager, 2 à 4 entrées"),
  items:[
   {n:g("Combo","Combo","Combo"),img:"combos",
@@ -405,7 +405,7 @@ const MENU = [
    v:[[g("Combo x2","Combo x2","Combo x2"),12.00],[g("Combo x3","Combo x3","Combo x3"),15.00],[g("Combo x4","Combo x4","Combo x4"),18.00]]}
  ]},
 
-{id:"sopas",emo:"🍲",n:g("Sopas","Soups","Soupes"),
+{id:"sopas",n:g("Sopas","Soups","Soupes"),
  s:g("Base de leche de coco, galanga y lemon grass","Coconut milk, galangal and lemon grass base","Base lait de coco, galanga et citronnelle"),
  items:[
   {n:g("Tom Yum","Tom Yum","Tom Yum"),img:"sopa-tomyum",tags:["spicy","veg"],v:P_SOPA,
@@ -418,7 +418,7 @@ const MENU = [
        "Soupe à base de lait de coco, galanga, citronnelle, feuilles de combava, brocoli, champignons, carotte, curry tom kha kai, coriandre et oignon rouge.")}
  ]},
 
-{id:"ramen",emo:"🍜",n:g("Ramen","Ramen","Ramen"),
+{id:"ramen",n:g("Ramen","Ramen","Ramen"),
  s:g("Con fideos, huevo guisado, alga nori y edamames","With noodles, boiled egg, nori seaweed and edamame","Avec nouilles, œuf mollet, algue nori et edamamés"),
  items:[
   {n:g("Ramen Tom Yum / Tom Yum Kha Kai","Ramen Tom Yum / Tom Yum Kha Kai","Ramen Tom Yum / Tom Yum Kha Kai"),
@@ -428,7 +428,7 @@ const MENU = [
        "Soupe moyennement épicée à base de lait de coco, galanga, citronnelle, feuilles de combava, brocoli, champignons, carotte, coriandre, oignon rouge, nouilles, curry tom yum ou tom kha kai, œuf mollet, algue nori, pousses de soja et edamamés.")}
  ]},
 
-{id:"brocheta",emo:"🍡",n:g("Brocheta","Skewers","Brochettes"),
+{id:"brocheta",n:g("Brocheta","Skewers","Brochettes"),
  s:g("x3 pinchitos con arroz frito y verduras al wok","x3 skewers with fried rice and wok vegetables","x3 brochettes avec riz frit et légumes au wok"),
  items:[
   {n:g("Brocheta de Pollo","Chicken Skewers","Brochettes de poulet"),p:12.50,img:"brocheta-pollo",
@@ -441,7 +441,7 @@ const MENU = [
        "3 brochettes de gambas, riz frit et mélange de légumes au wok.")}
  ]},
 
-{id:"arroces",emo:"🍚",n:g("Arroces","Rice","Riz"),
+{id:"arroces",n:g("Arroces","Rice","Riz"),
  s:g("Arroz jasmin salteado al wok","Wok-fried jasmine rice","Riz jasmin sauté au wok"),
  items:[
   {n:g("Arroz Tom Yum","Tom Yum Rice","Riz Tom Yum"),img:"arroz-tomyum",tags:["veg"],v:P_ARROZ,
@@ -461,7 +461,7 @@ const MENU = [
        "Riz jasmin, œuf et légumes mélangés au wok.")}
  ]},
 
-{id:"fideos",emo:"🍝",n:g("Fideos y Tallarines","Noodles","Nouilles"),
+{id:"fideos",n:g("Fideos y Tallarines","Noodles","Nouilles"),
  s:g("Noodles, Pad Thai o Udon al wok","Noodles, Pad Thai or Udon on wok","Noodles, Pad Thaï ou Udon au wok"),
  items:[
   {n:g("Fideos o Tallarines","Noodles or Pad Thai","Nouilles ou Pad Thaï"),tags:["veg"],v:P_ARROZ,
@@ -473,7 +473,7 @@ const MENU = [
           "Au choix : <b>Noodles</b> original ou classique · <b>Pad Thaï</b> original ou classique · <b>Udon</b> original, classique ou curry")}
  ]},
 
-{id:"poke",emo:"🥗",n:g("Poke Bowls","Poke Bowls","Poke Bowls"),
+{id:"poke",n:g("Poke Bowls","Poke Bowls","Poke Bowls"),
  s:g("Base de arroz redondo, edamames y aguacate","Round rice base, edamame and avocado","Base de riz rond, edamamés et avocat"),
  items:[
   {n:g("Poke Bowl","Poke Bowl","Poke Bowl"),img:"poke",tags:["veg"],
@@ -489,7 +489,7 @@ const MENU = [
       [g("Gambas Wok","Wok Prawns","Crevettes au wok"),13.50]]}
  ]},
 
-{id:"wraps",emo:"🌯",n:g("Wraps","Wraps","Wraps"),
+{id:"wraps",n:g("Wraps","Wraps","Wraps"),
  s:g("Tortilla de trigo con salsa ali oli","Wheat tortilla with ali oli sauce","Tortilla de blé, sauce aïoli"),
  items:[
   {n:g("Wrap","Wrap","Wrap"),tags:["veg"],
@@ -503,7 +503,7 @@ const MENU = [
       [g("Ternera y Pollo al Wok","Wok Beef & Chicken","Bœuf et poulet au wok"),10.00]]}
  ]},
 
-{id:"padkapro",emo:"🌶️",n:g("Pad Kapro","Pad Kapro","Pad Kapro"),
+{id:"padkapro",n:g("Pad Kapro","Pad Kapro","Pad Kapro"),
  s:g("Receta tradicional tailandesa con huevo frito","Traditional Thai recipe with fried egg","Recette thaïe traditionnelle avec œuf au plat"),
  items:[
   {n:g("Pad Kapro","Pad Kapro","Pad Kapro"),tags:["veg"],
@@ -513,7 +513,7 @@ const MENU = [
    v:[[V.veget,10.10],[V.pollo,11.00],[V.ternera,12.10],[V.langostinos,12.50],[V.mix2,13.80],[V.mix3,14.80]]}
  ]},
 
-{id:"sushi",emo:"🍣",n:g("Sushi","Sushi","Sushi"),
+{id:"sushi",n:g("Sushi","Sushi","Sushi"),
  s:g("Rolls y hamburguesa de sushi frita","Rolls and fried sushi burger","Rolls et burger de sushi frit"),
  items:[
   {n:g("Roll Pollo crispy","Crispy Chicken Roll","Roll poulet croustillant"),p:11.00,img:"roll-pollo",grp:g("Rolls","Rolls","Rolls"),
@@ -535,7 +535,7 @@ const MENU = [
        "Riz à sushi, algue nori, saumon fumé, fromage frais, avocat et ciboulette.")}
  ]},
 
-{id:"ensaladas",emo:"🥬",n:g("Ensaladas","Salads","Salades"),
+{id:"ensaladas",n:g("Ensaladas","Salads","Salades"),
  s:g("Base de lechuga fresca, vinagreta o cesar","Fresh lettuce base, vinaigrette or cesar","Base de laitue fraîche, vinaigrette ou césar"),
  items:[
   {n:g("Ensalada Bali","Bali Salad","Salade Bali"),img:"ens-bali",v:P_ENS,
@@ -565,7 +565,7 @@ const MENU = [
        "Laitue, tomate cerise, carotte, pousses de soja, radis, vinaigrette et sauce panko.")}
  ]},
 
-{id:"postres",emo:"🍰",n:g("Postres","Desserts","Desserts"),
+{id:"postres",n:g("Postres","Desserts","Desserts"),
  s:g("Coulant caliente, con o sin helado","Warm coulant, with or without ice cream","Coulant chaud, avec ou sans glace"),
  items:[
   {n:g("Coulant de chocolate","Chocolate Coulant","Coulant au chocolat"),img:"coulant-choco",
@@ -578,7 +578,7 @@ const MENU = [
       [g("2 bolas de helado","2 ice cream balls","2 boules de glace"),6.70]]}
  ]},
 
-{id:"batidos",emo:"🥤",n:g("Batidos","Shakes","Milkshakes"),
+{id:"batidos",n:g("Batidos","Shakes","Milkshakes"),
  s:g("Leche, helado y sirope","Milk, ice cream and syrup","Lait, glace et sirop"),
  items:[
   {n:g("Batido de galletas","Cookie shake","Milkshake aux biscuits"),p:5.50,img:"batido-galletas",
@@ -591,7 +591,7 @@ const MENU = [
        "Lait, glace (chocolat ou vanille) et sirop.")}
  ]},
 
-{id:"bebidas",emo:"🥂",n:g("Bebidas","Drinks","Boissons"),
+{id:"bebidas",n:g("Bebidas","Drinks","Boissons"),
  s:g("Refrescos, sidras, vinos y cervezas","Soft drinks, ciders, wines and beers","Sodas, cidres, vins et bières"),
  items:[
   {n:g("Agua","Water","Eau"),p:1.80,img:"bebidas",grp:g("Refrescos","Soft drinks","Sodas")},
