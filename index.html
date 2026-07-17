@@ -111,13 +111,17 @@ header{text-align:center;padding:14px 0 20px}
 .reviews:hover{background:rgba(192,170,133,.1)}
 .reviews svg{width:16px;height:16px}
 
-/* ---------- avis ---------- */
-.revwrap{margin-top:12px}
-.revnote{
-  font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--spice);border:1px dashed var(--spice);border-radius:4px;
-  padding:7px 9px;margin-bottom:9px;line-height:1.5;
+/* ---------- avis Google ---------- */
+.revwrap{margin-top:14px}
+.revhead{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-bottom:9px;font-size:12px;color:var(--muted);text-decoration:none;
 }
+.revhead svg.g{width:15px;height:15px;flex:0 0 15px}
+.revhead b{color:var(--txt);font-family:var(--serif);font-size:15px;font-weight:700}
+.revhead .gstars{display:flex;gap:1px}
+.revhead .gstars svg{width:12px;height:12px;color:#fbbc04}
+.revhead .gstars svg.off{color:var(--line)}
 .revrail{
   display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
   scroll-behavior:smooth;padding:2px 0 6px;scrollbar-width:none;
@@ -125,16 +129,19 @@ header{text-align:center;padding:14px 0 20px}
 .revrail::-webkit-scrollbar{display:none}
 .revcard{
   flex:0 0 86%;max-width:310px;scroll-snap-align:center;text-align:left;
-  background:var(--card);border:1px solid var(--line);border-radius:6px;padding:13px 14px;
+  background:#fff;color:#202124;border-radius:8px;padding:13px 14px;
+  box-shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.28);
+  text-decoration:none;display:block;
 }
-.revtop{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.revstars{display:flex;gap:2px}
-.revstars svg{width:13px;height:13px;color:var(--gold)}
-.revstars svg.off{color:var(--line)}
-.revsrc{font-size:9.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
-.revtext{font-size:12.5px;color:var(--txt);line-height:1.55;margin-top:9px;font-style:italic}
-.revwho{font-size:11px;color:var(--muted);margin-top:9px;letter-spacing:.03em}
-.revwho b{color:var(--txt);font-weight:700;font-style:normal}
+.revtop{display:flex;align-items:center;gap:8px}
+.revtop svg.g{width:17px;height:17px;flex:0 0 17px}
+.revsrc{font-size:11px;font-weight:700;color:#5f6368;letter-spacing:.02em}
+.revstars{display:flex;gap:1px;margin-left:auto}
+.revstars svg{width:13px;height:13px;color:#fbbc04}
+.revstars svg.off{color:#dadce0}
+.revtext{font-size:12.5px;color:#3c4043;line-height:1.55;margin-top:9px}
+.revwho{font-size:11px;color:#5f6368;margin-top:10px}
+.revwho b{color:#202124;font-weight:700}
 
 /* ---------- filtres ---------- */
 .filters{display:flex;gap:7px;overflow-x:auto;padding:8px 0 16px;scrollbar-width:none}
@@ -279,7 +286,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 10px;l
     <div class="social" id="social"></div>
     <a class="reviews" id="reviews" target="_blank" rel="noopener noreferrer"></a>
     <div class="revwrap" id="revwrap" hidden>
-      <div class="revnote" id="revnote" hidden></div>
+      <a class="revhead" id="revhead" target="_blank" rel="noopener noreferrer"></a>
       <div class="revrail" id="revrail"></div>
     </div>
   </header>
@@ -330,7 +337,8 @@ const ICONS = {
   facebook:`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.8 21v-7.4h2.5l.4-2.9h-2.9V8.9c0-.8.2-1.4 1.4-1.4h1.6V4.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H8v2.9h2.6V21h3.2z"/></svg>`,
   maps:`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2A6.9 6.9 0 0 0 5.1 9c0 5.1 6.9 12.8 6.9 12.8S18.9 14.2 18.9 9A6.9 6.9 0 0 0 12 2.2zm0 9.4A2.5 2.5 0 1 1 12 6.6a2.5 2.5 0 0 1 0 5z"/></svg>`,
   tripadvisor:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 6.6c2.6-1.4 5.8-1.4 8.4 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="7.4" cy="13" r="4.3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16.6" cy="13" r="4.3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="7.4" cy="13" r="1.7" fill="currentColor"/><circle cx="16.6" cy="13" r="1.7" fill="currentColor"/></svg>`,
-  star:`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9L12 2.6z"/></svg>`
+  star:`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9L12 2.6z"/></svg>`,
+  google:`<svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>`
 };
 
 /* Drapeaux dessinés en SVG : les emojis drapeaux ne s'affichent pas sous Windows */
@@ -347,15 +355,17 @@ const LANG_NAME = { es:"Español", en:"English", fr:"Français" };
    Mientras esté vacío, el carrusel no se muestra a los clientes.
       { n:"Nombre", r:5, t:"Texto de la opinión", d:"hace 2 semanas", s:"Google" }
    ============================================================ */
-const REVIEWS = [];
+/* Nota media real de la ficha de Google (comprobada el 17/07/2026). */
+const RATING = { score:3.9, count:325 };
 
-/* Ejemplos SOLO para previsualizar el diseño: se muestran únicamente
-   añadiendo ?demo=1 a la dirección, y con un aviso bien visible.
-   Nunca se muestran a un cliente que escanea el QR. */
-const DEMO_REVIEWS = [
-  { n:"Ejemplo A.", r:5, t:"Texto de ejemplo para ver el diseño del carrusel. No es una opinión real.", d:"—", s:"Demo" },
-  { n:"Ejemplo B.", r:4, t:"Segundo texto de ejemplo, más largo, para comprobar cómo se comporta la tarjeta cuando la opinión ocupa varias líneas seguidas.", d:"—", s:"Demo" },
-  { n:"Ejemplo C.", r:5, t:"Tercer texto de ejemplo. Sustituir por opiniones reales antes de publicar.", d:"—", s:"Demo" }
+/* Opiniones REALES copiadas de la ficha de Google (extractos, con enlace a la ficha). */
+const REVIEWS = [
+  { n:"Anna", r:5, d:"Hace 3 meses",
+    t:"Descubrimos Mister Noodles en Tenerife casi por casualidad y acabó siendo uno de esos sitios a los que sabes que vas a querer volver. Si te gusta la comida asiática con sabores intensos y platos bien preparados, este lugar es una apuesta…" },
+  { n:"Brb", r:5, d:"Hace 5 meses",
+    t:"Servicio muy rápido y la camarera que nos atendió muy simpática. Pedimos un pad thai de gambas y ternera buenísimos, hemos estado hace poco en un japo muy conocido de Santa Cruz con un 4.7 en reseñas que ya quisiera tener este pad thai." },
+  { n:"Thami Reyes", r:5, d:"Hace un mes",
+    t:"El servicio muy rápido, atento, amable y la comida súper rica. Para repetir y venir con más gente que debe descubrirlo." }
 ];
 
 /* ============================================================
@@ -364,7 +374,7 @@ const DEMO_REVIEWS = [
 const UI = {
   es:{search:"Buscar un plato…",count:"platos y bebidas",
       reviews:"Ver las opiniones en Google",
-      demo:"Vista previa · Opiniones de ejemplo, no reales. Invisibles para los clientes.",
+      revCount:n=>"("+n+" reseñas)",
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Cómo llegar",tripadvisor:"Tripadvisor"},
       filters:{all:"Todo",veg:"Vegetariano",spicy:"Picante",photo:"Con foto"},
       badges:{veg:"Opción veget.",spicy:"Medio picante"},
@@ -376,7 +386,7 @@ const UI = {
       foot:"TOM YUM · Asian Food · Comida halal<br>Carta oficial del restaurante"},
   en:{search:"Search a dish…",count:"dishes & drinks",
       reviews:"See the reviews on Google",
-      demo:"Preview · Sample reviews, not real. Never shown to customers.",
+      revCount:n=>"("+n+" reviews)",
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Directions",tripadvisor:"Tripadvisor"},
       filters:{all:"All",veg:"Vegetarian",spicy:"Spicy",photo:"With photo"},
       badges:{veg:"Veggie option",spicy:"Medium spicy"},
@@ -388,7 +398,7 @@ const UI = {
       foot:"TOM YUM · Asian Food · Halal food<br>Official restaurant menu"},
   fr:{search:"Rechercher un plat…",count:"plats et boissons",
       reviews:"Voir les avis sur Google",
-      demo:"Aperçu · Avis d'exemple, non réels. Invisibles pour les clients.",
+      revCount:n=>"("+n+" avis)",
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Itinéraire",tripadvisor:"Tripadvisor"},
       filters:{all:"Tout",veg:"Végétarien",spicy:"Épicé",photo:"Avec photo"},
       badges:{veg:"Option végé",spicy:"Moyennement épicé"},
@@ -714,6 +724,10 @@ const money = n =>
     ? "€" + n.toFixed(2)
     : n.toFixed(2).replace(".", ",") + " €";
 
+/* note : 3,9 en es/fr · 3.9 en en */
+const score = n =>
+  lang === "en" ? n.toFixed(1) : n.toFixed(1).replace(".", ",");
+
 /* ============================================================
    Render
    ============================================================ */
@@ -845,30 +859,33 @@ function renderLang(){
 }
 
 const STAR = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9L12 2.6z"/></svg>`;
-const isDemo = new URLSearchParams(location.search).get("demo") === "1";
+const stars = n => [1,2,3,4,5]
+  .map(i => STAR.replace("<svg", `<svg class="${i <= Math.round(n) ? "" : "off"}"`)).join("");
+const gLogo = () => ICONS.google.replace("<svg", '<svg class="g"');
 
 function renderReviews(){
-  const list = REVIEWS.length ? REVIEWS : (isDemo ? DEMO_REVIEWS : []);
   const wrap = $("#revwrap");
-  if (!list.length){ wrap.hidden = true; return; }
+  if (!REVIEWS.length){ wrap.hidden = true; return; }
   wrap.hidden = false;
 
-  const note = $("#revnote");
-  const showNote = !REVIEWS.length && isDemo;
-  note.hidden = !showNote;
-  if (showNote) note.textContent = T().demo;
+  const head = $("#revhead");
+  head.href = LINKS.reviews || "#";
+  head.innerHTML =
+    `${gLogo()}
+     <b>${score(RATING.score)}</b>
+     <span class="gstars">${stars(RATING.score)}</span>
+     <span>${T().revCount(RATING.count)}</span>`;
 
-  $("#revrail").innerHTML = list.map(v => `
-    <div class="revcard">
+  $("#revrail").innerHTML = REVIEWS.map(v => `
+    <a class="revcard" href="${LINKS.reviews}" target="_blank" rel="noopener noreferrer">
       <div class="revtop">
-        <div class="revstars" aria-label="${v.r}/5">
-          ${[1,2,3,4,5].map(i => STAR.replace("<svg", `<svg class="${i<=v.r?"":"off"}"`)).join("")}
-        </div>
-        <span class="revsrc">${v.s}</span>
+        ${gLogo()}
+        <span class="revsrc">Google</span>
+        <span class="revstars" aria-label="${v.r}/5">${stars(v.r)}</span>
       </div>
-      <div class="revtext">“${v.t}”</div>
+      <div class="revtext">${v.t}</div>
       <div class="revwho"><b>${v.n}</b> · ${v.d}</div>
-    </div>`).join("");
+    </a>`).join("");
   startAutoScroll();
 }
 
