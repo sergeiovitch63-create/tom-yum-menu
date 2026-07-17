@@ -52,6 +52,25 @@ header{text-align:center;padding:10px 0 18px}
 .chip img{width:20px;height:20px;display:block}
 .chip b{color:var(--txt)}
 
+.social{display:flex;justify-content:center;gap:10px;margin-top:14px}
+.soc{
+  width:46px;height:46px;border-radius:15px;border:1px solid var(--line);background:var(--card);
+  color:var(--txt);display:flex;align-items:center;justify-content:center;text-decoration:none;
+  transition:transform .12s ease,border-color .2s ease,color .2s ease;
+}
+.soc:active{transform:scale(.9)}
+.soc:hover{border-color:var(--gold);color:var(--gold)}
+.soc svg{width:22px;height:22px;display:block}
+.reviews{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;margin-top:10px;border-radius:15px;
+  background:var(--gold2);border:1px solid var(--gold);color:var(--txt);
+  font-weight:800;font-size:14px;text-decoration:none;
+  transition:transform .12s ease;
+}
+.reviews:active{transform:scale(.97)}
+.reviews svg{width:18px;height:18px;color:var(--gold)}
+
 .search{position:relative;margin:4px 0 12px}
 .search input{
   width:100%;height:50px;border-radius:16px;border:1px solid var(--line);
@@ -171,6 +190,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 0 10px;l
       <span class="chip"><img src="img/halal.webp" alt="Halal" width="20" height="20"> <b>Halal</b></span>
       <span class="chip" id="dishCount"></span>
     </div>
+    <div class="social" id="social"></div>
+    <a class="reviews" id="reviews" target="_blank" rel="noopener noreferrer"></a>
   </header>
 
   <div class="search" id="searchBox">
@@ -209,10 +230,32 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 0 10px;l
 
 <script>
 /* ============================================================
+   ENLACES — cambiar aquí, nada más
+   Poner null para ocultar el icono.
+   ============================================================ */
+const LINKS = {
+  instagram:   "https://www.instagram.com/tomyumtenerife/",
+  facebook:    null,   // ← pegar aquí la dirección Facebook para que aparezca el icono
+  maps:        "https://maps.app.goo.gl/7zW8A6aYrCatqTNp9",
+  tripadvisor: "https://www.tripadvisor.it/Restaurant_Review-g187481-d27276598-Reviews-Mister_Noodles-Puerto_de_la_Cruz_Tenerife_Canary_Islands.html",
+  reviews:     "https://maps.app.goo.gl/7zW8A6aYrCatqTNp9"
+};
+
+const ICONS = {
+  instagram:`<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.6" y="2.6" width="18.8" height="18.8" rx="5.4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></svg>`,
+  facebook:`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.8 21v-7.4h2.5l.4-2.9h-2.9V8.9c0-.8.2-1.4 1.4-1.4h1.6V4.9c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H8v2.9h2.6V21h3.2z"/></svg>`,
+  maps:`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.2A6.9 6.9 0 0 0 5.1 9c0 5.1 6.9 12.8 6.9 12.8S18.9 14.2 18.9 9A6.9 6.9 0 0 0 12 2.2zm0 9.4A2.5 2.5 0 1 1 12 6.6a2.5 2.5 0 0 1 0 5z"/></svg>`,
+  tripadvisor:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.8 6.6c2.6-1.4 5.8-1.4 8.4 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="7.4" cy="13" r="4.3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="16.6" cy="13" r="4.3" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="7.4" cy="13" r="1.7" fill="currentColor"/><circle cx="16.6" cy="13" r="1.7" fill="currentColor"/></svg>`,
+  star:`<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9L12 2.6z"/></svg>`
+};
+
+/* ============================================================
    INTERFACE — es / en / fr
    ============================================================ */
 const UI = {
   es:{search:"Buscar un plato…",count:"platos y bebidas",
+      reviews:"Ver las opiniones en Google",
+      soc:{instagram:"Instagram",facebook:"Facebook",maps:"Cómo llegar",tripadvisor:"Tripadvisor"},
       filters:{all:"Todo",veg:"Vegetariano",spicy:"Picante",photo:"Con foto"},
       badges:{veg:"Opción veget.",spicy:"Medio picante"},
       dishes:n=>n>1?n+" platos":n+" plato",
@@ -222,6 +265,8 @@ const UI = {
       done:"¡Gracias! Enseña esta pantalla al camarero para pedir.",
       foot:"TOM YUM · Asian Food · Comida halal<br>Carta oficial del restaurante"},
   en:{search:"Search a dish…",count:"dishes & drinks",
+      reviews:"See the reviews on Google",
+      soc:{instagram:"Instagram",facebook:"Facebook",maps:"Directions",tripadvisor:"Tripadvisor"},
       filters:{all:"All",veg:"Vegetarian",spicy:"Spicy",photo:"With photo"},
       badges:{veg:"Veggie option",spicy:"Medium spicy"},
       dishes:n=>n>1?n+" dishes":n+" dish",
@@ -231,6 +276,8 @@ const UI = {
       done:"Thank you! Show this screen to the waiter to order.",
       foot:"TOM YUM · Asian Food · Halal food<br>Official restaurant menu"},
   fr:{search:"Rechercher un plat…",count:"plats et boissons",
+      reviews:"Voir les avis sur Google",
+      soc:{instagram:"Instagram",facebook:"Facebook",maps:"Itinéraire",tripadvisor:"Tripadvisor"},
       filters:{all:"Tout",veg:"Végétarien",spicy:"Épicé",photo:"Avec photo"},
       badges:{veg:"Option végé",spicy:"Moyennement épicé"},
       dishes:n=>n>1?n+" plats":n+" plat",
@@ -665,8 +712,24 @@ function renderCart(){
   $("#sheetTitle").textContent = T().cart;
 }
 
+function renderSocial(){
+  const order = ["instagram","facebook","maps","tripadvisor"];
+  $("#social").innerHTML = order
+    .filter(k => LINKS[k])
+    .map(k => `<a class="soc" href="${LINKS[k]}" target="_blank" rel="noopener noreferrer"
+                  aria-label="${T().soc[k]}" title="${T().soc[k]}">${ICONS[k]}</a>`)
+    .join("");
+  const rev = $("#reviews");
+  if (LINKS.reviews){
+    rev.href = LINKS.reviews;
+    rev.innerHTML = `${ICONS.star}<span>${T().reviews}</span>`;
+    rev.style.display = "";
+  } else rev.style.display = "none";
+}
+
 function renderStatic(){
   document.documentElement.lang = lang;
+  renderSocial();
   const next = LANGS[(LANGS.indexOf(lang)+1) % LANGS.length];
   $("#langTxt").textContent = next.toUpperCase();
   $("#q").placeholder = T().search;
