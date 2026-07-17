@@ -67,11 +67,13 @@ body{
 .flag{width:24px;height:16px;flex:0 0 24px;border-radius:2px;display:block;box-shadow:0 0 0 1px rgba(0,0,0,.3)}
 
 /* ---------- en-tête ---------- */
-header{text-align:center;padding:16px 0 20px}
-.brand{display:flex;align-items:center;justify-content:center;gap:14px}
-.wordmark{font-family:var(--serif);font-size:35px;font-weight:700;letter-spacing:.1em;line-height:1;text-indent:.1em}
-.bowl{width:52px;height:34px;color:var(--txt);flex:0 0 52px}
-.sub{margin:10px 0 0;color:var(--gold);font-size:10.5px;letter-spacing:.42em;text-indent:.42em;font-weight:700;text-transform:uppercase}
+header{text-align:center;padding:14px 0 20px}
+.logo{
+  display:block;width:154px;height:154px;margin:0 auto;border-radius:50%;
+  box-shadow:0 0 0 1px rgba(227,178,60,.5), 0 10px 34px rgba(0,0,0,.55);
+  animation:rise .5s cubic-bezier(.2,1.1,.4,1);
+}
+@keyframes rise{from{opacity:0;transform:translateY(-8px) scale(.94)}to{opacity:1;transform:none}}
 .meta{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;margin-top:16px}
 .chip{
   background:var(--card);border:1px solid var(--line);border-radius:4px;
@@ -234,17 +236,8 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 10px;l
   </div>
 
   <header>
-    <div class="brand">
-      <span class="wordmark">TOM</span>
-      <svg class="bowl" viewBox="0 0 64 42" aria-hidden="true">
-        <path d="M5 19h54c0 12.7-12.1 21-27 21S5 31.7 5 19z" fill="none" stroke="currentColor" stroke-width="2.2"/>
-        <path d="M11 25.5h42" fill="none" stroke="currentColor" stroke-width="1.4" opacity=".55"/>
-        <path d="M38 3.5 61 15.5M41.5 1 62 11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-        <path d="M22 14c0-3.2 3.4-3.2 3.4-6.4M31 12c0-3.2 3.4-3.2 3.4-6.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".75"/>
-      </svg>
-      <span class="wordmark">YUM</span>
-    </div>
-    <p class="sub">Asian Food</p>
+    <img class="logo" src="img/logo.webp" width="320" height="320"
+         alt="TOM YUM — Asian Food" fetchpriority="high" decoding="async">
     <div class="meta">
       <span class="chip"><img src="img/halal.webp" alt="Halal" width="20" height="20"> <b>Halal</b></span>
       <span class="chip" id="dishCount"></span>
