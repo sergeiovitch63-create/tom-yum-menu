@@ -143,6 +143,41 @@ header{text-align:center;padding:14px 0 20px}
 .revwho{font-size:11px;color:#5f6368;margin-top:10px}
 .revwho b{color:#202124;font-weight:700}
 
+/* ---------- offres / combos ---------- */
+.offers{margin:22px 0 2px}
+.offers-h{display:flex;align-items:center;gap:11px;margin-bottom:11px}
+.offers-h::before,.offers-h::after{content:"";height:1px;background:var(--line);flex:1}
+.offers-h span{
+  font-family:var(--serif);font-size:11px;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);white-space:nowrap;
+}
+.offrail{
+  display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
+  padding:2px 0 6px;scrollbar-width:none;
+}
+.offrail::-webkit-scrollbar{display:none}
+.offcard{
+  flex:0 0 63%;max-width:225px;scroll-snap-align:start;text-align:left;
+  background:var(--card);border:1px solid var(--line);border-radius:6px;
+  overflow:hidden;padding:0;cursor:pointer;color:var(--txt);
+  transition:border-color .2s ease,transform .12s ease;
+}
+.offcard:active{transform:scale(.97)}
+.offcard:hover{border-color:var(--gold)}
+.offimg{display:block;width:100%;height:104px;object-fit:contain;background:var(--card2);padding:7px}
+.offbody{padding:10px 11px 12px}
+.offtag{
+  display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.13em;
+  text-transform:uppercase;background-image:var(--gold-grad);color:var(--ink);
+  border-radius:2px;padding:3px 6px;
+}
+.offname{font-family:var(--serif);font-size:15px;font-weight:700;margin-top:8px;letter-spacing:.05em}
+.offdesc{
+  font-size:11px;color:var(--muted);margin-top:5px;line-height:1.45;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.offprice{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold);margin-top:9px}
+
 /* ---------- filtres ---------- */
 .filters{display:flex;gap:7px;overflow-x:auto;padding:8px 0 16px;scrollbar-width:none}
 .filters::-webkit-scrollbar{display:none}
@@ -291,6 +326,11 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 10px;l
     </div>
   </header>
 
+  <section class="offers" id="offers" hidden>
+    <div class="offers-h"><span id="offersTitle"></span></div>
+    <div class="offrail" id="offrail"></div>
+  </section>
+
   <div class="filters" id="filters"></div>
   <div id="list"></div>
 
@@ -369,12 +409,45 @@ const REVIEWS = [
 ];
 
 /* ============================================================
+   OFERTAS destacadas — solo cosas que están de verdad en la carta.
+   cat = id de la categoría que se abre al tocar la tarjeta.
+   Vaciar el array ([]) para ocultar toda la franja.
+   ============================================================ */
+const OFFERS = [
+  { cat:"combos", img:"combos", p:12.00,
+    tag:{es:"Combo",en:"Combo",fr:"Combo"},
+    n:{es:"Combo x2",en:"Combo x2",fr:"Combo x2"},
+    d:{es:"2 entrantes: calamares, alitas BBQ, gambones crispy o pollo crispy.",
+       en:"2 starters: squids, BBQ wings, crispy king prawns or crispy chicken.",
+       fr:"2 entrées : calamars, ailes BBQ, gambas croustillantes ou poulet croustillant."} },
+  { cat:"combos", img:"combos", p:15.00,
+    tag:{es:"Combo",en:"Combo",fr:"Combo"},
+    n:{es:"Combo x3",en:"Combo x3",fr:"Combo x3"},
+    d:{es:"3 entrantes: calamares, alitas BBQ, gambones crispy o pollo crispy.",
+       en:"3 starters: squids, BBQ wings, crispy king prawns or crispy chicken.",
+       fr:"3 entrées : calamars, ailes BBQ, gambas croustillantes ou poulet croustillant."} },
+  { cat:"combos", img:"combos", p:18.00,
+    tag:{es:"Combo",en:"Combo",fr:"Combo"},
+    n:{es:"Combo x4",en:"Combo x4",fr:"Combo x4"},
+    d:{es:"Los 4 entrantes: calamares, alitas BBQ, gambones crispy y pollo crispy.",
+       en:"All 4 starters: squids, BBQ wings, crispy king prawns and crispy chicken.",
+       fr:"Les 4 entrées : calamars, ailes BBQ, gambas croustillantes et poulet croustillant."} },
+  { cat:"poke", img:"poke", p:11.50,
+    tag:{es:"Desde",en:"From",fr:"Dès"},
+    n:{es:"Poke Bowls",en:"Poke Bowls",fr:"Poke Bowls"},
+    d:{es:"Arroz redondo, edamames, zanahoria, pepino, aguacate y cebolla roja.",
+       en:"Round rice, edamame, carrot, cucumber, avocado and red onion.",
+       fr:"Riz rond, edamamés, carotte, concombre, avocat et oignon rouge."} }
+];
+
+/* ============================================================
    INTERFACE — es / en / fr
    ============================================================ */
 const UI = {
   es:{search:"Buscar un plato…",count:"platos y bebidas",
       reviews:"Ver las opiniones en Google",
       revCount:n=>"("+n+" reseñas)",
+      offers:"Combos y ofertas",
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Cómo llegar",tripadvisor:"Tripadvisor"},
       filters:{all:"Todo",veg:"Vegetariano",spicy:"Picante",photo:"Con foto"},
       badges:{veg:"Opción veget.",spicy:"Medio picante"},
@@ -387,6 +460,7 @@ const UI = {
   en:{search:"Search a dish…",count:"dishes & drinks",
       reviews:"See the reviews on Google",
       revCount:n=>"("+n+" reviews)",
+      offers:"Combos & offers",
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Directions",tripadvisor:"Tripadvisor"},
       filters:{all:"All",veg:"Vegetarian",spicy:"Spicy",photo:"With photo"},
       badges:{veg:"Veggie option",spicy:"Medium spicy"},
@@ -399,6 +473,7 @@ const UI = {
   fr:{search:"Rechercher un plat…",count:"plats et boissons",
       reviews:"Voir les avis sur Google",
       revCount:n=>"("+n+" avis)",
+      offers:"Combos et offres",
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Itinéraire",tripadvisor:"Tripadvisor"},
       filters:{all:"Tout",veg:"Végétarien",spicy:"Épicé",photo:"Avec photo"},
       badges:{veg:"Option végé",spicy:"Moyennement épicé"},
@@ -908,11 +983,40 @@ function startAutoScroll(){
   }, 4000);
 }
 
+function renderOffers(){
+  const box = $("#offers");
+  if (!OFFERS.length){ box.hidden = true; return; }
+  box.hidden = false;
+  $("#offersTitle").textContent = T().offers;
+  $("#offrail").innerHTML = OFFERS.map(o => `
+    <button class="offcard" data-off="${o.cat}">
+      <img class="offimg" src="img/${o.img}.webp" alt="${o.n[lang]}" loading="lazy" decoding="async">
+      <span class="offbody">
+        <span class="offtag">${o.tag[lang]}</span>
+        <span class="offname">${o.n[lang]}</span>
+        <span class="offdesc">${o.d[lang]}</span>
+        <span class="offprice">${money(o.p)}</span>
+      </span>
+    </button>`).join("");
+}
+
+/* ouvrir la catégorie visée et y amener le client */
+$("#offrail").addEventListener("click", e => {
+  const b = e.target.closest("[data-off]");
+  if (!b) return;
+  const id = b.dataset.off;
+  open.add(id);
+  renderList();
+  const el = document.querySelector(`[data-toggle="${id}"]`);
+  if (el) el.closest(".cat").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+
 function renderStatic(){
   document.documentElement.lang = lang;
   renderLang();
   renderSocial();
   renderReviews();
+  renderOffers();
   $("#foot").innerHTML = T().foot;
   const total = MENU.reduce((a,c) => a + c.items.length, 0);
   $("#dishCount").innerHTML = `<b>${total}</b> ${T().count}`;
