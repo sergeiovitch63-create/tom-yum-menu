@@ -330,6 +330,95 @@ html.reveal-ok .reveal.in{opacity:1;transform:none;transition:opacity .75s var(-
   .cat[open] .dish,.cat[open] .hero{animation:none}
   .progress{display:none}
 }
+/* ---------- assistant de la carte ---------- */
+.chatfab{
+  position:fixed;right:16px;z-index:45;
+  bottom:calc(16px + env(safe-area-inset-bottom));
+  width:56px;height:56px;border-radius:50%;border:1px solid var(--gold-lo);
+  background-image:var(--gold-grad);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 8px 26px rgba(0,0,0,.5);
+  transition:transform .3s var(--ease),bottom .3s var(--ease);
+}
+body.cart-on .chatfab{bottom:calc(84px + env(safe-area-inset-bottom))}
+.chatfab:active{transform:scale(.9)}
+.chatfab svg{width:25px;height:25px}
+.chatfab.open svg.ico-chat,.chatfab:not(.open) svg.ico-close{display:none}
+
+.chatpanel{
+  position:fixed;right:16px;z-index:46;
+  bottom:calc(82px + env(safe-area-inset-bottom));
+  width:min(348px,calc(100vw - 32px));max-height:min(70vh,540px);
+  background:var(--bg2);border:1px solid var(--line);border-radius:10px;
+  box-shadow:0 18px 50px rgba(0,0,0,.6);
+  display:flex;flex-direction:column;overflow:hidden;
+  opacity:0;transform:translateY(12px) scale(.97);pointer-events:none;
+  transition:opacity .28s var(--ease),transform .28s var(--ease);
+}
+body.cart-on .chatpanel{bottom:calc(150px + env(safe-area-inset-bottom))}
+.chatpanel.on{opacity:1;transform:none;pointer-events:auto}
+.chathead{
+  display:flex;align-items:center;gap:9px;padding:12px 14px;
+  border-bottom:1px solid var(--line);background:var(--card);flex:0 0 auto;
+}
+.chathead img{width:30px;height:30px;border-radius:50%;flex:0 0 30px}
+.chathead b{font-family:var(--serif);font-size:13.5px;letter-spacing:.06em;display:block}
+.chathead span{font-size:10.5px;color:var(--muted);display:block;margin-top:2px}
+.chatbody{
+  flex:1;min-height:0;overflow-y:auto;padding:14px;
+  display:flex;flex-direction:column;gap:9px;-webkit-overflow-scrolling:touch;
+}
+.msg{max-width:86%;font-size:12.5px;line-height:1.55;padding:9px 11px;border-radius:10px;animation:msgIn .32s var(--ease) both}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.msg.bot{align-self:flex-start;background:var(--card);border:1px solid var(--line);border-bottom-left-radius:3px}
+.msg.me{align-self:flex-end;background-image:var(--gold-grad);color:var(--ink);font-weight:600;border-bottom-right-radius:3px}
+.msg b{color:var(--gold)}
+.msg.me b{color:var(--ink)}
+.msg .line{display:flex;justify-content:space-between;gap:10px;padding:3px 0;border-bottom:1px dashed var(--line)}
+.msg .line:last-child{border-bottom:0}
+.msg .line i{font-style:normal;color:var(--muted)}
+.msg .line em{font-style:normal;font-family:var(--serif);color:var(--gold);font-weight:700;white-space:nowrap}
+.typing{display:flex;gap:4px;align-self:flex-start;padding:11px 12px;background:var(--card);border:1px solid var(--line);border-radius:10px;border-bottom-left-radius:3px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}
+.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px;flex:0 0 auto}
+.chip-q{
+  font-size:11px;font-weight:700;padding:7px 10px;border-radius:20px;
+  background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;
+  transition:background .2s var(--ease);
+}
+.chip-q:active{background:rgba(192,170,133,.14)}
+.chatform{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:var(--card);flex:0 0 auto}
+.chatform input{
+  flex:1;min-width:0;height:42px;border-radius:8px;border:1px solid var(--line);
+  background:var(--bg);color:var(--txt);padding:0 12px;font-size:16px;outline:none;
+}
+.chatform input:focus{border-color:var(--gold)}
+.chatform button{
+  width:42px;height:42px;flex:0 0 42px;border:0;border-radius:8px;
+  background-image:var(--gold-grad);color:var(--ink);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.chatform button svg{width:18px;height:18px}
+@media (prefers-reduced-motion: reduce){
+  .msg,.chatpanel,.chatfab{animation:none;transition:none}
+}
+.writerev{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  min-height:54px;margin:26px 0 4px;border-radius:6px;
+  background-image:var(--gold-grad);color:var(--ink);
+  font-size:11.5px;font-weight:800;text-decoration:none;
+  text-transform:uppercase;letter-spacing:.12em;
+  box-shadow:0 6px 22px rgba(0,0,0,.35);
+  transition:transform .12s var(--ease),filter .2s var(--ease);
+}
+.writerev:active{transform:scale(.98)}
+.writerev:hover{filter:brightness(1.05)}
+.writerev svg.g{width:17px;height:17px}
+.writerev .wstars{display:flex;gap:1px}
+.writerev .wstars svg{width:12px;height:12px;color:var(--ink)}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 10px;line-height:1.9;letter-spacing:.07em}
 </style>
 </head>
@@ -368,6 +457,8 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 10px;l
   <div class="filters" id="filters"></div>
   <div id="list"></div>
 
+  <a class="writerev" id="writerev" target="_blank" rel="noopener noreferrer"></a>
+
   <footer id="foot"></footer>
 </div>
 
@@ -403,7 +494,9 @@ const LINKS = {
   facebook:    null,   // ← pegar aquí la dirección Facebook para que aparezca el icono
   maps:        "https://maps.app.goo.gl/7zW8A6aYrCatqTNp9",
   tripadvisor: "https://www.tripadvisor.it/Restaurant_Review-g187481-d27276598-Reviews-Mister_Noodles-Puerto_de_la_Cruz_Tenerife_Canary_Islands.html",
-  reviews:     "https://maps.app.goo.gl/7zW8A6aYrCatqTNp9"
+  reviews:     "https://maps.app.goo.gl/7zW8A6aYrCatqTNp9",
+  /* ouvre directement le formulaire d'avis Google */
+  writeReview: "https://www.google.com/maps/place//data=!4m3!3m2!1s0xc6a7ff4cef6650f:0x89fb5ad325a47ef1!12e1"
 };
 
 const ICONS = {
@@ -481,6 +574,7 @@ const UI = {
   es:{search:"Buscar un plato…",count:"platos y bebidas",
       reviews:"Ver las opiniones en Google",
       revCount:n=>"("+n+" reseñas)",
+      writeRev:"Deja tu opinión en Google",
       offers:"Combos y ofertas",
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Cómo llegar",tripadvisor:"Tripadvisor"},
       filters:{all:"Todo",veg:"Vegetariano",spicy:"Picante",photo:"Con foto"},
@@ -494,6 +588,7 @@ const UI = {
   en:{search:"Search a dish…",count:"dishes & drinks",
       reviews:"See the reviews on Google",
       revCount:n=>"("+n+" reviews)",
+      writeRev:"Leave your review on Google",
       offers:"Combos & offers",
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Directions",tripadvisor:"Tripadvisor"},
       filters:{all:"All",veg:"Vegetarian",spicy:"Spicy",photo:"With photo"},
@@ -507,6 +602,7 @@ const UI = {
   fr:{search:"Rechercher un plat…",count:"plats et boissons",
       reviews:"Voir les avis sur Google",
       revCount:n=>"("+n+" avis)",
+      writeRev:"Laissez votre avis sur Google",
       offers:"Combos et offres",
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Itinéraire",tripadvisor:"Tripadvisor"},
       filters:{all:"Tout",veg:"Végétarien",spicy:"Épicé",photo:"Avec photo"},
@@ -918,6 +1014,7 @@ function totals(){
 function renderCart(){
   const { n, sum } = totals();
   $("#fab").classList.toggle("on", n > 0);
+  document.body.classList.toggle("cart-on", n > 0);
   $("#fabN").textContent = n;
   $("#fabTxt").textContent = T().view;
   $("#fabTot").textContent = money(sum);
@@ -952,6 +1049,15 @@ function renderSocial(){
     .map(k => `<a class="soc" href="${LINKS[k]}" target="_blank" rel="noopener noreferrer"
                   aria-label="${T().soc[k]}" title="${T().soc[k]}">${ICONS[k]}</a>`)
     .join("");
+  const wr = $("#writerev");
+  if (LINKS.writeReview){
+    wr.href = LINKS.writeReview;
+    wr.innerHTML = ICONS.google.replace("<svg", '<svg class="g"')
+      + "<span>" + T().writeRev + "</span>"
+      + '<span class="wstars">' + [1,2,3,4,5].map(() => ICONS.star).join("") + "</span>";
+    wr.hidden = false;
+  } else wr.hidden = true;
+
   const rev = $("#reviews");
   if (LINKS.reviews){
     rev.href = LINKS.reviews;
@@ -1138,6 +1244,7 @@ function renderStatic(){
   renderSocial();
   renderReviews();
   renderOffers();
+  if (document.getElementById("chatfab")) chatTexts();
   $("#foot").innerHTML = T().foot;
   const total = MENU.reduce((a,c) => a + c.items.length, 0);
   $("#dishCount").innerHTML = `<b>${total}</b> ${T().count}`;
@@ -1234,6 +1341,254 @@ $("#scrim").addEventListener("click", () => openSheet(false));
 $("#order").addEventListener("click", () => {
   alert(T().done);
   openSheet(false);
+});
+
+/* ============================================================
+   ASSISTANT DE LA CARTE
+   Répond uniquement à partir des données réelles du menu.
+   Aucune connexion, aucune bibliothèque : tout est local.
+   Ce qu'il ne sait pas (horaires, téléphone, allergènes),
+   il le dit et renvoie vers Google ou vers le personnel.
+   ============================================================ */
+const CHAT = {
+  es:{
+    title:"Asistente de la carta", sub:"Respuestas al instante",
+    hello:"¡Hola! Puedo buscar platos, precios y opciones vegetarianas o picantes. ¿Qué te apetece?",
+    ph:"Escribe tu pregunta…",
+    chips:["¿Qué es vegetariano?","¿Qué pica?","Los combos","Lo más barato","¿Es halal?"],
+    veg:"Platos con opción vegetariana:", spicy:"Platos que pican:",
+    cheap:"Lo más económico de la carta:",
+    combo:"Los combos son entrantes para compartir:",
+    halal:"Sí, toda la carne es <b>halal</b> ✓ La cocina es asiática: tailandesa, japonesa y china.",
+    rating:"",
+    found:"Esto he encontrado:", none:"No he encontrado ese plato en la carta. Prueba con «pollo», «gambas», «arroz», «sushi», «poke»…",
+    hours:"No tengo los horarios en la carta. Los verás siempre actualizados en nuestra ficha de Google 👇",
+    allerg:"En la carta no figuran los alérgenos. Por seguridad, pregunta directamente al camarero antes de pedir 🙏",
+    deliv:"Aquí solo está la carta. Para pedidos, reservas o llevar, pregunta al camarero o mira nuestra ficha de Google 👇",
+    link:"Ver la ficha de Google", drinks:"Bebidas destacadas:", from:"desde"
+  },
+  en:{
+    title:"Menu assistant", sub:"Instant answers",
+    hello:"Hi! I can look up dishes, prices, vegetarian and spicy options. What are you after?",
+    ph:"Type your question…",
+    chips:["What's vegetarian?","What's spicy?","The combos","Cheapest dishes","Is it halal?"],
+    veg:"Dishes with a vegetarian option:", spicy:"Dishes that are spicy:",
+    cheap:"The most affordable on the menu:",
+    combo:"Combos are starters to share:",
+    halal:"Yes, all our meat is <b>halal</b> ✓ The kitchen is Asian: Thai, Japanese and Chinese.",
+    rating:"", found:"Here's what I found:",
+    none:"I couldn't find that dish. Try «chicken», «prawns», «rice», «sushi», «poke»…",
+    hours:"Opening hours aren't in the menu. You'll always find them up to date on our Google listing 👇",
+    allerg:"Allergens aren't listed in the menu. To be safe, please ask your waiter before ordering 🙏",
+    deliv:"This is the menu only. For orders, bookings or takeaway, ask your waiter or check our Google listing 👇",
+    link:"Open the Google listing", drinks:"Featured drinks:", from:"from"
+  },
+  fr:{
+    title:"Assistant de la carte", sub:"Réponses immédiates",
+    hello:"Bonjour ! Je peux chercher des plats, des prix, les options végé ou épicées. Que cherchez-vous ?",
+    ph:"Écrivez votre question…",
+    chips:["Qu'est-ce qui est végé ?","Qu'est-ce qui pique ?","Les combos","Le moins cher","C'est halal ?"],
+    veg:"Plats avec une option végétarienne :", spicy:"Plats épicés :",
+    cheap:"Le plus abordable de la carte :",
+    combo:"Les combos sont des entrées à partager :",
+    halal:"Oui, toute la viande est <b>halal</b> ✓ La cuisine est asiatique : thaïe, japonaise et chinoise.",
+    rating:"", found:"Voici ce que j'ai trouvé :",
+    none:"Je n'ai pas trouvé ce plat. Essayez « poulet », « gambas », « riz », « sushi », « poke »…",
+    hours:"Les horaires ne figurent pas sur la carte. Vous les trouverez à jour sur notre fiche Google 👇",
+    allerg:"Les allergènes ne sont pas indiqués sur la carte. Par précaution, demandez au serveur avant de commander 🙏",
+    deliv:"Ici il n'y a que la carte. Pour commander, réserver ou emporter, demandez au serveur ou consultez notre fiche Google 👇",
+    link:"Voir la fiche Google", drinks:"Boissons à découvrir :", from:"dès"
+  }
+};
+
+const norm = s => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+
+/* tous les plats à plat, avec leur prix mini */
+function allDishes(){
+  const out = [];
+  MENU.forEach(c => {
+    let grp = null;                       /* le sous-titre (Cervezas, Rolls...) */
+    c.items.forEach(d => {                /* vaut pour tous les plats qui suivent */
+      if (d.grp) grp = d.grp;
+      const p = d.p != null ? d.p : Math.min(...d.v.map(v => v[1]));
+      out.push({ d, c, p, grp, fixed: d.p != null });
+    });
+  });
+  return out;
+}
+
+const priceTxt = x => (x.fixed ? "" : CHAT[lang].from + " ") + money(x.p);
+
+function lines(list){
+  return `<div>${list.map(x =>
+    `<span class="line"><i>${x.d.n[lang]}</i><em>${priceTxt(x)}</em></span>`).join("")}</div>`;
+}
+
+const gLink = () =>
+  `<div style="margin-top:8px"><a href="${LINKS.reviews}" target="_blank" rel="noopener noreferrer"
+     style="color:var(--gold);font-weight:700;font-size:11.5px">${CHAT[lang].link} →</a></div>`;
+
+/* texte cherchable d'un plat : nom + description + note + libellés des variantes */
+function haystack(x){
+  const d = x.d;
+  let s = d.n[lang] + " " + (d.d ? d.d[lang] : "") + " " + (d.note ? d.note[lang] : "")
+        + " " + x.c.n[lang] + " " + (x.grp ? x.grp[lang] : "");
+  if (d.v) s += " " + d.v.map(v => v[0][lang]).join(" ");
+  return norm(s);
+}
+
+/* « gambas » doit trouver « gambones » : on compare aussi les racines */
+function wordHits(words, hay){
+  return words.filter(w => {
+    if (hay.includes(w)) return true;
+    const stem = w.slice(0, Math.max(4, w.length - 2));
+    return stem.length >= 4 && hay.includes(stem);
+  }).length;
+}
+
+function search(q, pool){
+  const words = norm(q).split(/[^a-z0-9]+/).filter(w => w.length > 2);
+  if (!words.length) return [];
+  return (pool || allDishes())
+    .map(x => ({ x, n: wordHits(words, haystack(x)) }))
+    .filter(r => r.n > 0)
+    .sort((a, b) => b.n - a.n)
+    .slice(0, 6).map(r => r.x);
+}
+
+function answer(qRaw){
+  const q = norm(qRaw);
+  const t = CHAT[lang];
+  const has = (...w) => w.some(x => q.includes(x));
+  const all = allDishes();
+  const food = all.filter(x => x.c.id !== "bebidas");
+
+  if (has("halal","cerdo","porc","pork"))
+    return t.halal;
+
+  if (has("vegetarian","vegetarien","vegetariano","vege","vegan","sin carne","meat free"))
+    return t.veg + lines(food.filter(x => (x.d.tags||[]).includes("veg")).slice(0, 7));
+
+  if (has("pica","picante","spicy","epice","piment","hot"))
+    return t.spicy + lines(food.filter(x => (x.d.tags||[]).includes("spicy")));
+
+  if (has("combo"))
+    return t.combo + lines(all.filter(x => x.c.id === "combos"));
+
+  if (has("barato","cheap","pas cher","moins cher","economic","economico","precio bajo"))
+    return t.cheap + lines([...food].sort((a, b) => a.p - b.p).slice(0, 6));
+
+  if (has("horario","hora","abre","abierto","open","ouvert","horaire","cierra"))
+    return t.hours + gLink();
+
+  if (has("alergen","alergia","allerg","gluten","lactose","lactosa","cacahuete","peanut","nuts","intoleran"))
+    return t.allerg;
+
+  if (has("reserva","reservar","booking","book","domicilio","delivery","llevar","takeaway","emporter","telefono","phone","direccion","adresse","address","donde esta","where are","ou etes"))
+    return t.deliv + gLink();
+
+  if (has("opinion","opina","review","avis","valoraci","estrella","rating","nota media","comentario","clientes dicen"))
+    return `<b>${score(RATING.score)}/5</b> ${T().revCount(RATING.count)}` + gLink();
+
+  /* boissons : on cible d'abord le mot demandé (cerveza, vino…) */
+  if (has("bebida","drink","boisson","beber","tomar","cerveza","beer","biere","vino","wine","refresco","zumo","juice","agua","water")){
+    const drinks = all.filter(x => x.c.id === "bebidas");
+    const hits = search(qRaw, drinks);
+    return t.drinks + lines(hits.length ? hits : drinks.slice(0, 6));
+  }
+
+  const hits = search(qRaw);
+  if (hits.length) return t.found + lines(hits);
+  return t.none;
+}
+
+/* ---------- interface du chat ---------- */
+const ICO_CHAT  = `<svg class="ico-chat" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.9 3 2.8 6.3 2.8 10.4c0 2.3 1.3 4.3 3.3 5.7-.1 1-.6 2.3-1.6 3.4 1.8-.2 3.4-1 4.5-1.9 1 .3 2 .4 3 .4 5.1 0 9.2-3.3 9.2-7.6S17.1 3 12 3z"/></svg>`;
+const ICO_CLOSE = `<svg class="ico-close" viewBox="0 0 24 24" aria-hidden="true"><path stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>`;
+const ICO_SEND  = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3.4 20.4l17.4-8.4L3.4 3.6 3.4 10l12 2-12 2z"/></svg>`;
+
+function buildChat(){
+  const fab = document.createElement("button");
+  fab.className = "chatfab";
+  fab.id = "chatfab";
+  fab.setAttribute("aria-label", CHAT[lang].title);
+  fab.innerHTML = ICO_CHAT + ICO_CLOSE;
+
+  const panel = document.createElement("div");
+  panel.className = "chatpanel";
+  panel.id = "chatpanel";
+  panel.setAttribute("role", "dialog");
+  panel.innerHTML = `
+    <div class="chathead">
+      <img src="img/logo.webp" alt="" width="30" height="30">
+      <span><b id="chatTitle"></b><span id="chatSub"></span></span>
+    </div>
+    <div class="chatbody" id="chatbody"></div>
+    <div class="chips" id="chatchips"></div>
+    <form class="chatform" id="chatform" autocomplete="off">
+      <input id="chatinput" type="text" enterkeyhint="send">
+      <button type="submit" aria-label="OK">${ICO_SEND}</button>
+    </form>`;
+
+  document.body.append(fab, panel);
+}
+
+function chatTexts(){
+  const t = CHAT[lang];
+  $("#chatTitle").textContent = t.title;
+  $("#chatSub").textContent = t.sub;
+  $("#chatinput").placeholder = t.ph;
+  $("#chatfab").setAttribute("aria-label", t.title);
+  $("#chatchips").innerHTML = t.chips
+    .map(c => `<button class="chip-q" type="button">${c}</button>`).join("");
+}
+
+function push(html, who){
+  const m = document.createElement("div");
+  m.className = "msg " + who;
+  m.innerHTML = html;
+  const body = $("#chatbody");
+  body.appendChild(m);
+  body.scrollTop = body.scrollHeight;
+  return m;
+}
+
+/* petite pause + points de saisie : l'assistant paraît réfléchir */
+function ask(q){
+  if (!q.trim()) return;
+  push(q, "me");
+  const body = $("#chatbody");
+  const dots = document.createElement("div");
+  dots.className = "typing";
+  dots.innerHTML = "<i></i><i></i><i></i>";
+  body.appendChild(dots);
+  body.scrollTop = body.scrollHeight;
+  const reply = answer(q);
+  setTimeout(() => { dots.remove(); push(reply, "bot"); }, 420);
+}
+
+function openChat(v){
+  $("#chatpanel").classList.toggle("on", v);
+  $("#chatfab").classList.toggle("open", v);
+  if (v && !$("#chatbody").children.length) push(CHAT[lang].hello, "bot");
+  if (v) setTimeout(() => $("#chatinput").focus({ preventScroll:true }), 260);
+}
+
+buildChat();
+chatTexts();
+$("#chatfab").addEventListener("click", () => openChat(!$("#chatpanel").classList.contains("on")));
+$("#chatform").addEventListener("submit", e => {
+  e.preventDefault();
+  const i = $("#chatinput");
+  ask(i.value);
+  i.value = "";
+});
+$("#chatchips").addEventListener("click", e => {
+  const b = e.target.closest(".chip-q");
+  if (b) ask(b.textContent);
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && $("#chatpanel").classList.contains("on")) openChat(false);
 });
 
 applyTheme();
