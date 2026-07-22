@@ -17,6 +17,7 @@
   --ink:#1e2126;
   --spice:#d98a5a; --veg:#9db77a;
   --serif:Georgia,"Iowan Old Style","Palatino Linotype","Times New Roman",serif;
+  --ease:cubic-bezier(.16,1,.3,1);
   --shadow:0 2px 6px rgba(0,0,0,.45),0 12px 32px rgba(0,0,0,.4);
 }
 [data-theme="light"]{
@@ -151,32 +152,40 @@ header{text-align:center;padding:14px 0 20px}
   font-family:var(--serif);font-size:11px;font-weight:700;letter-spacing:.22em;
   text-transform:uppercase;color:var(--gold);white-space:nowrap;
 }
-.offrail{
-  display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;
-  padding:2px 0 6px;scrollbar-width:none;
+.offviewport{overflow:hidden;position:relative;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
 }
-.offrail::-webkit-scrollbar{display:none}
+.offrail{display:flex;gap:10px;width:max-content;will-change:transform;animation:marquee var(--mqdur,42s) linear infinite}
+@keyframes marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(calc(-50% - 5px),0,0)}}
+.offviewport:hover .offrail,
+.offviewport:focus-within .offrail,
+.offviewport.paused .offrail{animation-play-state:paused}
+@media (prefers-reduced-motion: reduce){
+  .offrail{animation:none}
+  .offviewport{overflow-x:auto;scrollbar-width:none}
+}
 .offcard{
-  flex:0 0 63%;max-width:225px;scroll-snap-align:start;text-align:left;
+  flex:0 0 210px;text-align:left;
   background:var(--card);border:1px solid var(--line);border-radius:6px;
   overflow:hidden;padding:0;cursor:pointer;color:var(--txt);
-  transition:border-color .2s ease,transform .12s ease;
+  transition:border-color .3s var(--ease),transform .3s var(--ease);
 }
 .offcard:active{transform:scale(.97)}
 .offcard:hover{border-color:var(--gold)}
-.offimg{display:block;width:100%;height:104px;object-fit:contain;background:var(--card2);padding:7px}
-.offbody{padding:10px 11px 12px}
+.offimg{display:block;width:100%;height:104px;object-fit:cover;background:var(--card2)}
+.offbody{display:block;padding:10px 11px 12px}
 .offtag{
   display:inline-block;font-size:8.5px;font-weight:800;letter-spacing:.13em;
   text-transform:uppercase;background-image:var(--gold-grad);color:var(--ink);
   border-radius:2px;padding:3px 6px;
 }
-.offname{font-family:var(--serif);font-size:15px;font-weight:700;margin-top:8px;letter-spacing:.05em}
+.offname{display:block;font-family:var(--serif);font-size:15px;font-weight:700;margin-top:8px;letter-spacing:.05em}
 .offdesc{
-  font-size:11px;color:var(--muted);margin-top:5px;line-height:1.45;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  display:-webkit-box;font-size:11px;color:var(--muted);margin-top:5px;line-height:1.45;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
 }
-.offprice{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold);margin-top:9px}
+.offprice{display:block;font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold);margin-top:9px}
 
 /* ---------- filtres ---------- */
 .filters{display:flex;gap:7px;overflow-x:auto;padding:8px 0 16px;scrollbar-width:none}
@@ -296,6 +305,31 @@ header{text-align:center;padding:14px 0 20px}
 }
 .order:active{transform:scale(.98)}
 .order:disabled{opacity:.35}
+/* ---------- revelations au defilement (inspire du site de reference) ---------- */
+/* le masquage n est applique QUE si le JS confirme que la revelation fonctionne :
+   sans lui, la carte reste visible en toutes circonstances */
+html.reveal-ok .reveal{opacity:0;transform:translateY(20px)}
+html.reveal-ok .reveal.in{opacity:1;transform:none;transition:opacity .75s var(--ease),transform .75s var(--ease)}
+
+/* apparition en cascade des plats a l ouverture d une categorie */
+.cat[open] .dish{animation:dishIn .55s var(--ease) both;animation-delay:calc(var(--i,0)*55ms)}
+@keyframes dishIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* leger zoom facon Ken Burns sur les photos de plats */
+.figure{overflow:hidden}
+.hero{transform-origin:50% 50%}
+.cat[open] .hero{animation:fade .3s ease, kenburns 9s var(--ease) forwards}
+@keyframes kenburns{from{transform:scale(1.05)}to{transform:scale(1)}}
+
+/* barre de progression de lecture */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:70;
+  background-image:var(--gold-grad);transition:width .12s linear}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal{opacity:1;transform:none}
+  .cat[open] .dish,.cat[open] .hero{animation:none}
+  .progress{display:none}
+}
 footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 10px;line-height:1.9;letter-spacing:.07em}
 </style>
 </head>
@@ -328,7 +362,7 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 10px;l
 
   <section class="offers" id="offers" hidden>
     <div class="offers-h"><span id="offersTitle"></span></div>
-    <div class="offrail" id="offrail"></div>
+    <div class="offviewport" id="offviewport"><div class="offrail" id="offrail"></div></div>
   </section>
 
   <div class="filters" id="filters"></div>
@@ -865,6 +899,8 @@ function renderList(){
     </div>`;
   }
   $("#list").innerHTML = shown ? html : `<div class="empty">${T().noRes}</div>`;
+  indexDishes();
+  observeReveal();
 }
 
 function find(key){
@@ -983,13 +1019,8 @@ function startAutoScroll(){
   }, 4000);
 }
 
-function renderOffers(){
-  const box = $("#offers");
-  if (!OFFERS.length){ box.hidden = true; return; }
-  box.hidden = false;
-  $("#offersTitle").textContent = T().offers;
-  $("#offrail").innerHTML = OFFERS.map(o => `
-    <button class="offcard" data-off="${o.cat}">
+function offCard(o){
+  return `<button class="offcard" data-off="${o.cat}" tabindex="-1">
       <img class="offimg" src="img/${o.img}.webp" alt="${o.n[lang]}" loading="lazy" decoding="async">
       <span class="offbody">
         <span class="offtag">${o.tag[lang]}</span>
@@ -997,8 +1028,32 @@ function renderOffers(){
         <span class="offdesc">${o.d[lang]}</span>
         <span class="offprice">${money(o.p)}</span>
       </span>
-    </button>`).join("");
+    </button>`;
 }
+
+function renderOffers(){
+  const box = $("#offers");
+  if (!OFFERS.length){ box.hidden = true; return; }
+  box.hidden = false;
+  $("#offersTitle").textContent = T().offers;
+  /* piste dupliquée : la boucle repart sans saut visible */
+  const once = OFFERS.map(offCard).join("");
+  $("#offrail").innerHTML = once + once;
+  /* vitesse constante quel que soit le nombre de cartes (~6,5 s par carte) */
+  $("#offrail").style.setProperty("--mqdur", (OFFERS.length * 6.5) + "s");
+}
+
+/* la bande s'arrête pendant que le client la touche, puis repart */
+(() => {
+  const vp = $("#offviewport");
+  let t = null;
+  const pause = () => { vp.classList.add("paused"); clearTimeout(t); };
+  const resume = () => { clearTimeout(t); t = setTimeout(() => vp.classList.remove("paused"), 2500); };
+  vp.addEventListener("pointerdown", pause);
+  vp.addEventListener("pointerup", resume);
+  vp.addEventListener("pointercancel", resume);
+  vp.addEventListener("pointerleave", resume);
+})();
 
 /* ouvrir la catégorie visée et y amener le client */
 $("#offrail").addEventListener("click", e => {
@@ -1010,6 +1065,72 @@ $("#offrail").addEventListener("click", e => {
   const el = document.querySelector(`[data-toggle="${id}"]`);
   if (el) el.closest(".cat").scrollIntoView({ behavior:"smooth", block:"start" });
 });
+
+/* ============================================================
+   ANIMATIONS — révélation au défilement + barre de progression
+   Tout est natif : aucune bibliothèque, aucun appel réseau.
+   ============================================================ */
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* chaque plat reçoit son rang, pour la cascade */
+function indexDishes(){
+  document.querySelectorAll(".panel").forEach(p => {
+    [...p.querySelectorAll(".dish")].forEach((d, i) => d.style.setProperty("--i", i));
+  });
+}
+
+/* Les blocs apparaissent quand ils entrent dans l'écran.
+   Sécurité : le masquage n'est activé que si IntersectionObserver existe,
+   et un filet de sécurité révèle tout au bout de 1,5 s quoi qu'il arrive —
+   une carte de restaurant ne doit jamais rester invisible. */
+const CAN_REVEAL = !REDUCED && typeof IntersectionObserver === "function";
+if (CAN_REVEAL) document.documentElement.classList.add("reveal-ok");
+
+const revealAll = () => {
+  document.documentElement.classList.remove("reveal-ok");
+  document.querySelectorAll(".reveal").forEach(el => el.classList.add("in"));
+};
+/* le filet ne se declenche que si l observateur n a jamais repondu */
+let ioAlive = false;
+if (CAN_REVEAL) setTimeout(() => { if (!ioAlive) revealAll(); }, 1500);
+
+const revealer = CAN_REVEAL ? new IntersectionObserver((entries, obs) => {
+  ioAlive = true;
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.classList.add("in");
+    obs.unobserve(e.target);
+  });
+}, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 }) : null;
+
+function observeReveal(){
+  if (!revealer || !document.documentElement.classList.contains("reveal-ok")) return;
+  document.querySelectorAll(".cat:not(.in)").forEach(el => {
+    el.classList.add("reveal");
+    revealer.observe(el);
+    /* déjà à l'écran au chargement : on révèle tout de suite */
+    const r = el.getBoundingClientRect();
+    if (r.top < innerHeight && r.bottom > 0) el.classList.add("in");
+  });
+}
+
+/* fine ligne dorée en haut, qui suit la lecture de la carte */
+(() => {
+  if (REDUCED) return;
+  const bar = document.createElement("div");
+  bar.className = "progress";
+  document.body.appendChild(bar);
+  let ticking = false;
+  addEventListener("scroll", () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const h = document.documentElement.scrollHeight - innerHeight;
+      bar.style.width = (h > 0 ? (scrollY / h) * 100 : 0) + "%";
+      ticking = false;
+    });
+  }, { passive: true });
+})();
 
 function renderStatic(){
   document.documentElement.lang = lang;
