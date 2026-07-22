@@ -461,28 +461,6 @@ footer{text-align:center;color:var(--muted);font-size:11px;padding:30px 0 10px;l
   <footer id="foot"></footer>
 </div>
 
-<button class="fab" id="fab">
-  <span class="fab-n" id="fabN">0</span>
-  <span id="fabTxt"></span>
-  <span class="fab-tot" id="fabTot">0</span>
-</button>
-
-<div class="scrim" id="scrim"></div>
-<div class="sheet" id="sheet" role="dialog" aria-modal="true">
-  <div class="sheet-in">
-    <div class="grab"></div>
-    <div class="sheet-h">
-      <h2 id="sheetTitle"></h2>
-      <button class="icobtn" id="close" aria-label="close">✕</button>
-    </div>
-    <div class="sheet-body" id="cartBody"></div>
-    <div style="padding:0 18px">
-      <div class="tot" id="totals"></div>
-      <button class="order" id="order"></button>
-    </div>
-  </div>
-</div>
-
 <script>
 /* ============================================================
    ENLACES — cambiar aquí, nada más
@@ -511,9 +489,11 @@ const ICONS = {
 const FLAGS = {
   es:`<svg class="flag" viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg>`,
   en:`<svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><clipPath id="fu"><path d="M0 0v30h60V0z"/></clipPath><clipPath id="fd"><path d="M30 15h30v15zv15H30zH0V15zV0h30z"/></clipPath><g clip-path="url(#fu)"><path d="M0 0v30h60V0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" clip-path="url(#fd)" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>`,
-  fr:`<svg class="flag" viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#fff"/><rect width="20" height="40" fill="#002395"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg>`
+  fr:`<svg class="flag" viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#fff"/><rect width="20" height="40" fill="#002395"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg>`,
+  it:`<svg class="flag" viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#fff"/><rect width="20" height="40" fill="#008C45"/><rect x="40" width="20" height="40" fill="#CD212A"/></svg>`,
+  de:`<svg class="flag" viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#FFCE00"/><rect width="60" height="26.7" fill="#DD0000"/><rect width="60" height="13.3" fill="#000"/></svg>`
 };
-const LANG_NAME = { es:"Español", en:"English", fr:"Français" };
+const LANG_NAME = { es:"Español", en:"English", fr:"Français", it:"Italiano", de:"Deutsch" };
 
 /* ============================================================
    OPINIONES / AVIS
@@ -541,36 +521,44 @@ const REVIEWS = [
    ============================================================ */
 const OFFERS = [
   { cat:"combos", img:"combos", p:12.00,
-    tag:{es:"Combo",en:"Combo",fr:"Combo"},
-    n:{es:"Combo x2",en:"Combo x2",fr:"Combo x2"},
+    tag:{es:"Combo",en:"Combo",fr:"Combo",it:"Combo",de:"Combo"},
+    n:{es:"Combo x2",en:"Combo x2",fr:"Combo x2",it:"Combo x2",de:"Combo x2"},
     d:{es:"2 entrantes: calamares, alitas BBQ, gambones crispy o pollo crispy.",
        en:"2 starters: squids, BBQ wings, crispy king prawns or crispy chicken.",
-       fr:"2 entrées : calamars, ailes BBQ, gambas croustillantes ou poulet croustillant."} },
+       fr:"2 entrées : calamars, ailes BBQ, gambas croustillantes ou poulet croustillant.",
+       it:"2 antipasti: calamari, alette BBQ, gamberoni croccanti o pollo croccante.",
+       de:"2 Vorspeisen: Calamari, BBQ-Flügel, knusprige Riesengarnelen oder knuspriges Hähnchen."} },
   { cat:"combos", img:"combos", p:15.00,
     tag:{es:"Combo",en:"Combo",fr:"Combo"},
-    n:{es:"Combo x3",en:"Combo x3",fr:"Combo x3"},
+    n:{es:"Combo x3",en:"Combo x3",fr:"Combo x3",it:"Combo x3",de:"Combo x3"},
     d:{es:"3 entrantes: calamares, alitas BBQ, gambones crispy o pollo crispy.",
        en:"3 starters: squids, BBQ wings, crispy king prawns or crispy chicken.",
-       fr:"3 entrées : calamars, ailes BBQ, gambas croustillantes ou poulet croustillant."} },
+       fr:"3 entrées : calamars, ailes BBQ, gambas croustillantes ou poulet croustillant.",
+       it:"3 antipasti: calamari, alette BBQ, gamberoni croccanti o pollo croccante.",
+       de:"3 Vorspeisen: Calamari, BBQ-Flügel, knusprige Riesengarnelen oder knuspriges Hähnchen."} },
   { cat:"combos", img:"combos", p:18.00,
     tag:{es:"Combo",en:"Combo",fr:"Combo"},
-    n:{es:"Combo x4",en:"Combo x4",fr:"Combo x4"},
+    n:{es:"Combo x4",en:"Combo x4",fr:"Combo x4",it:"Combo x4",de:"Combo x4"},
     d:{es:"Los 4 entrantes: calamares, alitas BBQ, gambones crispy y pollo crispy.",
        en:"All 4 starters: squids, BBQ wings, crispy king prawns and crispy chicken.",
-       fr:"Les 4 entrées : calamars, ailes BBQ, gambas croustillantes et poulet croustillant."} },
+       fr:"Les 4 entrées : calamars, ailes BBQ, gambas croustillantes et poulet croustillant.",
+       it:"I 4 antipasti: calamari, alette BBQ, gamberoni croccanti e pollo croccante.",
+       de:"Alle 4 Vorspeisen: Calamari, BBQ-Flügel, knusprige Riesengarnelen und knuspriges Hähnchen."} },
   { cat:"poke", img:"poke", p:11.50,
-    tag:{es:"Desde",en:"From",fr:"Dès"},
-    n:{es:"Poke Bowls",en:"Poke Bowls",fr:"Poke Bowls"},
+    tag:{es:"Desde",en:"From",fr:"Dès",it:"Da",de:"Ab"},
+    n:{es:"Poke Bowls",en:"Poke Bowls",fr:"Poke Bowls",it:"Poke Bowls",de:"Poke Bowls"},
     d:{es:"Arroz redondo, edamames, zanahoria, pepino, aguacate y cebolla roja.",
        en:"Round rice, edamame, carrot, cucumber, avocado and red onion.",
-       fr:"Riz rond, edamamés, carotte, concombre, avocat et oignon rouge."} }
+       fr:"Riz rond, edamamés, carotte, concombre, avocat et oignon rouge.",
+       it:"Riso tondo, edamame, carota, cetriolo, avocado e cipolla rossa.",
+       de:"Rundkornreis, Edamame, Karotte, Gurke, Avocado und rote Zwiebel."} }
 ];
 
 /* ============================================================
    INTERFACE — es / en / fr
    ============================================================ */
 const UI = {
-  es:{search:"Buscar un plato…",count:"platos y bebidas",
+  es:{count:"platos y bebidas",
       reviews:"Ver las opiniones en Google",
       revCount:n=>"("+n+" reseñas)",
       writeRev:"Deja tu opinión en Google",
@@ -578,13 +566,9 @@ const UI = {
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Cómo llegar",tripadvisor:"Tripadvisor"},
       filters:{all:"Todo",veg:"Vegetariano",spicy:"Picante",photo:"Con foto"},
       badges:{veg:"Opción veget.",spicy:"Medio picante"},
-      dishes:n=>n>1?n+" platos":n+" plato",
-      cart:"Tu pedido",view:"Ver el pedido",empty:"Tu pedido está vacío",
-      total:"Total",order:"Llamar al camarero",
-      noRes:"Ningún plato coincide con tu búsqueda.",
-      done:"¡Gracias! Enseña esta pantalla al camarero para pedir.",
+      noRes:"Ningún plato coincide.",
       foot:"TOM YUM · Asian Food · Comida halal<br>Carta oficial del restaurante"},
-  en:{search:"Search a dish…",count:"dishes & drinks",
+  en:{count:"dishes & drinks",
       reviews:"See the reviews on Google",
       revCount:n=>"("+n+" reviews)",
       writeRev:"Leave your review on Google",
@@ -592,13 +576,9 @@ const UI = {
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Directions",tripadvisor:"Tripadvisor"},
       filters:{all:"All",veg:"Vegetarian",spicy:"Spicy",photo:"With photo"},
       badges:{veg:"Veggie option",spicy:"Medium spicy"},
-      dishes:n=>n>1?n+" dishes":n+" dish",
-      cart:"Your order",view:"View order",empty:"Your order is empty",
-      total:"Total",order:"Call the waiter",
-      noRes:"No dish matches your search.",
-      done:"Thank you! Show this screen to the waiter to order.",
+      noRes:"No dish matches.",
       foot:"TOM YUM · Asian Food · Halal food<br>Official restaurant menu"},
-  fr:{search:"Rechercher un plat…",count:"plats et boissons",
+  fr:{count:"plats et boissons",
       reviews:"Voir les avis sur Google",
       revCount:n=>"("+n+" avis)",
       writeRev:"Laissez votre avis sur Google",
@@ -606,24 +586,40 @@ const UI = {
       soc:{instagram:"Instagram",facebook:"Facebook",maps:"Itinéraire",tripadvisor:"Tripadvisor"},
       filters:{all:"Tout",veg:"Végétarien",spicy:"Épicé",photo:"Avec photo"},
       badges:{veg:"Option végé",spicy:"Moyennement épicé"},
-      dishes:n=>n>1?n+" plats":n+" plat",
-      cart:"Votre commande",view:"Voir la commande",empty:"Votre commande est vide",
-      total:"Total",order:"Appeler le serveur",
-      noRes:"Aucun plat ne correspond à votre recherche.",
-      done:"Merci ! Montrez cet écran au serveur pour commander.",
-      foot:"TOM YUM · Asian Food · Cuisine halal<br>Carte officielle du restaurant"}
+      noRes:"Aucun plat ne correspond.",
+      foot:"TOM YUM · Asian Food · Cuisine halal<br>Carte officielle du restaurant"},
+  it:{count:"piatti e bevande",
+      reviews:"Vedi le recensioni su Google",
+      revCount:n=>"("+n+" recensioni)",
+      writeRev:"Lascia la tua recensione su Google",
+      offers:"Combo e offerte",
+      soc:{instagram:"Instagram",facebook:"Facebook",maps:"Come arrivare",tripadvisor:"Tripadvisor"},
+      filters:{all:"Tutto",veg:"Vegetariano",spicy:"Piccante",photo:"Con foto"},
+      badges:{veg:"Opzione veg.",spicy:"Mediamente piccante"},
+      noRes:"Nessun piatto corrisponde.",
+      foot:"TOM YUM · Asian Food · Cucina halal<br>Menù ufficiale del ristorante"},
+  de:{count:"Gerichte & Getränke",
+      reviews:"Bewertungen auf Google ansehen",
+      revCount:n=>"("+n+" Bewertungen)",
+      writeRev:"Bewerten Sie uns auf Google",
+      offers:"Combos & Angebote",
+      soc:{instagram:"Instagram",facebook:"Facebook",maps:"Anfahrt",tripadvisor:"Tripadvisor"},
+      filters:{all:"Alle",veg:"Vegetarisch",spicy:"Scharf",photo:"Mit Foto"},
+      badges:{veg:"Veg. Option",spicy:"Mittelscharf"},
+      noRes:"Kein Gericht gefunden.",
+      foot:"TOM YUM · Asian Food · Halal-Küche<br>Offizielle Speisekarte"}
 };
 
 /* Étiquettes de variantes réutilisées */
 const V = {
-  veget:{es:"Veget.",en:"Veggie",fr:"Végé"},
-  pollo:{es:"Pollo",en:"Chicken",fr:"Poulet"},
-  ternera:{es:"Ternera",en:"Beef",fr:"Bœuf"},
-  langostino:{es:"Langostino",en:"Prawn",fr:"Gambas"},
-  langostinos:{es:"Langostinos",en:"Prawns",fr:"Gambas"},
-  mixta:{es:"Mixta",en:"Mixed",fr:"Mixte"},
-  mix2:{es:"Mixto x2 ingr.",en:"Mixed x2 ingr.",fr:"Mixte x2 ingr."},
-  mix3:{es:"Mixto x3 ingr.",en:"Mixed x3 ingr.",fr:"Mixte x3 ingr."}
+  veget:{es:"Veget.",en:"Veggie",fr:"Végé",it:"Veg.",de:"Veg."},
+  pollo:{es:"Pollo",en:"Chicken",fr:"Poulet",it:"Pollo",de:"Hähnchen"},
+  ternera:{es:"Ternera",en:"Beef",fr:"Bœuf",it:"Manzo",de:"Rind"},
+  langostino:{es:"Langostino",en:"Prawn",fr:"Gambas",it:"Gamberone",de:"Garnele"},
+  langostinos:{es:"Langostinos",en:"Prawns",fr:"Gambas",it:"Gamberoni",de:"Garnelen"},
+  mixta:{es:"Mixta",en:"Mixed",fr:"Mixte",it:"Mista",de:"Gemischt"},
+  mix2:{es:"Mixto x2 ingr.",en:"Mixed x2 ingr.",fr:"Mixte x2 ingr.",it:"Misto x2 ingr.",de:"Gemischt x2 Zut."},
+  mix3:{es:"Mixto x3 ingr.",en:"Mixed x3 ingr.",fr:"Mixte x3 ingr.",it:"Misto x3 ingr.",de:"Gemischt x3 Zut."}
 };
 
 /* Grilles de prix partagées (telles quelles sur la carte) */
@@ -632,292 +628,237 @@ const P_RAMEN = [[V.veget,11.00],[V.pollo,12.50],[V.langostinos,14.00],[V.mixta,
 const P_ARROZ = [[V.veget,11.00],[V.pollo,11.50],[V.ternera,12.70],[V.langostino,13.50],[V.mix2,14.30],[V.mix3,15.00]];
 const P_ENS   = [[V.pollo,11.20],[V.langostino,12.20],[V.mixta,13.00]];
 
-const g = (es,en,fr) => ({es,en,fr});
+const g = (es,en,fr,it,de) => ({es,en,fr,it,de});
 
 /* ============================================================
    CARTA — datos reales (Carta.pdf)
    n = nombre · d = descripción · p = precio fijo · v = variantes
    ============================================================ */
 const MENU = [
-{id:"entrantes",n:g("Entrantes","Starters","Entrées"),
- s:g("Fritos crujientes, pinchitos, edamames","Crispy fried, skewers, edamame","Fritures croustillantes, brochettes, edamamés"),
+{id:"entrantes",n:g("Entrantes","Starters","Entrées","Antipasti","Vorspeisen"),
+ s:g("Fritos crujientes, pinchitos, edamames","Crispy fried, skewers, edamame","Fritures croustillantes, brochettes, edamamés","Fritti croccanti, spiedini, edamame","Knusprig Frittiertes, Spieße, Edamame"),
  items:[
-  {n:g("Alitas de pollo BBQ","BBQ Chicken Wings","Ailes de poulet BBQ"),p:6.60},
-  {n:g("Crispy Calamares","Crispy Squids","Calamars croustillants"),p:7.90,img:"calamares",
-   d:g("Calamares fritos rebosados con panko.","Fried squids wrapped with panko.","Calamars frits panés au panko.")},
-  {n:g("Pinchitos de Pollo Teriyaki","Chicken Teriyaki Skewers","Brochettes de poulet teriyaki"),
-   v:[[g("2 pcs","2 pcs","2 pcs"),5.50],[g("3 pcs","3 pcs","3 pcs"),6.50]]},
-  {n:g("Pinchitos de Langostino Teriyaki","Prawns Teriyaki Skewers","Brochettes de gambas teriyaki"),
-   v:[[g("2 pcs","2 pcs","2 pcs"),7.50],[g("3 pcs","3 pcs","3 pcs"),8.50]]},
-  {n:g("Palomitas de Pollo","Chicken Pop Corn","Pop-corn de poulet"),p:6.50,img:"popcorn",
-   d:g("Pollo frito empanado con panko.","Fried chicken wrapped with panko.","Poulet frit pané au panko.")},
-  {n:g("Crispy Gambones","Crispy King Prawns","Gambas croustillantes"),p:8.00,
-   d:g("Gambones fritos rebosados con panko.","Fried king prawns wrapped with panko.","Gambas frites panées au panko.")},
-  {n:g("Crispy Pollo","Crispy Chicken","Poulet croustillant"),p:6.80,img:"crispy-pollo",
-   d:g("Tiras de pollo fritas rebosadas con panko.","Fried chicken strips wrapped with panko.","Aiguillettes de poulet frites panées au panko.")},
-  {n:g("Rollitos (2 pcs)","Spring rolls (2 pcs)","Rouleaux de printemps (2 pcs)"),
-   v:[[g("Primavera","Vegetable","Légumes"),5.50],[V.pollo,6.20],[V.langostinos,6.30]]},
-  {n:g("Edamames","Edamame","Edamamés"),p:5.90,img:"edamames",tags:["veg"]}
+  {n:g("Alitas de pollo BBQ","BBQ Chicken Wings","Ailes de poulet BBQ","Alette di pollo BBQ","BBQ-Hähnchenflügel"),p:6.60},
+  {n:g("Crispy Calamares","Crispy Squids","Calamars croustillants","Calamari croccanti","Knusprige Calamari"),p:7.90,img:"calamares",
+   d:g("Calamares fritos rebosados con panko.","Fried squids wrapped with panko.","Calamars frits panés au panko.","Calamari fritti impanati al panko.","Frittierte Calamari in Panko-Panade.")},
+  {n:g("Pinchitos de Pollo Teriyaki","Chicken Teriyaki Skewers","Brochettes de poulet teriyaki","Spiedini di pollo teriyaki","Hähnchenspieße Teriyaki"),
+   v:[[g("2 pcs","2 pcs","2 pcs","2 pz","2 St."),5.50],[g("3 pcs","3 pcs","3 pcs","3 pz","3 St."),6.50]]},
+  {n:g("Pinchitos de Langostino Teriyaki","Prawns Teriyaki Skewers","Brochettes de gambas teriyaki","Spiedini di gamberoni teriyaki","Garnelenspieße Teriyaki"),
+   v:[[g("2 pcs","2 pcs","2 pcs","2 pz","2 St."),7.50],[g("3 pcs","3 pcs","3 pcs","3 pz","3 St."),8.50]]},
+  {n:g("Palomitas de Pollo","Chicken Pop Corn","Pop-corn de poulet","Pop corn di pollo","Hähnchen-Popcorn"),p:6.50,img:"popcorn",
+   d:g("Pollo frito empanado con panko.","Fried chicken wrapped with panko.","Poulet frit pané au panko.","Pollo fritto impanato al panko.","Frittiertes Hähnchen in Panko-Panade.")},
+  {n:g("Crispy Gambones","Crispy King Prawns","Gambas croustillantes","Gamberoni croccanti","Knusprige Riesengarnelen"),p:8.00,
+   d:g("Gambones fritos rebosados con panko.","Fried king prawns wrapped with panko.","Gambas frites panées au panko.","Gamberoni fritti impanati al panko.","Frittierte Riesengarnelen in Panko-Panade.")},
+  {n:g("Crispy Pollo","Crispy Chicken","Poulet croustillant","Pollo croccante","Knuspriges Hähnchen"),p:6.80,img:"crispy-pollo",
+   d:g("Tiras de pollo fritas rebosadas con panko.","Fried chicken strips wrapped with panko.","Aiguillettes de poulet frites panées au panko.","Strisce di pollo fritte impanate al panko.","Frittierte Hähnchenstreifen in Panko-Panade.")},
+  {n:g("Rollitos (2 pcs)","Spring rolls (2 pcs)","Rouleaux de printemps (2 pcs)","Involtini primavera (2 pz)","Frühlingsrollen (2 St.)"),
+   v:[[g("Primavera","Vegetable","Légumes","Verdure","Gemüse"),5.50],[V.pollo,6.20],[V.langostinos,6.30]]},
+  {n:g("Edamames","Edamame","Edamamés","Edamame","Edamame"),p:5.90,img:"edamames",tags:["veg"]}
  ]},
 
-{id:"combos",n:g("Combos","Combos","Combos"),
- s:g("Para compartir, 2 a 4 entrantes","To share, 2 to 4 starters","À partager, 2 à 4 entrées"),
+{id:"combos",n:g("Combos","Combos","Combos","Combo","Combos"),
+ s:g("Para compartir, 2 a 4 entrantes","To share, 2 to 4 starters","À partager, 2 à 4 entrées","Da condividere, da 2 a 4 antipasti","Zum Teilen, 2 bis 4 Vorspeisen"),
  items:[
-  {n:g("Combo","Combo","Combo"),img:"combos",
-   d:g("Calamares fritos, alitas de pollo BBQ, gambones crispy, pollo crispy.",
-       "Fried squids, BBQ chicken wings, crispy king prawns, crispy chicken.",
-       "Calamars frits, ailes de poulet BBQ, gambas croustillantes, poulet croustillant."),
-   v:[[g("Combo x2","Combo x2","Combo x2"),12.00],[g("Combo x3","Combo x3","Combo x3"),15.00],[g("Combo x4","Combo x4","Combo x4"),18.00]]}
+  {n:g("Combo","Combo","Combo","Combo","Combo"),img:"combos",
+   d:g("Calamares fritos, alitas de pollo BBQ, gambones crispy, pollo crispy.","Fried squids, BBQ chicken wings, crispy king prawns, crispy chicken.","Calamars frits, ailes de poulet BBQ, gambas croustillantes, poulet croustillant.","Calamari fritti, alette di pollo BBQ, gamberoni croccanti, pollo croccante.","Frittierte Calamari, BBQ-Hähnchenflügel, knusprige Riesengarnelen, knuspriges Hähnchen."),
+   v:[[g("Combo x2","Combo x2","Combo x2","Combo x2","Combo x2"),12.00],[g("Combo x3","Combo x3","Combo x3","Combo x3","Combo x3"),15.00],[g("Combo x4","Combo x4","Combo x4","Combo x4","Combo x4"),18.00]]}
  ]},
 
-{id:"sopas",n:g("Sopas","Soups","Soupes"),
- s:g("Base de leche de coco, galanga y lemon grass","Coconut milk, galangal and lemon grass base","Base lait de coco, galanga et citronnelle"),
+{id:"sopas",n:g("Sopas","Soups","Soupes","Zuppe","Suppen"),
+ s:g("Base de leche de coco, galanga y lemon grass","Coconut milk, galangal and lemon grass base","Base lait de coco, galanga et citronnelle","Base di latte di cocco, galanga e citronella","Basis aus Kokosmilch, Galgant und Zitronengras"),
  items:[
-  {n:g("Tom Yum","Tom Yum","Tom Yum"),img:"sopa-tomyum",tags:["spicy","veg"],v:P_SOPA,
-   d:g("Sopa medio picante con base de leche de coco, galanga, lemon grass, hojas de lima, brocoli, champiñones, zanahoria, tom yum curry, cilantro y cebolla roja.",
-       "Medium spicy soup with coconut milk, galanga, lemon grass, lime leaf, brocoli, mushrooms, carrot, tom yum curry, coriander and red onion.",
-       "Soupe moyennement épicée à base de lait de coco, galanga, citronnelle, feuilles de combava, brocoli, champignons, carotte, curry tom yum, coriandre et oignon rouge.")},
-  {n:g("Tom Kha Kai","Tom Kha Kai","Tom Kha Kai"),img:"sopa-tomkhakai",tags:["veg"],v:P_SOPA,
-   d:g("Sopa con base de leche de coco, galanga, lemon grass, hojas de lima, brocoli, champiñones, zanahoria, tom kha kai curry, cilantro y cebolla roja.",
-       "Soup with coconut milk, galanga, lemon grass, lime leaf, brocoli, mushrooms, carrot, tom kha kai curry, coriander and red onion.",
-       "Soupe à base de lait de coco, galanga, citronnelle, feuilles de combava, brocoli, champignons, carotte, curry tom kha kai, coriandre et oignon rouge.")}
+  {n:g("Tom Yum","Tom Yum","Tom Yum","Tom Yum","Tom Yum"),img:"sopa-tomyum",tags:["spicy","veg"],v:P_SOPA,
+   d:g("Sopa medio picante con base de leche de coco, galanga, lemon grass, hojas de lima, brocoli, champiñones, zanahoria, tom yum curry, cilantro y cebolla roja.","Medium spicy soup with coconut milk, galanga, lemon grass, lime leaf, brocoli, mushrooms, carrot, tom yum curry, coriander and red onion.","Soupe moyennement épicée à base de lait de coco, galanga, citronnelle, feuilles de combava, brocoli, champignons, carotte, curry tom yum, coriandre et oignon rouge.","Zuppa mediamente piccante a base di latte di cocco, galanga, citronella, foglie di lime, broccoli, funghi, carota, curry tom yum, coriandolo e cipolla rossa.","Mittelscharfe Suppe mit Kokosmilch, Galgant, Zitronengras, Limettenblättern, Brokkoli, Champignons, Karotte, Tom-Yum-Curry, Koriander und roter Zwiebel.")},
+  {n:g("Tom Kha Kai","Tom Kha Kai","Tom Kha Kai","Tom Kha Kai","Tom Kha Kai"),img:"sopa-tomkhakai",tags:["veg"],v:P_SOPA,
+   d:g("Sopa con base de leche de coco, galanga, lemon grass, hojas de lima, brocoli, champiñones, zanahoria, tom kha kai curry, cilantro y cebolla roja.","Soup with coconut milk, galanga, lemon grass, lime leaf, brocoli, mushrooms, carrot, tom kha kai curry, coriander and red onion.","Soupe à base de lait de coco, galanga, citronnelle, feuilles de combava, brocoli, champignons, carotte, curry tom kha kai, coriandre et oignon rouge.","Zuppa a base di latte di cocco, galanga, citronella, foglie di lime, broccoli, funghi, carota, curry tom kha kai, coriandolo e cipolla rossa.","Suppe mit Kokosmilch, Galgant, Zitronengras, Limettenblättern, Brokkoli, Champignons, Karotte, Tom-Kha-Kai-Curry, Koriander und roter Zwiebel.")}
  ]},
 
-{id:"ramen",n:g("Ramen","Ramen","Ramen"),
- s:g("Con fideos, huevo guisado, alga nori y edamames","With noodles, boiled egg, nori seaweed and edamame","Avec nouilles, œuf mollet, algue nori et edamamés"),
+{id:"ramen",n:g("Ramen","Ramen","Ramen","Ramen","Ramen"),
+ s:g("Con fideos, huevo guisado, alga nori y edamames","With noodles, boiled egg, nori seaweed and edamame","Avec nouilles, œuf mollet, algue nori et edamamés","Con noodles, uovo sodo, alga nori ed edamame","Mit Nudeln, gekochtem Ei, Nori-Alge und Edamame"),
  items:[
-  {n:g("Ramen Tom Yum / Tom Yum Kha Kai","Ramen Tom Yum / Tom Yum Kha Kai","Ramen Tom Yum / Tom Yum Kha Kai"),
+  {n:g("Ramen Tom Yum / Tom Yum Kha Kai","Ramen Tom Yum / Tom Yum Kha Kai","Ramen Tom Yum / Tom Yum Kha Kai","Ramen Tom Yum / Tom Yum Kha Kai","Ramen Tom Yum / Tom Yum Kha Kai"),
    img:"ramen",tags:["spicy","veg"],v:P_RAMEN,
-   d:g("Sopa medio picante con base de leche de coco, galanga, lemon grass, hojas de lima, brocoli, champiñones, zanahoria, cilantro, cebolla roja, fideos, tom yum o tom kha kai curry, huevo guisado, alga nori, brotes de soja y edamames.",
-       "Medium spicy soup with coconut milk, galanga, lemon grass, lime leaf, brocoli, mushrooms, carrot, tom yum or tom kha kai curry, coriander and red onion, noodles, boiled egg, nori seaweed, soja beans and edamames.",
-       "Soupe moyennement épicée à base de lait de coco, galanga, citronnelle, feuilles de combava, brocoli, champignons, carotte, coriandre, oignon rouge, nouilles, curry tom yum ou tom kha kai, œuf mollet, algue nori, pousses de soja et edamamés.")}
+   d:g("Sopa medio picante con base de leche de coco, galanga, lemon grass, hojas de lima, brocoli, champiñones, zanahoria, cilantro, cebolla roja, fideos, tom yum o tom kha kai curry, huevo guisado, alga nori, brotes de soja y edamames.","Medium spicy soup with coconut milk, galanga, lemon grass, lime leaf, brocoli, mushrooms, carrot, tom yum or tom kha kai curry, coriander and red onion, noodles, boiled egg, nori seaweed, soja beans and edamames.","Soupe moyennement épicée à base de lait de coco, galanga, citronnelle, feuilles de combava, brocoli, champignons, carotte, coriandre, oignon rouge, nouilles, curry tom yum ou tom kha kai, œuf mollet, algue nori, pousses de soja et edamamés.","Zuppa mediamente piccante a base di latte di cocco, galanga, citronella, foglie di lime, broccoli, funghi, carota, coriandolo, cipolla rossa, noodles, curry tom yum o tom kha kai, uovo sodo, alga nori, germogli di soia ed edamame.","Mittelscharfe Suppe mit Kokosmilch, Galgant, Zitronengras, Limettenblättern, Brokkoli, Champignons, Karotte, Koriander, roter Zwiebel, Nudeln, Tom-Yum- oder Tom-Kha-Kai-Curry, gekochtem Ei, Nori-Alge, Sojasprossen und Edamame.")}
  ]},
 
-{id:"brocheta",n:g("Brocheta","Skewers","Brochettes"),
- s:g("x3 pinchitos con arroz frito y verduras al wok","x3 skewers with fried rice and wok vegetables","x3 brochettes avec riz frit et légumes au wok"),
+{id:"brocheta",n:g("Brocheta","Skewers","Brochettes","Spiedini","Spieße"),
+ s:g("x3 pinchitos con arroz frito y verduras al wok","x3 skewers with fried rice and wok vegetables","x3 brochettes avec riz frit et légumes au wok","3 spiedini con riso fritto e verdure al wok","3 Spieße mit gebratenem Reis und Wok-Gemüse"),
  items:[
-  {n:g("Brocheta de Pollo","Chicken Skewers","Brochettes de poulet"),p:12.50,img:"brocheta-pollo",
-   d:g("Pinchitos de pollo marinado x 3, arroz frito y mix de verduras al wok.",
-       "Chicken skewers x 3, fried rice and mix vegetables on wok.",
-       "3 brochettes de poulet mariné, riz frit et mélange de légumes au wok.")},
-  {n:g("Brocheta de Langostino","Prawn Skewers","Brochettes de gambas"),p:14.50,img:"brocheta-langostino",
-   d:g("Pinchitos de langostinos x 3, arroz frito y mix de verduras al wok.",
-       "Prawns skewers x 3, fried rice and mix vegetables on wok.",
-       "3 brochettes de gambas, riz frit et mélange de légumes au wok.")}
+  {n:g("Brocheta de Pollo","Chicken Skewers","Brochettes de poulet","Spiedini di pollo","Hähnchenspieße"),p:12.50,img:"brocheta-pollo",
+   d:g("Pinchitos de pollo marinado x 3, arroz frito y mix de verduras al wok.","Chicken skewers x 3, fried rice and mix vegetables on wok.","3 brochettes de poulet mariné, riz frit et mélange de légumes au wok.","3 spiedini di pollo marinato, riso fritto e mix di verdure al wok.","3 Spieße mariniertes Hähnchen, gebratener Reis und Gemüsemix aus dem Wok.")},
+  {n:g("Brocheta de Langostino","Prawn Skewers","Brochettes de gambas","Spiedini di gamberoni","Garnelenspieße"),p:14.50,img:"brocheta-langostino",
+   d:g("Pinchitos de langostinos x 3, arroz frito y mix de verduras al wok.","Prawns skewers x 3, fried rice and mix vegetables on wok.","3 brochettes de gambas, riz frit et mélange de légumes au wok.","3 spiedini di gamberoni, riso fritto e mix di verdure al wok.","3 Garnelenspieße, gebratener Reis und Gemüsemix aus dem Wok.")}
  ]},
 
-{id:"arroces",n:g("Arroces","Rice","Riz"),
- s:g("Arroz jasmin salteado al wok","Wok-fried jasmine rice","Riz jasmin sauté au wok"),
+{id:"arroces",n:g("Arroces","Rice","Riz","Riso","Reis"),
+ s:g("Arroz jasmin salteado al wok","Wok-fried jasmine rice","Riz jasmin sauté au wok","Riso jasmine saltato al wok","Jasminreis aus dem Wok"),
  items:[
-  {n:g("Arroz Tom Yum","Tom Yum Rice","Riz Tom Yum"),img:"arroz-tomyum",tags:["veg"],v:P_ARROZ,
-   d:g("Arroz jasmin, verduras mixtas, huevo, tomate cherry, cebolla roja, brotes de soja, albahaca y pasta tom yum.",
-       "Jasmin rice, mix vegetables, cherry tomato, red onion, soja beans, basil and tom yum paste.",
-       "Riz jasmin, légumes mélangés, œuf, tomate cerise, oignon rouge, pousses de soja, basilic et pâte tom yum.")},
-  {n:g("Arroz con Curry","Curry Rice","Riz au curry"),img:"arroz-curry",tags:["veg"],v:P_ARROZ,
-   d:g("Arroz blanco jasmin, verduras mixtas, leche de coco, leche semidesnatada, azucar, crema de cacahuete, salsa de pescado y pasta de curry.",
-       "Jasmin white rice, mix vegetables, coconut milk, semi-skimmed milk, sugar, peanut butter, fish sauce and curry paste.",
-       "Riz blanc jasmin, légumes mélangés, lait de coco, lait demi-écrémé, sucre, crème de cacahuète, sauce de poisson et pâte de curry."),
-   note:g("Curry a elegir : Panang, Massaman (Rojo), Amarillo, Verde",
-          "Choice of curry: Panang, Massaman (Red), Yellow, Green",
-          "Curry au choix : Panang, Massaman (rouge), jaune, vert")},
-  {n:g("Arroz Singapur (Arroz Frito)","Singapore Rice (Fried Rice)","Riz Singapour (riz frit)"),img:"arroz-singapur",tags:["veg"],v:P_ARROZ,
-   d:g("Arroz jasmin, huevo y verduras mixtas al wok.",
-       "Jasmin rice, egg and mix vegetables to the wok.",
-       "Riz jasmin, œuf et légumes mélangés au wok.")}
+  {n:g("Arroz Tom Yum","Tom Yum Rice","Riz Tom Yum","Riso Tom Yum","Tom-Yum-Reis"),img:"arroz-tomyum",tags:["veg"],v:P_ARROZ,
+   d:g("Arroz jasmin, verduras mixtas, huevo, tomate cherry, cebolla roja, brotes de soja, albahaca y pasta tom yum.","Jasmin rice, mix vegetables, cherry tomato, red onion, soja beans, basil and tom yum paste.","Riz jasmin, légumes mélangés, œuf, tomate cerise, oignon rouge, pousses de soja, basilic et pâte tom yum.","Riso jasmine, verdure miste, uovo, pomodorini, cipolla rossa, germogli di soia, basilico e pasta tom yum.","Jasminreis, gemischtes Gemüse, Ei, Kirschtomaten, rote Zwiebel, Sojasprossen, Basilikum und Tom-Yum-Paste.")},
+  {n:g("Arroz con Curry","Curry Rice","Riz au curry","Riso al curry","Reis mit Curry"),img:"arroz-curry",tags:["veg"],v:P_ARROZ,
+   d:g("Arroz blanco jasmin, verduras mixtas, leche de coco, leche semidesnatada, azucar, crema de cacahuete, salsa de pescado y pasta de curry.","Jasmin white rice, mix vegetables, coconut milk, semi-skimmed milk, sugar, peanut butter, fish sauce and curry paste.","Riz blanc jasmin, légumes mélangés, lait de coco, lait demi-écrémé, sucre, crème de cacahuète, sauce de poisson et pâte de curry.","Riso bianco jasmine, verdure miste, latte di cocco, latte parzialmente scremato, zucchero, crema di arachidi, salsa di pesce e pasta di curry.","Weißer Jasminreis, gemischtes Gemüse, Kokosmilch, fettarme Milch, Zucker, Erdnusscreme, Fischsauce und Currypaste."),
+   note:g("Curry a elegir : Panang, Massaman (Rojo), Amarillo, Verde","Choice of curry: Panang, Massaman (Red), Yellow, Green","Curry au choix : Panang, Massaman (rouge), jaune, vert","Curry a scelta: Panang, Massaman (rosso), giallo, verde","Curry nach Wahl: Panang, Massaman (rot), gelb, grün")},
+  {n:g("Arroz Singapur (Arroz Frito)","Singapore Rice (Fried Rice)","Riz Singapour (riz frit)","Riso Singapore (riso fritto)","Singapur-Reis (gebratener Reis)"),img:"arroz-singapur",tags:["veg"],v:P_ARROZ,
+   d:g("Arroz jasmin, huevo y verduras mixtas al wok.","Jasmin rice, egg and mix vegetables to the wok.","Riz jasmin, œuf et légumes mélangés au wok.","Riso jasmine, uovo e verdure miste al wok.","Jasminreis, Ei und gemischtes Gemüse aus dem Wok.")}
  ]},
 
-{id:"fideos",n:g("Fideos y Tallarines","Noodles","Nouilles"),
- s:g("Noodles, Pad Thai o Udon al wok","Noodles, Pad Thai or Udon on wok","Noodles, Pad Thaï ou Udon au wok"),
+{id:"fideos",n:g("Fideos y Tallarines","Noodles","Nouilles","Noodles","Nudeln"),
+ s:g("Noodles, Pad Thai o Udon al wok","Noodles, Pad Thai or Udon on wok","Noodles, Pad Thaï ou Udon au wok","Noodles, Pad Thai o Udon al wok","Noodles, Pad Thai oder Udon aus dem Wok"),
  items:[
-  {n:g("Fideos o Tallarines","Noodles or Pad Thai","Nouilles ou Pad Thaï"),img:"fideos",tags:["veg"],v:P_ARROZ,
-   d:g("Fideos o tallarines, huevo y verduras mixtas al wok.",
-       "Noodles or pad thai, egg and mix vegetables to the wok.",
-       "Nouilles ou pâtes de riz, œuf et légumes mélangés au wok."),
-   note:g("A elegir : <b>Noodles</b> original o clásico · <b>Pad Thai</b> original o clásico · <b>Udon</b> original, clásico o Curry",
-          "Choice of: <b>Noodles</b> original or classic · <b>Pad Thai</b> original or classic · <b>Udon</b> original, classic or Curry",
-          "Au choix : <b>Noodles</b> original ou classique · <b>Pad Thaï</b> original ou classique · <b>Udon</b> original, classique ou curry")}
+  {n:g("Fideos o Tallarines","Noodles or Pad Thai","Nouilles ou Pad Thaï","Noodles o Pad Thai","Nudeln oder Pad Thai"),img:"fideos",tags:["veg"],v:P_ARROZ,
+   d:g("Fideos o tallarines, huevo y verduras mixtas al wok.","Noodles or pad thai, egg and mix vegetables to the wok.","Nouilles ou pâtes de riz, œuf et légumes mélangés au wok.","Noodles o pad thai, uovo e verdure miste al wok.","Nudeln oder Pad Thai, Ei und gemischtes Gemüse aus dem Wok."),
+   note:g("A elegir : <b>Noodles</b> original o clásico · <b>Pad Thai</b> original o clásico · <b>Udon</b> original, clásico o Curry","Choice of: <b>Noodles</b> original or classic · <b>Pad Thai</b> original or classic · <b>Udon</b> original, classic or Curry","Au choix : <b>Noodles</b> original ou classique · <b>Pad Thaï</b> original ou classique · <b>Udon</b> original, classique ou curry","A scelta: <b>Noodles</b> original o classico · <b>Pad Thai</b> original o classico · <b>Udon</b> original, classico o Curry","Zur Wahl: <b>Noodles</b> original oder klassisch · <b>Pad Thai</b> original oder klassisch · <b>Udon</b> original, klassisch oder Curry")}
  ]},
 
-{id:"poke",n:g("Poke Bowls","Poke Bowls","Poke Bowls"),
- s:g("Base de arroz redondo, edamames y aguacate","Round rice base, edamame and avocado","Base de riz rond, edamamés et avocat"),
+{id:"poke",n:g("Poke Bowls","Poke Bowls","Poke Bowls","Poke Bowls","Poke Bowls"),
+ s:g("Base de arroz redondo, edamames y aguacate","Round rice base, edamame and avocado","Base de riz rond, edamamés et avocat","Base di riso tondo, edamame e avocado","Basis aus Rundkornreis, Edamame und Avocado"),
  items:[
-  {n:g("Poke Bowl","Poke Bowl","Poke Bowl"),img:"poke",tags:["veg"],
-   d:g("Base de arroz redondo con edamames, zanahoria, pepino, aguacate y cebolla roja.",
-       "Round rice base with edamame, carrots, cucumber, avocado and red onion.",
-       "Base de riz rond avec edamamés, carotte, concombre, avocat et oignon rouge."),
-   v:[[g("Tofu (Veget.)","Tofu (Veggie)","Tofu (végé)"),11.50],
-      [g("Pollo Crispy","Crispy Chicken","Poulet croustillant"),12.20],
-      [g("Gambones Crispy","Crispy King Prawns","Gambas croustillantes"),13.50],
-      [g("Salmón","Salmon","Saumon"),14.50],
-      [g("Pollo Wok","Wok Chicken","Poulet au wok"),12.20],
-      [g("Ternera Wok","Wok Beef","Bœuf au wok"),13.20],
-      [g("Gambas Wok","Wok Prawns","Crevettes au wok"),13.50]]}
+  {n:g("Poke Bowl","Poke Bowl","Poke Bowl","Poke Bowl","Poke Bowl"),img:"poke",tags:["veg"],
+   d:g("Base de arroz redondo con edamames, zanahoria, pepino, aguacate y cebolla roja.","Round rice base with edamame, carrots, cucumber, avocado and red onion.","Base de riz rond avec edamamés, carotte, concombre, avocat et oignon rouge.","Base di riso tondo con edamame, carota, cetriolo, avocado e cipolla rossa.","Rundkornreis mit Edamame, Karotte, Gurke, Avocado und roter Zwiebel."),
+   v:[[g("Tofu (Veget.)","Tofu (Veggie)","Tofu (végé)","Tofu (veg.)","Tofu (veg.)"),11.50],
+      [g("Pollo Crispy","Crispy Chicken","Poulet croustillant","Pollo croccante","Knuspriges Hähnchen"),12.20],
+      [g("Gambones Crispy","Crispy King Prawns","Gambas croustillantes","Gamberoni croccanti","Knusprige Riesengarnelen"),13.50],
+      [g("Salmón","Salmon","Saumon","Salmone","Lachs"),14.50],
+      [g("Pollo Wok","Wok Chicken","Poulet au wok","Pollo al wok","Hähnchen aus dem Wok"),12.20],
+      [g("Ternera Wok","Wok Beef","Bœuf au wok","Manzo al wok","Rind aus dem Wok"),13.20],
+      [g("Gambas Wok","Wok Prawns","Crevettes au wok","Gamberi al wok","Garnelen aus dem Wok"),13.50]]}
  ]},
 
-{id:"wraps",n:g("Wraps","Wraps","Wraps"),
- s:g("Tortilla de trigo con salsa ali oli","Wheat tortilla with ali oli sauce","Tortilla de blé, sauce aïoli"),
+{id:"wraps",n:g("Wraps","Wraps","Wraps","Wrap","Wraps"),
+ s:g("Tortilla de trigo con salsa ali oli","Wheat tortilla with ali oli sauce","Tortilla de blé, sauce aïoli","Tortilla di grano con salsa ali oli","Weizen-Tortilla mit Aioli"),
  items:[
-  {n:g("Wrap","Wrap","Wrap"),tags:["veg"],
-   d:g("Tortilla de trigo rellena con lechuga, tomate, cebolla roja, queso en escamas y salsa ali oli.",
-       "Wheat tortilla with lettuce, tomato, red onion, flakes cheese and ali oli sauces.",
-       "Tortilla de blé garnie de laitue, tomate, oignon rouge, copeaux de fromage et sauce aïoli."),
-   v:[[g("Vegetariano (verduras al wok)","Vegetarian (wok vegetables)","Végétarien (légumes au wok)"),8.00],
-      [g("Pollo Crispy","Crispy Chicken","Poulet croustillant"),9.00],
-      [g("Pollo al wok","Wok Chicken","Poulet au wok"),9.00],
-      [g("Ternera al Wok","Wok Beef","Bœuf au wok"),9.60],
-      [g("Ternera y Pollo al Wok","Wok Beef & Chicken","Bœuf et poulet au wok"),10.00]]}
+  {n:g("Wrap","Wrap","Wrap","Wrap","Wrap"),tags:["veg"],
+   d:g("Tortilla de trigo rellena con lechuga, tomate, cebolla roja, queso en escamas y salsa ali oli.","Wheat tortilla with lettuce, tomato, red onion, flakes cheese and ali oli sauces.","Tortilla de blé garnie de laitue, tomate, oignon rouge, copeaux de fromage et sauce aïoli.","Tortilla di grano farcita con lattuga, pomodoro, cipolla rossa, scaglie di formaggio e salsa ali oli.","Weizen-Tortilla gefüllt mit Salat, Tomate, roter Zwiebel, Käsespänen und Aioli."),
+   v:[[g("Vegetariano (verduras al wok)","Vegetarian (wok vegetables)","Végétarien (légumes au wok)","Vegetariano (verdure al wok)","Vegetarisch (Wok-Gemüse)"),8.00],
+      [g("Pollo Crispy","Crispy Chicken","Poulet croustillant","Pollo croccante","Knuspriges Hähnchen"),9.00],
+      [g("Pollo al wok","Wok Chicken","Poulet au wok","Pollo al wok","Hähnchen aus dem Wok"),9.00],
+      [g("Ternera al Wok","Wok Beef","Bœuf au wok","Manzo al wok","Rind aus dem Wok"),9.60],
+      [g("Ternera y Pollo al Wok","Wok Beef & Chicken","Bœuf et poulet au wok","Manzo e pollo al wok","Rind und Hähnchen aus dem Wok"),10.00]]}
  ]},
 
-{id:"padkapro",n:g("Pad Kapro","Pad Kapro","Pad Kapro"),
- s:g("Receta tradicional tailandesa con huevo frito","Traditional Thai recipe with fried egg","Recette thaïe traditionnelle avec œuf au plat"),
+{id:"padkapro",n:g("Pad Kapro","Pad Kapro","Pad Kapro","Pad Kapro","Pad Kapro"),
+ s:g("Receta tradicional tailandesa con huevo frito","Traditional Thai recipe with fried egg","Recette thaïe traditionnelle avec œuf au plat","Ricetta tradizionale thailandese con uovo fritto","Traditionelles thailändisches Rezept mit Spiegelei"),
  items:[
-  {n:g("Pad Kapro","Pad Kapro","Pad Kapro"),tags:["veg"],
-   d:g("Receta tradicional Tailandesa con judias verdes, albahaca, mixto de verduras, arroz blanco y huevo frito sobre el arroz.",
-       "Traditional recipe of Thailand with green beans, basil, mix vegetables, white rice and fried egg on the rice.",
-       "Recette traditionnelle thaïlandaise avec haricots verts, basilic, légumes mélangés, riz blanc et œuf au plat sur le riz."),
+  {n:g("Pad Kapro","Pad Kapro","Pad Kapro","Pad Kapro","Pad Kapro"),tags:["veg"],
+   d:g("Receta tradicional Tailandesa con judias verdes, albahaca, mixto de verduras, arroz blanco y huevo frito sobre el arroz.","Traditional recipe of Thailand with green beans, basil, mix vegetables, white rice and fried egg on the rice.","Recette traditionnelle thaïlandaise avec haricots verts, basilic, légumes mélangés, riz blanc et œuf au plat sur le riz.","Ricetta tradizionale thailandese con fagiolini, basilico, mix di verdure, riso bianco e uovo fritto sul riso.","Traditionelles thailändisches Rezept mit grünen Bohnen, Basilikum, Gemüsemix, weißem Reis und Spiegelei auf dem Reis."),
    v:[[V.veget,10.10],[V.pollo,11.00],[V.ternera,12.10],[V.langostinos,12.50],[V.mix2,13.80],[V.mix3,14.80]]}
  ]},
 
-{id:"sushi",n:g("Sushi","Sushi","Sushi"),
- s:g("Rolls y hamburguesa de sushi frita","Rolls and fried sushi burger","Rolls et burger de sushi frit"),
+{id:"sushi",n:g("Sushi","Sushi","Sushi","Sushi","Sushi"),
+ s:g("Rolls y hamburguesa de sushi frita","Rolls and fried sushi burger","Rolls et burger de sushi frit","Rolls e hamburger di sushi fritto","Rolls und frittierter Sushi-Burger"),
  items:[
-  {n:g("Roll Pollo crispy","Crispy Chicken Roll","Roll poulet croustillant"),p:11.00,img:"roll-pollo",grp:g("Rolls","Rolls","Rolls"),
-   d:g("Arroz de sushi, alga nori, pollo crispy, queso de untar, aguacate y cebollino.",
-       "Sushi rice, nori seaweed, crispy chicken, cream cheese, avocado and chive.",
-       "Riz à sushi, algue nori, poulet croustillant, fromage frais, avocat et ciboulette.")},
-  {n:g("Roll Salmón ahumado","Smoked Salmon Roll","Roll saumon fumé"),p:12.50,img:"roll-salmon",
-   d:g("Arroz de sushi, alga nori, salmón ahumado, queso de untar, aguacate y cebollino.",
-       "Sushi rice, nori seaweed, smoked salmon, cream cheese, avocado and chive.",
-       "Riz à sushi, algue nori, saumon fumé, fromage frais, avocat et ciboulette.")},
-  {n:g("Hamburguesa Pollo crispy","Crispy Chicken Sushi Burger","Burger de sushi poulet croustillant"),p:9.00,img:"burger-pollo",
-   grp:g("Hamburguesa de Sushi frita","Fried Sushi Burger","Burger de sushi frit"),
-   d:g("Arroz de sushi, alga nori, queso de untar, pollo crispy, aguacate y cebollino.",
-       "Sushi rice, nori seaweed, cream cheese, crispy chicken, avocado and chive.",
-       "Riz à sushi, algue nori, fromage frais, poulet croustillant, avocat et ciboulette.")},
-  {n:g("Hamburguesa Salmón ahumado","Smoked Salmon Sushi Burger","Burger de sushi saumon fumé"),p:10.50,img:"burger-salmon",
-   d:g("Arroz de sushi, alga nori, salmón ahumado, queso de untar, aguacate y cebollino.",
-       "Sushi rice, nori seaweed, smoked salmon, cream cheese, avocado and chive.",
-       "Riz à sushi, algue nori, saumon fumé, fromage frais, avocat et ciboulette.")}
+  {n:g("Roll Pollo crispy","Crispy Chicken Roll","Roll poulet croustillant","Roll pollo croccante","Roll knuspriges Hähnchen"),p:11.00,img:"roll-pollo",grp:g("Rolls","Rolls","Rolls","Rolls","Rolls"),
+   d:g("Arroz de sushi, alga nori, pollo crispy, queso de untar, aguacate y cebollino.","Sushi rice, nori seaweed, crispy chicken, cream cheese, avocado and chive.","Riz à sushi, algue nori, poulet croustillant, fromage frais, avocat et ciboulette.","Riso per sushi, alga nori, pollo croccante, formaggio spalmabile, avocado ed erba cipollina.","Sushi-Reis, Nori-Alge, knuspriges Hähnchen, Frischkäse, Avocado und Schnittlauch.")},
+  {n:g("Roll Salmón ahumado","Smoked Salmon Roll","Roll saumon fumé","Roll salmone affumicato","Roll Räucherlachs"),p:12.50,img:"roll-salmon",
+   d:g("Arroz de sushi, alga nori, salmón ahumado, queso de untar, aguacate y cebollino.","Sushi rice, nori seaweed, smoked salmon, cream cheese, avocado and chive.","Riz à sushi, algue nori, saumon fumé, fromage frais, avocat et ciboulette.","Riso per sushi, alga nori, salmone affumicato, formaggio spalmabile, avocado ed erba cipollina.","Sushi-Reis, Nori-Alge, Räucherlachs, Frischkäse, Avocado und Schnittlauch.")},
+  {n:g("Hamburguesa Pollo crispy","Crispy Chicken Sushi Burger","Burger de sushi poulet croustillant","Hamburger pollo croccante","Burger knuspriges Hähnchen"),p:9.00,img:"burger-pollo",
+   grp:g("Hamburguesa de Sushi frita","Fried Sushi Burger","Burger de sushi frit","Hamburger di sushi fritto","Frittierter Sushi-Burger"),
+   d:g("Arroz de sushi, alga nori, queso de untar, pollo crispy, aguacate y cebollino.","Sushi rice, nori seaweed, cream cheese, crispy chicken, avocado and chive.","Riz à sushi, algue nori, fromage frais, poulet croustillant, avocat et ciboulette.","Riso per sushi, alga nori, formaggio spalmabile, pollo croccante, avocado ed erba cipollina.","Sushi-Reis, Nori-Alge, Frischkäse, knuspriges Hähnchen, Avocado und Schnittlauch.")},
+  {n:g("Hamburguesa Salmón ahumado","Smoked Salmon Sushi Burger","Burger de sushi saumon fumé","Hamburger salmone affumicato","Burger Räucherlachs"),p:10.50,img:"burger-salmon",
+   d:g("Arroz de sushi, alga nori, salmón ahumado, queso de untar, aguacate y cebollino.","Sushi rice, nori seaweed, smoked salmon, cream cheese, avocado and chive.","Riz à sushi, algue nori, saumon fumé, fromage frais, avocat et ciboulette.","Riso per sushi, alga nori, salmone affumicato, formaggio spalmabile, avocado ed erba cipollina.","Sushi-Reis, Nori-Alge, Räucherlachs, Frischkäse, Avocado und Schnittlauch.")}
  ]},
 
-{id:"ensaladas",n:g("Ensaladas","Salads","Salades"),
- s:g("Base de lechuga fresca, vinagreta o cesar","Fresh lettuce base, vinaigrette or cesar","Base de laitue fraîche, vinaigrette ou césar"),
+{id:"ensaladas",n:g("Ensaladas","Salads","Salades","Insalate","Salate"),
+ s:g("Base de lechuga fresca, vinagreta o cesar","Fresh lettuce base, vinaigrette or cesar","Base de laitue fraîche, vinaigrette ou césar","Base di lattuga fresca, vinaigrette o cesar","Frischer Blattsalat, Vinaigrette oder Caesar"),
  items:[
-  {n:g("Ensalada Bali","Bali Salad","Salade Bali"),img:"ens-bali",v:P_ENS,
-   d:g("Pimientos, champiñones y zanahoria al wok sobre una base de lechuga y salsa ali oli o cesar.",
-       "Lettuce base, red bell pepper, mushrooms and carrots to the wok, ali oli or cesar sauce.",
-       "Poivrons, champignons et carotte au wok sur un lit de laitue, sauce aïoli ou césar.")},
-  {n:g("Ensalada Mixta","Mixed Salad","Salade mixte"),img:"ens-mixta",v:P_ENS,
-   d:g("Lechuga, aguacate, tomate cherry, pepino, cebolla roja, queso parmesano, vinagreta y salsa cesar.",
-       "Lettuce, avocado, cherry tomato, cucumber, red onion, parmesan cheese, vinaigrette and cesar sauce.",
-       "Laitue, avocat, tomate cerise, concombre, oignon rouge, parmesan, vinaigrette et sauce césar.")},
-  {n:g("Clásico César","Classic Cesar","César classique"),img:"ens-cesar",v:P_ENS,
-   d:g("Lechuga, aguacate, tomate cherry, queso parmesano, picatostes, vinagreta y salsa cesar.",
-       "Lettuce, avocado, cherry tomato, parmesan cheese, croutons, vinaigrette and cesar sauce.",
-       "Laitue, avocat, tomate cerise, parmesan, croûtons, vinaigrette et sauce césar.")},
-  {n:g("Ensalada Noodles Bangkok","Bangkok Noodles Salad","Salade Noodles Bangkok"),img:"ens-noodles",v:P_ENS,
-   d:g("Lechuga, vinagreta, noodles y mixto de verduras al wok y salsa ali oli.",
-       "Lettuce, vinaigrette, noodles and mix vegetables to the wok, ali oli sauce.",
-       "Laitue, vinaigrette, nouilles et légumes mélangés au wok, sauce aïoli.")},
-  {n:g("Ensalada Thai Wok","Thai Wok Salad","Salade Thaï Wok"),p:11.70,img:"ens-thai",
-   d:g("Lechuga, tomate cherry, pepino, hierbas frescas, cacahuetes, cebolla roja, ternera al wok, salsa thai y salsa ali oli.",
-       "Lettuce, cherry tomato, cucumber, fresh herbs, peanuts, red onion, wok beef, thai sauce and ali oli sauce.",
-       "Laitue, tomate cerise, concombre, herbes fraîches, cacahuètes, oignon rouge, bœuf au wok, sauce thaï et sauce aïoli."),
-   note:g("Con ternera","With beef","Au bœuf")},
-  {n:g("Ensalada Crispy","Crispy Salad","Salade Crispy"),v:P_ENS,
-   d:g("Lechuga, tomate cherry, zanahoria, brotes de soja, rabanos, vinagreta y salsa panko.",
-       "Lettuce, cherry tomato, carrots, soja beans, radish, vinaigrette and panko sauce.",
-       "Laitue, tomate cerise, carotte, pousses de soja, radis, vinaigrette et sauce panko.")}
+  {n:g("Ensalada Bali","Bali Salad","Salade Bali","Insalata Bali","Bali-Salat"),img:"ens-bali",v:P_ENS,
+   d:g("Pimientos, champiñones y zanahoria al wok sobre una base de lechuga y salsa ali oli o cesar.","Lettuce base, red bell pepper, mushrooms and carrots to the wok, ali oli or cesar sauce.","Poivrons, champignons et carotte au wok sur un lit de laitue, sauce aïoli ou césar.","Peperoni, funghi e carota al wok su un letto di lattuga, salsa ali oli o cesar.","Paprika, Champignons und Karotte aus dem Wok auf Blattsalat, Aioli oder Caesar-Dressing.")},
+  {n:g("Ensalada Mixta","Mixed Salad","Salade mixte","Insalata mista","Gemischter Salat"),img:"ens-mixta",v:P_ENS,
+   d:g("Lechuga, aguacate, tomate cherry, pepino, cebolla roja, queso parmesano, vinagreta y salsa cesar.","Lettuce, avocado, cherry tomato, cucumber, red onion, parmesan cheese, vinaigrette and cesar sauce.","Laitue, avocat, tomate cerise, concombre, oignon rouge, parmesan, vinaigrette et sauce césar.","Lattuga, avocado, pomodorini, cetriolo, cipolla rossa, parmigiano, vinaigrette e salsa cesar.","Blattsalat, Avocado, Kirschtomaten, Gurke, rote Zwiebel, Parmesan, Vinaigrette und Caesar-Dressing.")},
+  {n:g("Clásico César","Classic Cesar","César classique","Cesare classica","Klassischer Caesar"),img:"ens-cesar",v:P_ENS,
+   d:g("Lechuga, aguacate, tomate cherry, queso parmesano, picatostes, vinagreta y salsa cesar.","Lettuce, avocado, cherry tomato, parmesan cheese, croutons, vinaigrette and cesar sauce.","Laitue, avocat, tomate cerise, parmesan, croûtons, vinaigrette et sauce césar.","Lattuga, avocado, pomodorini, parmigiano, crostini, vinaigrette e salsa cesar.","Blattsalat, Avocado, Kirschtomaten, Parmesan, Croûtons, Vinaigrette und Caesar-Dressing.")},
+  {n:g("Ensalada Noodles Bangkok","Bangkok Noodles Salad","Salade Noodles Bangkok","Insalata Noodles Bangkok","Bangkok-Nudelsalat"),img:"ens-noodles",v:P_ENS,
+   d:g("Lechuga, vinagreta, noodles y mixto de verduras al wok y salsa ali oli.","Lettuce, vinaigrette, noodles and mix vegetables to the wok, ali oli sauce.","Laitue, vinaigrette, nouilles et légumes mélangés au wok, sauce aïoli.","Lattuga, vinaigrette, noodles e mix di verdure al wok, salsa ali oli.","Blattsalat, Vinaigrette, Nudeln und Gemüsemix aus dem Wok, Aioli.")},
+  {n:g("Ensalada Thai Wok","Thai Wok Salad","Salade Thaï Wok","Insalata Thai Wok","Thai-Wok-Salat"),p:11.70,img:"ens-thai",
+   d:g("Lechuga, tomate cherry, pepino, hierbas frescas, cacahuetes, cebolla roja, ternera al wok, salsa thai y salsa ali oli.","Lettuce, cherry tomato, cucumber, fresh herbs, peanuts, red onion, wok beef, thai sauce and ali oli sauce.","Laitue, tomate cerise, concombre, herbes fraîches, cacahuètes, oignon rouge, bœuf au wok, sauce thaï et sauce aïoli.","Lattuga, pomodorini, cetriolo, erbe fresche, arachidi, cipolla rossa, manzo al wok, salsa thai e salsa ali oli.","Blattsalat, Kirschtomaten, Gurke, frische Kräuter, Erdnüsse, rote Zwiebel, Rind aus dem Wok, Thai-Sauce und Aioli."),
+   note:g("Con ternera","With beef","Au bœuf","Con manzo","Mit Rind")},
+  {n:g("Ensalada Crispy","Crispy Salad","Salade Crispy","Insalata Crispy","Crispy-Salat"),v:P_ENS,
+   d:g("Lechuga, tomate cherry, zanahoria, brotes de soja, rabanos, vinagreta y salsa panko.","Lettuce, cherry tomato, carrots, soja beans, radish, vinaigrette and panko sauce.","Laitue, tomate cerise, carotte, pousses de soja, radis, vinaigrette et sauce panko.","Lattuga, pomodorini, carota, germogli di soia, ravanelli, vinaigrette e salsa panko.","Blattsalat, Kirschtomaten, Karotte, Sojasprossen, Radieschen, Vinaigrette und Panko-Sauce.")}
  ]},
 
-{id:"postres",n:g("Postres","Desserts","Desserts"),
- s:g("Coulant caliente, con o sin helado","Warm coulant, with or without ice cream","Coulant chaud, avec ou sans glace"),
+{id:"postres",n:g("Postres","Desserts","Desserts","Dolci","Desserts"),
+ s:g("Coulant caliente, con o sin helado","Warm coulant, with or without ice cream","Coulant chaud, avec ou sans glace","Coulant caldo, con o senza gelato","Warmer Coulant, mit oder ohne Eis"),
  items:[
-  {n:g("Coulant de chocolate","Chocolate Coulant","Coulant au chocolat"),img:"coulant-choco",
-   v:[[g("Solo","On its own","Seul"),4.50],
-      [g("1 bola de helado","1 ice cream ball","1 boule de glace"),5.50],
-      [g("2 bolas de helado","2 ice cream balls","2 boules de glace"),6.70]]},
-  {n:g("Coulant de tarta de queso","Cheesecake Coulant","Coulant au cheesecake"),img:"coulant-queso",
-   v:[[g("Solo","On its own","Seul"),4.50],
-      [g("1 bola de helado","1 ice cream ball","1 boule de glace"),5.50],
-      [g("2 bolas de helado","2 ice cream balls","2 boules de glace"),6.70]]}
+  {n:g("Coulant de chocolate","Chocolate Coulant","Coulant au chocolat","Coulant al cioccolato","Schoko-Coulant"),img:"coulant-choco",
+   v:[[g("Solo","On its own","Seul","Da solo","Pur"),4.50],
+      [g("1 bola de helado","1 ice cream ball","1 boule de glace","1 pallina di gelato","1 Kugel Eis"),5.50],
+      [g("2 bolas de helado","2 ice cream balls","2 boules de glace","2 palline di gelato","2 Kugeln Eis"),6.70]]},
+  {n:g("Coulant de tarta de queso","Cheesecake Coulant","Coulant au cheesecake","Coulant al cheesecake","Cheesecake-Coulant"),img:"coulant-queso",
+   v:[[g("Solo","On its own","Seul","Da solo","Pur"),4.50],
+      [g("1 bola de helado","1 ice cream ball","1 boule de glace","1 pallina di gelato","1 Kugel Eis"),5.50],
+      [g("2 bolas de helado","2 ice cream balls","2 boules de glace","2 palline di gelato","2 Kugeln Eis"),6.70]]}
  ]},
 
-{id:"batidos",n:g("Batidos","Shakes","Milkshakes"),
- s:g("Leche, helado y sirope","Milk, ice cream and syrup","Lait, glace et sirop"),
+{id:"batidos",n:g("Batidos","Shakes","Milkshakes","Frullati","Milchshakes"),
+ s:g("Leche, helado y sirope","Milk, ice cream and syrup","Lait, glace et sirop","Latte, gelato e sciroppo","Milch, Eis und Sirup"),
  items:[
-  {n:g("Batido de galletas","Cookie shake","Milkshake aux biscuits"),p:5.50,img:"batido-galletas",
-   d:g("Leche, helado de vainilla, galletas de chocolate con crema y sirope.",
-       "Milk, vanilla ice cream, chocolate cookies with cream and syrup.",
-       "Lait, glace vanille, biscuits au chocolat fourrés et sirop.")},
-  {n:g("Batido de helado","Ice cream shake","Milkshake à la glace"),p:5.00,
-   d:g("Leche, helado (chocolate o vainilla) y sirope.",
-       "Milk, ice cream (vanilla or chocolate) and syrup.",
-       "Lait, glace (chocolat ou vanille) et sirop.")}
+  {n:g("Batido de galletas","Cookie shake","Milkshake aux biscuits","Frullato ai biscotti","Keks-Shake"),p:5.50,img:"batido-galletas",
+   d:g("Leche, helado de vainilla, galletas de chocolate con crema y sirope.","Milk, vanilla ice cream, chocolate cookies with cream and syrup.","Lait, glace vanille, biscuits au chocolat fourrés et sirop.","Latte, gelato alla vaniglia, biscotti al cioccolato con crema e sciroppo.","Milch, Vanilleeis, Schokoladenkekse mit Creme und Sirup.")},
+  {n:g("Batido de helado","Ice cream shake","Milkshake à la glace","Frullato al gelato","Eis-Shake"),p:5.00,
+   d:g("Leche, helado (chocolate o vainilla) y sirope.","Milk, ice cream (vanilla or chocolate) and syrup.","Lait, glace (chocolat ou vanille) et sirop.","Latte, gelato (cioccolato o vaniglia) e sciroppo.","Milch, Eis (Schokolade oder Vanille) und Sirup.")}
  ]},
 
-{id:"bebidas",n:g("Bebidas","Drinks","Boissons"),
- s:g("Refrescos, sidras, vinos y cervezas","Soft drinks, ciders, wines and beers","Sodas, cidres, vins et bières"),
+{id:"bebidas",n:g("Bebidas","Drinks","Boissons","Bevande","Getränke"),
+ s:g("Refrescos, sidras, vinos y cervezas","Soft drinks, ciders, wines and beers","Sodas, cidres, vins et bières","Bibite, sidri, vini e birre","Erfrischungsgetränke, Cider, Weine und Biere"),
  items:[
-  {n:g("Agua","Water","Eau"),p:1.80,img:"bebidas",grp:g("Refrescos","Soft drinks","Sodas")},
-  {n:g("Agua con gas","Sparkling water","Eau gazeuse"),p:1.95},
-  {n:g("Coca Cola botella","Coca Cola bottle","Coca-Cola bouteille"),p:2.95},
-  {n:g("Coca Cola lata","Coca Cola can","Coca-Cola canette"),p:2.00},
-  {n:g("Coca Cola Zero botella","Coca Cola Zero bottle","Coca-Cola Zero bouteille"),p:2.95},
-  {n:g("Coca Cola Zero lata","Coca Cola Zero can","Coca-Cola Zero canette"),p:2.00},
-  {n:g("Fanta Naranja, Limón","Fanta Orange, Lemon","Fanta orange, citron"),p:2.95},
-  {n:g("Aquarius Naranja, Limón, Melocotón","Aquarius Orange, Lemon, Peach","Aquarius orange, citron, pêche"),p:2.95},
-  {n:g("Fuze Tea Limón, Mango Piña, Maracuya","Fuze Tea Lemon, Mango Pineapple, Passion fruit","Fuze Tea citron, mangue-ananas, fruit de la passion"),p:2.95},
-  {n:g("Appletiser","Appletiser","Appletiser"),p:2.95},
-  {n:g("Sprite","Sprite","Sprite"),p:2.95},
-  {n:g("Tónica","Tonic","Tonic"),p:2.30},
-  {n:g("Zumo Melocotón, Piña, Manzana","Juice Peach, Pineapple, Apple","Jus pêche, ananas, pomme"),p:2.50},
-  {n:g("Monster Mango loco, Original","Monster Mango loco, Original","Monster Mango loco, Original"),p:3.00},
-  {n:g("Red Bull","Red Bull","Red Bull"),p:3.00},
-  {n:g("Aloe Vera King","Aloe Vera King","Aloe Vera King"),p:2.95},
-  {n:g("Foco (Coco, Mango, Maracuya, Tamarindo)","Foco (Coconut, Mango, Passion fruit, Tamarind)","Foco (coco, mangue, passion, tamarin)"),p:3.00},
-  {n:g("Nico Nico (Maracuya, Mango, Coco, Lychee)","Nico Nico (Passion fruit, Mango, Coconut, Lychee)","Nico Nico (passion, mangue, coco, litchi)"),p:2.20},
-  {n:g("BubbleTea","BubbleTea","Bubble Tea"),p:3.95},
+  {n:g("Agua","Water","Eau","Acqua","Wasser"),p:1.80,img:"bebidas",grp:g("Refrescos","Soft drinks","Sodas","Bibite","Erfrischungsgetränke")},
+  {n:g("Agua con gas","Sparkling water","Eau gazeuse","Acqua frizzante","Wasser mit Kohlensäure"),p:1.95},
+  {n:g("Coca Cola botella","Coca Cola bottle","Coca-Cola bouteille","Coca Cola bottiglia","Coca-Cola Flasche"),p:2.95},
+  {n:g("Coca Cola lata","Coca Cola can","Coca-Cola canette","Coca Cola lattina","Coca-Cola Dose"),p:2.00},
+  {n:g("Coca Cola Zero botella","Coca Cola Zero bottle","Coca-Cola Zero bouteille","Coca Cola Zero bottiglia","Coca-Cola Zero Flasche"),p:2.95},
+  {n:g("Coca Cola Zero lata","Coca Cola Zero can","Coca-Cola Zero canette","Coca Cola Zero lattina","Coca-Cola Zero Dose"),p:2.00},
+  {n:g("Fanta Naranja, Limón","Fanta Orange, Lemon","Fanta orange, citron","Fanta arancia, limone","Fanta Orange, Zitrone"),p:2.95},
+  {n:g("Aquarius Naranja, Limón, Melocotón","Aquarius Orange, Lemon, Peach","Aquarius orange, citron, pêche","Aquarius arancia, limone, pesca","Aquarius Orange, Zitrone, Pfirsich"),p:2.95},
+  {n:g("Fuze Tea Limón, Mango Piña, Maracuya","Fuze Tea Lemon, Mango Pineapple, Passion fruit","Fuze Tea citron, mangue-ananas, fruit de la passion","Fuze Tea limone, mango-ananas, maracuja","Fuze Tea Zitrone, Mango-Ananas, Maracuja"),p:2.95},
+  {n:g("Appletiser","Appletiser","Appletiser","Appletiser","Appletiser"),p:2.95},
+  {n:g("Sprite","Sprite","Sprite","Sprite","Sprite"),p:2.95},
+  {n:g("Tónica","Tonic","Tonic","Tonica","Tonic Water"),p:2.30},
+  {n:g("Zumo Melocotón, Piña, Manzana","Juice Peach, Pineapple, Apple","Jus pêche, ananas, pomme","Succo pesca, ananas, mela","Saft Pfirsich, Ananas, Apfel"),p:2.50},
+  {n:g("Monster Mango loco, Original","Monster Mango loco, Original","Monster Mango loco, Original","Monster Mango loco, Original","Monster Mango loco, Original"),p:3.00},
+  {n:g("Red Bull","Red Bull","Red Bull","Red Bull","Red Bull"),p:3.00},
+  {n:g("Aloe Vera King","Aloe Vera King","Aloe Vera King","Aloe Vera King","Aloe Vera King"),p:2.95},
+  {n:g("Foco (Coco, Mango, Maracuya, Tamarindo)","Foco (Coconut, Mango, Passion fruit, Tamarind)","Foco (coco, mangue, passion, tamarin)","Foco (cocco, mango, maracuja, tamarindo)","Foco (Kokos, Mango, Maracuja, Tamarinde)"),p:3.00},
+  {n:g("Nico Nico (Maracuya, Mango, Coco, Lychee)","Nico Nico (Passion fruit, Mango, Coconut, Lychee)","Nico Nico (passion, mangue, coco, litchi)","Nico Nico (maracuja, mango, cocco, litchi)","Nico Nico (Maracuja, Mango, Kokos, Litschi)"),p:2.20},
+  {n:g("BubbleTea","BubbleTea","Bubble Tea","Bubble Tea","Bubble Tea"),p:3.95},
 
-  {n:g("Tinto de verano","Tinto de verano","Tinto de verano"),p:4.00,grp:g("Sidras y Vinos","Ciders & Wines","Cidres et vins")},
-  {n:g("Ladrón de manzanas, frutos rojos","Ladrón de manzanas, red berries","Ladrón de manzanas, fruits rouges"),p:3.00},
-  {n:g("Kopparberg","Kopparberg","Kopparberg"),p:4.00},
-  {n:g("Copa de vino","Glass of wine","Verre de vin"),p:4.00},
-  {n:g("Botella de vino","Bottle of wine","Bouteille de vin"),p:14.00},
+  {n:g("Tinto de verano","Tinto de verano","Tinto de verano","Tinto de verano","Tinto de verano"),p:4.00,grp:g("Sidras y Vinos","Ciders & Wines","Cidres et vins","Sidri e vini","Cider & Weine")},
+  {n:g("Ladrón de manzanas, frutos rojos","Ladrón de manzanas, red berries","Ladrón de manzanas, fruits rouges","Ladrón de manzanas, frutti rossi","Ladrón de manzanas, rote Früchte"),p:3.00},
+  {n:g("Kopparberg","Kopparberg","Kopparberg","Kopparberg","Kopparberg"),p:4.00},
+  {n:g("Copa de vino","Glass of wine","Verre de vin","Calice di vino","Glas Wein"),p:4.00},
+  {n:g("Botella de vino","Bottle of wine","Bouteille de vin","Bottiglia di vino","Flasche Wein"),p:14.00},
 
-  {n:g("Caña","Draft beer","Demi pression"),p:2.00,grp:g("Cervezas","Beers","Bières")},
-  {n:g("Jarra","Beer jug","Chope"),p:3.00},
-  {n:g("Dorada Pilsen","Dorada Pilsen","Dorada Pilsen"),p:2.95},
-  {n:g("Dorada Especial","Dorada Especial","Dorada Especial"),p:2.95},
-  {n:g("Dorada sin","Dorada alcohol-free","Dorada sans alcool"),p:2.95},
-  {n:g("Dorada sin con limón","Dorada alcohol-free with lemon","Dorada sans alcool citron"),p:2.95},
-  {n:g("Dorada sin tostada","Dorada alcohol-free amber","Dorada sans alcool ambrée"),p:2.95},
-  {n:g("Heineken botella","Heineken bottle","Heineken bouteille"),p:2.80},
-  {n:g("Heineken lata","Heineken can","Heineken canette"),p:1.95},
-  {n:g("Heineken 0,0","Heineken 0.0","Heineken 0,0"),p:2.80},
-  {n:g("Coronita","Coronita","Coronita"),p:3.00},
-  {n:g("Coronita 0,0","Coronita 0.0","Coronita 0,0"),p:3.00},
-  {n:g("Águila sin filtrar","Águila unfiltered","Águila non filtrée"),p:2.90},
-  {n:g("Cruz Campo sin gluten","Cruz Campo gluten-free","Cruz Campo sans gluten"),p:2.95},
-  {n:g("Peroni","Peroni","Peroni"),p:3.00},
-  {n:g("Radler","Radler","Radler"),p:2.90},
-  {n:g("Erdinger","Erdinger","Erdinger"),p:4.10},
-  {n:g("Estrella 0,0","Estrella 0.0","Estrella 0,0"),p:2.35},
-  {n:g("Estrella 0,0 tostada","Estrella 0.0 amber","Estrella 0,0 ambrée"),p:2.35},
-  {n:g("Asahi","Asahi","Asahi"),p:3.10},
-  {n:g("Singha","Singha","Singha"),p:3.20},
-  {n:g("Kirin","Kirin","Kirin"),p:3.20}
+  {n:g("Caña","Draft beer","Demi pression","Birra alla spina","Bier vom Fass"),p:2.00,grp:g("Cervezas","Beers","Bières","Birre","Biere")},
+  {n:g("Jarra","Beer jug","Chope","Boccale","Krug"),p:3.00},
+  {n:g("Dorada Pilsen","Dorada Pilsen","Dorada Pilsen","Dorada Pilsen","Dorada Pilsen"),p:2.95},
+  {n:g("Dorada Especial","Dorada Especial","Dorada Especial","Dorada Especial","Dorada Especial"),p:2.95},
+  {n:g("Dorada sin","Dorada alcohol-free","Dorada sans alcool","Dorada analcolica","Dorada alkoholfrei"),p:2.95},
+  {n:g("Dorada sin con limón","Dorada alcohol-free with lemon","Dorada sans alcool citron","Dorada analcolica al limone","Dorada alkoholfrei mit Zitrone"),p:2.95},
+  {n:g("Dorada sin tostada","Dorada alcohol-free amber","Dorada sans alcool ambrée","Dorada analcolica ambrata","Dorada alkoholfrei bernstein"),p:2.95},
+  {n:g("Heineken botella","Heineken bottle","Heineken bouteille","Heineken bottiglia","Heineken Flasche"),p:2.80},
+  {n:g("Heineken lata","Heineken can","Heineken canette","Heineken lattina","Heineken Dose"),p:1.95},
+  {n:g("Heineken 0,0","Heineken 0.0","Heineken 0,0","Heineken 0.0","Heineken 0,0"),p:2.80},
+  {n:g("Coronita","Coronita","Coronita","Coronita","Coronita"),p:3.00},
+  {n:g("Coronita 0,0","Coronita 0.0","Coronita 0,0","Coronita 0.0","Coronita 0,0"),p:3.00},
+  {n:g("Águila sin filtrar","Águila unfiltered","Águila non filtrée","Águila non filtrata","Águila naturtrüb"),p:2.90},
+  {n:g("Cruz Campo sin gluten","Cruz Campo gluten-free","Cruz Campo sans gluten","Cruz Campo senza glutine","Cruz Campo glutenfrei"),p:2.95},
+  {n:g("Peroni","Peroni","Peroni","Peroni","Peroni"),p:3.00},
+  {n:g("Radler","Radler","Radler","Radler","Radler"),p:2.90},
+  {n:g("Erdinger","Erdinger","Erdinger","Erdinger","Erdinger"),p:4.10},
+  {n:g("Estrella 0,0","Estrella 0.0","Estrella 0,0","Estrella 0.0","Estrella 0,0"),p:2.35},
+  {n:g("Estrella 0,0 tostada","Estrella 0.0 amber","Estrella 0,0 ambrée","Estrella 0.0 ambrata","Estrella 0,0 bernstein"),p:2.35},
+  {n:g("Asahi","Asahi","Asahi","Asahi","Asahi"),p:3.10},
+  {n:g("Singha","Singha","Singha","Singha","Singha"),p:3.20},
+  {n:g("Kirin","Kirin","Kirin","Kirin","Kirin"),p:3.20}
  ]}
 ];
 
 /* ============================================================
    Estado
    ============================================================ */
-const LANGS = ["es","en","fr"];
+const LANGS = ["es","en","fr","it","de"];
 let lang  = localStorage.getItem("ty_lang")  || "es";
 let theme = localStorage.getItem("ty_theme") || "dark";
 let filter = "all";
-const cart = new Map();
 const open = new Set();
 
 const $ = s => document.querySelector(s);
@@ -950,15 +891,12 @@ function renderFilters(){
 }
 
 function dishHTML(c, d, i){
-  const key = c.id + ":" + i;
-  const n = cart.get(key) || 0;
   const badges = (d.tags||[]).map(t =>
     t === "veg"   ? `<span class="b veg">${T().badges.veg}</span>` :
     t === "spicy" ? `<span class="b spi">${T().badges.spicy}</span>` : "").join("");
 
   const foot = d.p != null
-    ? `<span class="price">${money(d.p)}</span>
-       <button class="add ${n?"in":""}" data-add="${key}" aria-label="+">${n||"+"}</button>`
+    ? `<span class="price">${money(d.p)}</span>`
     : `<div class="vgrid">${d.v.map(([l,p]) => `<span class="v">${l[lang]} <b>${money(p)}</b></span>`).join("")}</div>`;
 
   return `${d.grp ? `<div class="grp">${d.grp[lang]}</div>` : ""}
@@ -996,49 +934,6 @@ function renderList(){
   $("#list").innerHTML = shown ? html : `<div class="empty">${T().noRes}</div>`;
   indexDishes();
   observeReveal();
-}
-
-function find(key){
-  const [cid,i] = key.split(":");
-  const c = MENU.find(x => x.id === cid);
-  return { c, d: c.items[+i] };
-}
-
-function totals(){
-  let n = 0, sum = 0;
-  for (const [k,q] of cart){ n += q; sum += find(k).d.p * q; }
-  return { n, sum };
-}
-
-function renderCart(){
-  const { n, sum } = totals();
-  $("#fab").classList.toggle("on", n > 0);
-  document.body.classList.toggle("cart-on", n > 0);
-  $("#fabN").textContent = n;
-  $("#fabTxt").textContent = T().view;
-  $("#fabTot").textContent = money(sum);
-
-  const body = $("#cartBody");
-  if (!n){
-    body.innerHTML = `<div class="empty">${T().empty}</div>`;
-    $("#totals").innerHTML = "";
-    $("#order").disabled = true;
-  } else {
-    body.innerHTML = [...cart].map(([k,q]) => {
-      const { c,d } = find(k);
-      return `<div class="ci">
-        <div class="ci-n"><div>${d.n[lang]}</div><div>${c.n[lang]} · ${money(d.p)}</div></div>
-        <div class="qty">
-          <button data-q="${k}:-1" aria-label="−">−</button><span>${q}</span><button data-q="${k}:1" aria-label="+">+</button>
-        </div>
-        <div class="ci-p">${money(d.p*q)}</div>
-      </div>`;
-    }).join("");
-    $("#totals").innerHTML = `<div class="tr big"><span>${T().total}</span><span>${money(sum)}</span></div>`;
-    $("#order").disabled = false;
-  }
-  $("#order").textContent = T().order;
-  $("#sheetTitle").textContent = T().cart;
 }
 
 function renderSocial(){
@@ -1249,7 +1144,7 @@ function renderStatic(){
   $("#dishCount").innerHTML = `<b>${total}</b> ${T().count}`;
 }
 
-function renderAll(){ renderStatic(); renderFilters(); renderList(); renderCart(); }
+function renderAll(){ renderStatic(); renderFilters(); renderList(); }
 
 /* ============================================================
    Eventos
@@ -1262,25 +1157,6 @@ $("#list").addEventListener("click", e => {
     else { el.setAttribute("open",""); open.add(id); }
     return;
   }
-  const add = e.target.closest("[data-add]");
-  if (add){
-    const k = add.dataset.add;
-    cart.set(k,(cart.get(k)||0)+1);
-    add.textContent = cart.get(k);
-    add.classList.add("in");
-    renderCart();
-  }
-});
-
-$("#cartBody").addEventListener("click", e => {
-  const b = e.target.closest("[data-q]");
-  if (!b) return;
-  const parts = b.dataset.q.split(":");
-  const delta = +parts.pop();
-  const k = parts.join(":");
-  const q = (cart.get(k)||0) + delta;
-  if (q <= 0) cart.delete(k); else cart.set(k,q);
-  renderCart(); renderList();
 });
 
 $("#filters").addEventListener("click", e => {
@@ -1329,19 +1205,6 @@ $("#theme").addEventListener("click", () => {
   applyTheme();
 });
 
-const openSheet = v => {
-  $("#sheet").classList.toggle("on", v);
-  $("#scrim").classList.toggle("on", v);
-  document.body.style.overflow = v ? "hidden" : "";
-};
-$("#fab").addEventListener("click", () => openSheet(true));
-$("#close").addEventListener("click", () => openSheet(false));
-$("#scrim").addEventListener("click", () => openSheet(false));
-$("#order").addEventListener("click", () => {
-  alert(T().done);
-  openSheet(false);
-});
-
 /* ============================================================
    ASSISTANT DE LA CARTE
    Répond uniquement à partir des données réelles du menu.
@@ -1359,8 +1222,8 @@ const CHAT = {
     cheap:"Lo más económico de la carta:",
     combo:"Los combos son entrantes para compartir:",
     halal:"Sí, toda la carne es <b>halal</b> ✓ La cocina es asiática: tailandesa, japonesa y china.",
-    rating:"",
-    found:"Esto he encontrado:", none:"No he encontrado ese plato en la carta. Prueba con «pollo», «gambas», «arroz», «sushi», «poke»…",
+    found:"Esto he encontrado:",
+    none:"No he encontrado ese plato en la carta. Prueba con «pollo», «gambas», «arroz», «sushi», «poke»…",
     hours:"No tengo los horarios en la carta. Los verás siempre actualizados en nuestra ficha de Google 👇",
     allerg:"En la carta no figuran los alérgenos. Por seguridad, pregunta directamente al camarero antes de pedir 🙏",
     deliv:"Aquí solo está la carta. Para pedidos, reservas o llevar, pregunta al camarero o mira nuestra ficha de Google 👇",
@@ -1375,7 +1238,7 @@ const CHAT = {
     cheap:"The most affordable on the menu:",
     combo:"Combos are starters to share:",
     halal:"Yes, all our meat is <b>halal</b> ✓ The kitchen is Asian: Thai, Japanese and Chinese.",
-    rating:"", found:"Here's what I found:",
+    found:"Here's what I found:",
     none:"I couldn't find that dish. Try «chicken», «prawns», «rice», «sushi», «poke»…",
     hours:"Opening hours aren't in the menu. You'll always find them up to date on our Google listing 👇",
     allerg:"Allergens aren't listed in the menu. To be safe, please ask your waiter before ordering 🙏",
@@ -1391,12 +1254,44 @@ const CHAT = {
     cheap:"Le plus abordable de la carte :",
     combo:"Les combos sont des entrées à partager :",
     halal:"Oui, toute la viande est <b>halal</b> ✓ La cuisine est asiatique : thaïe, japonaise et chinoise.",
-    rating:"", found:"Voici ce que j'ai trouvé :",
+    found:"Voici ce que j'ai trouvé :",
     none:"Je n'ai pas trouvé ce plat. Essayez « poulet », « gambas », « riz », « sushi », « poke »…",
     hours:"Les horaires ne figurent pas sur la carte. Vous les trouverez à jour sur notre fiche Google 👇",
     allerg:"Les allergènes ne sont pas indiqués sur la carte. Par précaution, demandez au serveur avant de commander 🙏",
     deliv:"Ici il n'y a que la carte. Pour commander, réserver ou emporter, demandez au serveur ou consultez notre fiche Google 👇",
     link:"Voir la fiche Google", drinks:"Boissons à découvrir :", from:"dès"
+  },
+  it:{
+    title:"Assistente del menù", sub:"Risposte immediate",
+    hello:"Ciao! Posso cercare piatti, prezzi e opzioni vegetariane o piccanti. Cosa ti va?",
+    ph:"Scrivi la tua domanda…",
+    chips:["Cosa è vegetariano?","Cosa è piccante?","I combo","Il più economico","È halal?"],
+    veg:"Piatti con opzione vegetariana:", spicy:"Piatti piccanti:",
+    cheap:"I più economici del menù:",
+    combo:"I combo sono antipasti da condividere:",
+    halal:"Sì, tutta la carne è <b>halal</b> ✓ La cucina è asiatica: thailandese, giapponese e cinese.",
+    found:"Ecco cosa ho trovato:",
+    none:"Non ho trovato questo piatto. Prova con «pollo», «gamberoni», «riso», «sushi», «poke»…",
+    hours:"Gli orari non sono nel menù. Li trovi sempre aggiornati sulla nostra scheda Google 👇",
+    allerg:"Gli allergeni non sono indicati nel menù. Per sicurezza, chiedi al cameriere prima di ordinare 🙏",
+    deliv:"Qui c'è solo il menù. Per ordini, prenotazioni o asporto, chiedi al cameriere o guarda la nostra scheda Google 👇",
+    link:"Vedi la scheda Google", drinks:"Bevande in evidenza:", from:"da"
+  },
+  de:{
+    title:"Menü-Assistent", sub:"Sofortige Antworten",
+    hello:"Hallo! Ich finde Gerichte, Preise sowie vegetarische und scharfe Optionen. Worauf haben Sie Lust?",
+    ph:"Schreiben Sie Ihre Frage…",
+    chips:["Was ist vegetarisch?","Was ist scharf?","Die Combos","Am günstigsten","Ist es halal?"],
+    veg:"Gerichte mit vegetarischer Option:", spicy:"Scharfe Gerichte:",
+    cheap:"Die günstigsten Gerichte:",
+    combo:"Combos sind Vorspeisen zum Teilen:",
+    halal:"Ja, unser gesamtes Fleisch ist <b>halal</b> ✓ Die Küche ist asiatisch: thailändisch, japanisch und chinesisch.",
+    found:"Das habe ich gefunden:",
+    none:"Dieses Gericht habe ich nicht gefunden. Versuchen Sie «Hähnchen», «Garnelen», «Reis», «Sushi», «Poke»…",
+    hours:"Die Öffnungszeiten stehen nicht in der Karte. Aktuell finden Sie sie in unserem Google-Eintrag 👇",
+    allerg:"Allergene sind in der Karte nicht angegeben. Fragen Sie bitte sicherheitshalber das Personal, bevor Sie bestellen 🙏",
+    deliv:"Hier finden Sie nur die Speisekarte. Für Bestellungen, Reservierungen oder Abholung fragen Sie das Personal oder sehen Sie in unserem Google-Eintrag nach 👇",
+    link:"Google-Eintrag öffnen", drinks:"Ausgewählte Getränke:", from:"ab"
   }
 };
 
@@ -1462,25 +1357,25 @@ function answer(qRaw){
   const all = allDishes();
   const food = all.filter(x => x.c.id !== "bebidas");
 
-  if (has("halal","cerdo","porc","pork"))
+  if (has("halal","cerdo","porc","pork","maiale","schwein"))
     return t.halal;
 
-  if (has("vegetarian","vegetarien","vegetariano","vege","vegan","sin carne","meat free"))
+  if (has("vegetarian","vegetarien","vegetariano","vege","vegan","sin carne","meat free","vegetarisch","fleischlos"))
     return t.veg + lines(food.filter(x => (x.d.tags||[]).includes("veg")).slice(0, 7));
 
-  if (has("pica","picante","spicy","epice","piment","hot"))
+  if (has("pica","picante","spicy","epice","piment","hot","piccante","scharf"))
     return t.spicy + lines(food.filter(x => (x.d.tags||[]).includes("spicy")));
 
   if (has("combo"))
     return t.combo + lines(all.filter(x => x.c.id === "combos"));
 
-  if (has("barato","cheap","pas cher","moins cher","economic","economico","precio bajo"))
+  if (has("barato","cheap","pas cher","moins cher","economic","economico","precio bajo","gunstig","günstig","billig","piu economico"))
     return t.cheap + lines([...food].sort((a, b) => a.p - b.p).slice(0, 6));
 
-  if (has("horario","hora","abre","abierto","open","ouvert","horaire","cierra"))
+  if (has("horario","hora","abre","abierto","open","ouvert","horaire","cierra","orari","aperto","offnung","öffnung","geoffnet","geöffnet"))
     return t.hours + gLink();
 
-  if (has("alergen","alergia","allerg","gluten","lactose","lactosa","cacahuete","peanut","nuts","intoleran"))
+  if (has("alergen","alergia","allerg","gluten","lactose","lactosa","cacahuete","peanut","nuts","intoleran","glutine","laktose","erdnuss","nuss"))
     return t.allerg;
 
   if (has("reserva","reservar","booking","book","domicilio","delivery","llevar","takeaway","emporter","telefono","phone","direccion","adresse","address","donde esta","where are","ou etes"))
@@ -1490,7 +1385,7 @@ function answer(qRaw){
     return `<b>${score(RATING.score)}/5</b> ${T().revCount(RATING.count)}` + gLink();
 
   /* boissons : on cible d'abord le mot demandé (cerveza, vino…) */
-  if (has("bebida","drink","boisson","beber","tomar","cerveza","beer","biere","vino","wine","refresco","zumo","juice","agua","water")){
+  if (has("bebida","drink","boisson","beber","tomar","cerveza","beer","biere","vino","wine","refresco","zumo","juice","agua","water","bevanda","birra","bier","getrank","getränk","wasser","saft","succo")){
     const drinks = all.filter(x => x.c.id === "bebidas");
     const hits = search(qRaw, drinks);
     return t.drinks + lines(hits.length ? hits : drinks.slice(0, 6));
