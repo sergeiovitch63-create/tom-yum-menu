@@ -632,7 +632,7 @@ const P_SOPA  = [[V.veget,6.60],[V.pollo,7.30],[V.langostinos,7.80],[V.mixta,8.2
 const P_RAMEN = [[V.veget,11.50],[V.pollo,13.00],[V.langostinos,15.50],[V.mixta,16.50]];
 const P_ARROZ = [[V.veget,11.00],[V.pollo,11.50],[V.ternera,12.80],[V.langostino,14.50],[V.mix2,15.50],[V.mix3,16.00]];
 const P_FIDEOS= [[V.veget,11.00],[V.pollo,11.50],[V.ternera,12.80],[V.langostino,14.50],[V.mix2,15.20],[V.mix3,15.50]];
-const P_ENS   = [[V.pollo,11.20],[V.langostino,12.20],[V.mixta,13.00]];
+const P_ENS   = [[V.veget,10.50],[V.pollo,11.20],[V.langostino,12.20],[V.mixta,13.00]];
 
 const g = (es,en,fr,it,de) => ({es,en,fr,it,de});
 
@@ -750,15 +750,10 @@ const MENU = [
    v:[[V.veget,10.10],[V.pollo,11.00],[V.ternera,12.10],[V.langostinos,14.80],[V.mix2,15.20],[V.mix3,15.90]]}
  ]},
 
-{id:"sushi",n:g("Sushi","Sushi","Sushi","Sushi","Sushi"),
- s:g("Rolls y hamburguesa de sushi frita","Rolls and fried sushi burger","Rolls et burger de sushi frit","Rolls e hamburger di sushi fritto","Rolls und frittierter Sushi-Burger"),
+{id:"sushi",n:g("Sushi Burger","Sushi Burger","Sushi Burger","Sushi Burger","Sushi Burger"),
+ s:g("Hamburguesa de sushi frita","Fried sushi burger","Burger de sushi frit","Hamburger di sushi fritto","Frittierter Sushi-Burger"),
  items:[
-  {n:g("Roll Pollo crispy","Crispy Chicken Roll","Roll poulet croustillant","Roll pollo croccante","Roll knuspriges Hähnchen"),p:11.00,img:"roll-pollo",grp:g("Rolls","Rolls","Rolls","Rolls","Rolls"),
-   d:g("Arroz de sushi, alga nori, pollo crispy, queso de untar, aguacate y cebollino.","Sushi rice, nori seaweed, crispy chicken, cream cheese, avocado and chive.","Riz à sushi, algue nori, poulet croustillant, fromage frais, avocat et ciboulette.","Riso per sushi, alga nori, pollo croccante, formaggio spalmabile, avocado ed erba cipollina.","Sushi-Reis, Nori-Alge, knuspriges Hähnchen, Frischkäse, Avocado und Schnittlauch.")},
-  {n:g("Roll Salmón ahumado","Smoked Salmon Roll","Roll saumon fumé","Roll salmone affumicato","Roll Räucherlachs"),p:12.50,img:"roll-salmon",
-   d:g("Arroz de sushi, alga nori, salmón ahumado, queso de untar, aguacate y cebollino.","Sushi rice, nori seaweed, smoked salmon, cream cheese, avocado and chive.","Riz à sushi, algue nori, saumon fumé, fromage frais, avocat et ciboulette.","Riso per sushi, alga nori, salmone affumicato, formaggio spalmabile, avocado ed erba cipollina.","Sushi-Reis, Nori-Alge, Räucherlachs, Frischkäse, Avocado und Schnittlauch.")},
   {n:g("Hamburguesa Pollo crispy","Crispy Chicken Sushi Burger","Burger de sushi poulet croustillant","Hamburger pollo croccante","Burger knuspriges Hähnchen"),p:9.50,img:"burger-pollo",
-   grp:g("Hamburguesa de Sushi frita","Fried Sushi Burger","Burger de sushi frit","Hamburger di sushi fritto","Frittierter Sushi-Burger"),
    d:g("Arroz de sushi, alga nori, queso de untar, pollo crispy, aguacate y cebollino.","Sushi rice, nori seaweed, cream cheese, crispy chicken, avocado and chive.","Riz à sushi, algue nori, fromage frais, poulet croustillant, avocat et ciboulette.","Riso per sushi, alga nori, formaggio spalmabile, pollo croccante, avocado ed erba cipollina.","Sushi-Reis, Nori-Alge, Frischkäse, knuspriges Hähnchen, Avocado und Schnittlauch.")},
   {n:g("Hamburguesa Salmón ahumado","Smoked Salmon Sushi Burger","Burger de sushi saumon fumé","Hamburger salmone affumicato","Burger Räucherlachs"),p:10.90,img:"burger-salmon",
    d:g("Arroz de sushi, alga nori, salmón ahumado, queso de untar, aguacate y cebollino.","Sushi rice, nori seaweed, smoked salmon, cream cheese, avocado and chive.","Riz à sushi, algue nori, saumon fumé, fromage frais, avocat et ciboulette.","Riso per sushi, alga nori, salmone affumicato, formaggio spalmabile, avocado ed erba cipollina.","Sushi-Reis, Nori-Alge, Räucherlachs, Frischkäse, Avocado und Schnittlauch.")}
@@ -767,18 +762,17 @@ const MENU = [
 {id:"ensaladas",n:g("Ensaladas","Salads","Salades","Insalate","Salate"),
  s:g("Base de lechuga fresca, vinagreta o cesar","Fresh lettuce base, vinaigrette or cesar","Base de laitue fraîche, vinaigrette ou césar","Base di lattuga fresca, vinaigrette o cesar","Frischer Blattsalat, Vinaigrette oder Caesar"),
  items:[
-  {n:g("Ensalada Bali","Bali Salad","Salade Bali","Insalata Bali","Bali-Salat"),img:"ens-bali",v:[[V.pollo,11.50],[V.langostino,13.80],[V.mixta,14.50]],
+  {n:g("Ensalada Bali","Bali Salad","Salade Bali","Insalata Bali","Bali-Salat"),img:"ens-bali",tags:["veg"],v:[[V.veget,10.50],[V.pollo,11.50],[V.langostino,13.80],[V.mixta,14.50]],
    d:g("Pimientos, champiñones y zanahoria al wok sobre una base de lechuga y salsa ali oli o cesar.","Lettuce base, red bell pepper, mushrooms and carrots to the wok, ali oli or cesar sauce.","Poivrons, champignons et carotte au wok sur un lit de laitue, sauce aïoli ou césar.","Peperoni, funghi e carota al wok su un letto di lattuga, salsa ali oli o cesar.","Paprika, Champignons und Karotte aus dem Wok auf Blattsalat, Aioli oder Caesar-Dressing.")},
-  {n:g("Ensalada Mixta","Mixed Salad","Salade mixte","Insalata mista","Gemischter Salat"),img:"ens-mixta",v:P_ENS,
+  {n:g("Ensalada Mixta","Mixed Salad","Salade mixte","Insalata mista","Gemischter Salat"),img:"ens-mixta",tags:["veg"],v:P_ENS,
    d:g("Lechuga, aguacate, tomate cherry, pepino, cebolla roja, queso parmesano, vinagreta y salsa cesar.","Lettuce, avocado, cherry tomato, cucumber, red onion, parmesan cheese, vinaigrette and cesar sauce.","Laitue, avocat, tomate cerise, concombre, oignon rouge, parmesan, vinaigrette et sauce césar.","Lattuga, avocado, pomodorini, cetriolo, cipolla rossa, parmigiano, vinaigrette e salsa cesar.","Blattsalat, Avocado, Kirschtomaten, Gurke, rote Zwiebel, Parmesan, Vinaigrette und Caesar-Dressing.")},
-  {n:g("Clásico César","Classic Cesar","César classique","Cesare classica","Klassischer Caesar"),img:"ens-cesar",v:P_ENS,
+  {n:g("Clásico César","Classic Cesar","César classique","Cesare classica","Klassischer Caesar"),img:"ens-cesar",tags:["veg"],v:P_ENS,
    d:g("Lechuga, aguacate, tomate cherry, queso parmesano, picatostes, vinagreta y salsa cesar.","Lettuce, avocado, cherry tomato, parmesan cheese, croutons, vinaigrette and cesar sauce.","Laitue, avocat, tomate cerise, parmesan, croûtons, vinaigrette et sauce césar.","Lattuga, avocado, pomodorini, parmigiano, crostini, vinaigrette e salsa cesar.","Blattsalat, Avocado, Kirschtomaten, Parmesan, Croûtons, Vinaigrette und Caesar-Dressing.")},
-  {n:g("Ensalada Noodles Bangkok","Bangkok Noodles Salad","Salade Noodles Bangkok","Insalata Noodles Bangkok","Bangkok-Nudelsalat"),img:"ens-noodles",v:P_ENS,
+  {n:g("Ensalada Noodles Bangkok","Bangkok Noodles Salad","Salade Noodles Bangkok","Insalata Noodles Bangkok","Bangkok-Nudelsalat"),img:"ens-noodles",tags:["veg"],v:P_ENS,
    d:g("Lechuga, vinagreta, noodles y mixto de verduras al wok y salsa ali oli.","Lettuce, vinaigrette, noodles and mix vegetables to the wok, ali oli sauce.","Laitue, vinaigrette, nouilles et légumes mélangés au wok, sauce aïoli.","Lattuga, vinaigrette, noodles e mix di verdure al wok, salsa ali oli.","Blattsalat, Vinaigrette, Nudeln und Gemüsemix aus dem Wok, Aioli.")},
-  {n:g("Ensalada Thai Wok","Thai Wok Salad","Salade Thaï Wok","Insalata Thai Wok","Thai-Wok-Salat"),p:12.80,img:"ens-thai",
-   d:g("Lechuga, tomate cherry, pepino, hierbas frescas, cacahuetes, cebolla roja, ternera al wok, salsa thai y salsa ali oli.","Lettuce, cherry tomato, cucumber, fresh herbs, peanuts, red onion, wok beef, thai sauce and ali oli sauce.","Laitue, tomate cerise, concombre, herbes fraîches, cacahuètes, oignon rouge, bœuf au wok, sauce thaï et sauce aïoli.","Lattuga, pomodorini, cetriolo, erbe fresche, arachidi, cipolla rossa, manzo al wok, salsa thai e salsa ali oli.","Blattsalat, Kirschtomaten, Gurke, frische Kräuter, Erdnüsse, rote Zwiebel, Rind aus dem Wok, Thai-Sauce und Aioli."),
-   note:g("Con ternera","With beef","Au bœuf","Con manzo","Mit Rind")},
-  {n:g("Ensalada Crispy","Crispy Salad","Salade Crispy","Insalata Crispy","Crispy-Salat"),v:[[V.pollo,11.20],[V.langostino,14.00],[V.mixta,14.90]],
+  {n:g("Ensalada Thai Wok","Thai Wok Salad","Salade Thaï Wok","Insalata Thai Wok","Thai-Wok-Salat"),tags:["veg"],img:"ens-thai",v:[[V.veget,10.50],[V.ternera,12.80]],
+   d:g("Lechuga, tomate cherry, pepino, hierbas frescas, cacahuetes, cebolla roja, ternera al wok, salsa thai y salsa ali oli.","Lettuce, cherry tomato, cucumber, fresh herbs, peanuts, red onion, wok beef, thai sauce and ali oli sauce.","Laitue, tomate cerise, concombre, herbes fraîches, cacahuètes, oignon rouge, bœuf au wok, sauce thaï et sauce aïoli.","Lattuga, pomodorini, cetriolo, erbe fresche, arachidi, cipolla rossa, manzo al wok, salsa thai e salsa ali oli.","Blattsalat, Kirschtomaten, Gurke, frische Kräuter, Erdnüsse, rote Zwiebel, Rind aus dem Wok, Thai-Sauce und Aioli.")},
+  {n:g("Ensalada Crispy","Crispy Salad","Salade Crispy","Insalata Crispy","Crispy-Salat"),tags:["veg"],v:[[V.veget,10.50],[V.pollo,11.20],[V.langostino,14.00],[V.mixta,14.90]],
    d:g("Lechuga, tomate cherry, zanahoria, brotes de soja, rabanos, vinagreta y salsa panko.","Lettuce, cherry tomato, carrots, soja beans, radish, vinaigrette and panko sauce.","Laitue, tomate cerise, carotte, pousses de soja, radis, vinaigrette et sauce panko.","Lattuga, pomodorini, carota, germogli di soia, ravanelli, vinaigrette e salsa panko.","Blattsalat, Kirschtomaten, Karotte, Sojasprossen, Radieschen, Vinaigrette und Panko-Sauce.")}
  ]},
 
@@ -792,7 +786,8 @@ const MENU = [
   {n:g("Coulant de tarta de queso","Cheesecake Coulant","Coulant au cheesecake","Coulant al cheesecake","Cheesecake-Coulant"),img:"coulant-queso",
    v:[[g("Solo","On its own","Seul","Da solo","Pur"),5.50],
       [g("1 bola de helado","1 ice cream ball","1 boule de glace","1 pallina di gelato","1 Kugel Eis"),6.80],
-      [g("2 bolas de helado","2 ice cream balls","2 boules de glace","2 palline di gelato","2 Kugeln Eis"),7.20]]}
+      [g("2 bolas de helado","2 ice cream balls","2 boules de glace","2 palline di gelato","2 Kugeln Eis"),7.20]]},
+  {n:g("Helado Häagen-Dazs","Häagen-Dazs Ice Cream","Glace Häagen-Dazs","Gelato Häagen-Dazs","Häagen-Dazs Eis"),p:3.50}
  ]},
 
 {id:"batidos",n:g("Batidos","Shakes","Milkshakes","Frullati","Milchshakes"),
